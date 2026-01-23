@@ -525,7 +525,7 @@ async function suggestPattern(args: any) {
       for (const patternId of patternIds) {
         // Search through all categories
         for (const category of Object.values(patterns.patterns)) {
-          if (typeof category === "object" && patternId in category) {
+          if (typeof category === "object" && category !== null && patternId in category) {
             suggestedPatterns.push({
               id: patternId,
               category: Object.keys(patterns.patterns).find(
