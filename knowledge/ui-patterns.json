@@ -1,0 +1,344 @@
+{
+  "name": "Common UI Patterns Library",
+  "description": "Proven user interface patterns for common scenarios",
+  "patterns": {
+    "navigation": {
+      "header_navigation": {
+        "name": "Header Navigation",
+        "when_to_use": "Primary navigation for websites and web apps with 5-7 main sections",
+        "structure": "Logo (left) + Nav items (center/right) + Actions (right)",
+        "best_practices": [
+          "Highlight current page in navigation",
+          "Use descriptive labels (not 'Products' → 'Our Solutions')",
+          "Mobile: Collapse to hamburger menu",
+          "Sticky header for long pages",
+          "Max 7 items (Miller's Law)"
+        ],
+        "accessibility": [
+          "nav element with aria-label",
+          "Current page marked with aria-current='page'",
+          "Keyboard navigation support"
+        ],
+        "example_structure": "header > nav > ul > li > a"
+      },
+      "breadcrumbs": {
+        "name": "Breadcrumbs",
+        "when_to_use": "Deep hierarchical navigation, e-commerce, documentation",
+        "structure": "Home > Category > Subcategory > Current Page",
+        "best_practices": [
+          "Show user's current location",
+          "Make each level clickable except current",
+          "Use chevrons (>) or slashes (/) as separators",
+          "Place above page title",
+          "Keep concise (truncate long names)"
+        ],
+        "accessibility": [
+          "nav element with aria-label='Breadcrumb'",
+          "Structured data (schema.org/BreadcrumbList)",
+          "Current page marked with aria-current='page'"
+        ]
+      },
+      "tabs": {
+        "name": "Tabs",
+        "when_to_use": "Organize related content into separate views without navigation",
+        "structure": "Tab list (horizontal) + Tab panels",
+        "best_practices": [
+          "3-6 tabs is optimal",
+          "Clear active state",
+          "Lazy load content if heavy",
+          "Don't use for sequential steps (use wizard)",
+          "Keep tab labels short"
+        ],
+        "accessibility": [
+          "role='tablist' on container",
+          "role='tab' on each tab",
+          "role='tabpanel' on panels",
+          "Arrow keys to navigate tabs",
+          "aria-selected and aria-controls"
+        ]
+      }
+    },
+    "forms": {
+      "single_column_form": {
+        "name": "Single Column Form",
+        "when_to_use": "Most forms, especially on mobile",
+        "structure": "Label above input, helper text, error below",
+        "best_practices": [
+          "One column layout (faster completion)",
+          "Labels above fields (not placeholder-only)",
+          "Group related fields",
+          "Show password requirements upfront",
+          "Disable submit until valid (with visual feedback)",
+          "Use appropriate input types",
+          "Autofocus first field"
+        ],
+        "accessibility": [
+          "Label associated with for/id",
+          "Required fields marked with aria-required",
+          "Errors announced with aria-live",
+          "Fieldsets for radio/checkbox groups"
+        ],
+        "validation": {
+          "timing": "Validate on blur, show success on input",
+          "messages": "Specific and actionable",
+          "visual": "Icon + color + text (not color alone)"
+        }
+      },
+      "multi_step_wizard": {
+        "name": "Multi-Step Wizard",
+        "when_to_use": "Complex forms, checkout flows, onboarding",
+        "structure": "Progress indicator + Step content + Navigation",
+        "best_practices": [
+          "Show progress (steps completed / total)",
+          "Allow editing previous steps",
+          "Save progress automatically",
+          "Validate each step before proceeding",
+          "Provide clear 'Next' and 'Back' buttons",
+          "Review step before final submission"
+        ],
+        "accessibility": [
+          "Announce step changes",
+          "Keyboard navigation between steps",
+          "Clear heading for each step"
+        ]
+      },
+      "inline_validation": {
+        "name": "Inline Validation",
+        "when_to_use": "Real-time feedback on form inputs",
+        "timing": {
+          "on_blur": "Check when user leaves field",
+          "on_input": "Show success state as user types (for password strength, username availability)",
+          "on_submit": "Final validation before submission"
+        },
+        "best_practices": [
+          "Don't validate on first keystroke",
+          "Show success states (green checkmark)",
+          "Keep error messages visible",
+          "Place errors below field",
+          "Use icons + color + text"
+        ]
+      }
+    },
+    "feedback": {
+      "toast_notification": {
+        "name": "Toast/Snackbar",
+        "when_to_use": "Non-critical, brief messages (success, info, warning)",
+        "structure": "Message + Optional action + Dismiss",
+        "best_practices": [
+          "Auto-dismiss after 4-6 seconds",
+          "One toast at a time",
+          "Position: bottom-left or top-right",
+          "Allow manual dismiss",
+          "Don't block important content",
+          "Stack multiple toasts vertically"
+        ],
+        "accessibility": [
+          "role='status' for non-critical",
+          "role='alert' for urgent",
+          "Announce to screen readers"
+        ],
+        "types": {
+          "success": "Green, checkmark icon, 'Action completed'",
+          "error": "Red, X icon, 'Action failed: [reason]'",
+          "warning": "Yellow, alert icon, 'Caution: [message]'",
+          "info": "Blue, info icon, 'FYI: [message]'"
+        }
+      },
+      "modal_dialog": {
+        "name": "Modal Dialog",
+        "when_to_use": "Require user attention/decision, prevent errors",
+        "structure": "Backdrop + Dialog (Title + Content + Actions)",
+        "best_practices": [
+          "Use sparingly (interrupts workflow)",
+          "Darken background (80% opacity)",
+          "Clear title describing action",
+          "Primary action on right",
+          "Allow dismiss (X, ESC, click outside)",
+          "Trap focus inside modal",
+          "Return focus on close"
+        ],
+        "accessibility": [
+          "role='dialog' or 'alertdialog'",
+          "aria-labelledby points to title",
+          "aria-modal='true'",
+          "ESC to close",
+          "Focus trap implemented",
+          "Announce to screen readers"
+        ],
+        "types": {
+          "confirmation": "Are you sure? [Cancel] [Confirm]",
+          "form": "Collect information, [Cancel] [Submit]",
+          "alert": "Error/warning that requires acknowledgment"
+        }
+      },
+      "loading_states": {
+        "name": "Loading Indicators",
+        "when_to_use": "Operations taking > 200ms",
+        "types": {
+          "spinner": "General loading (< 2 seconds)",
+          "progress_bar": "Known duration, show percentage",
+          "skeleton_screen": "Content loading, preserve layout",
+          "button_loading": "Disable + show spinner + 'Loading...' text"
+        },
+        "best_practices": [
+          "Show immediately for ops > 200ms",
+          "Estimate time if possible",
+          "Keep UI responsive",
+          "Disable actions during loading",
+          "Provide cancel option for long operations"
+        ]
+      }
+    },
+    "data_display": {
+      "data_table": {
+        "name": "Data Table",
+        "when_to_use": "Display structured data, comparisons",
+        "features": [
+          "Sortable columns (click header)",
+          "Pagination for large datasets",
+          "Row selection (checkbox)",
+          "Filters and search",
+          "Fixed header on scroll",
+          "Responsive: stack on mobile",
+          "Zebra striping for readability"
+        ],
+        "best_practices": [
+          "Left-align text, right-align numbers",
+          "Highlight row on hover",
+          "Show loading state for data",
+          "Empty state with helpful message",
+          "Export functionality if needed"
+        ],
+        "accessibility": [
+          "table, thead, tbody, th, td elements",
+          "scope attribute on headers",
+          "caption for table description",
+          "Sortable columns announce state"
+        ]
+      },
+      "cards": {
+        "name": "Card Pattern",
+        "when_to_use": "Group related information, scannable content",
+        "structure": "Image + Title + Description + Actions",
+        "best_practices": [
+          "Consistent card dimensions",
+          "Clear visual hierarchy",
+          "Subtle shadow for depth",
+          "Hover state (lift effect)",
+          "Make entire card clickable if one action",
+          "Use grid layout (2-4 columns)"
+        ],
+        "accessibility": [
+          "Semantic markup (article)",
+          "Descriptive headings",
+          "Link text describes destination"
+        ]
+      },
+      "empty_states": {
+        "name": "Empty State",
+        "when_to_use": "No data to display, first-time use",
+        "structure": "Illustration + Message + Call-to-action",
+        "best_practices": [
+          "Explain why it's empty",
+          "Provide clear next action",
+          "Use friendly illustration",
+          "Match tone to context",
+          "Don't use 'No results found' alone"
+        ],
+        "examples": [
+          "No items yet: 'Start by adding your first item'",
+          "Search no results: 'Try different keywords'",
+          "Filter no results: 'Adjust your filters'"
+        ]
+      }
+    },
+    "input_components": {
+      "search": {
+        "name": "Search Input",
+        "features": [
+          "Clear icon (X) to reset",
+          "Search icon (magnifying glass)",
+          "Auto-complete suggestions",
+          "Recent searches",
+          "Highlight matching text",
+          "Show result count"
+        ],
+        "best_practices": [
+          "Prominent placement",
+          "Keyboard shortcut (/, Cmd+K)",
+          "Show search while typing (if fast)",
+          "Preserve query in URL",
+          "Empty state for no results"
+        ],
+        "accessibility": [
+          "role='search' on form",
+          "aria-label for input",
+          "Announce results count"
+        ]
+      },
+      "date_picker": {
+        "name": "Date Picker",
+        "structure": "Input field + Calendar popup",
+        "best_practices": [
+          "Allow manual input (MM/DD/YYYY)",
+          "Today button in calendar",
+          "Disable invalid dates",
+          "Show selected date clearly",
+          "Support keyboard navigation",
+          "Localize format"
+        ],
+        "accessibility": [
+          "Input has label",
+          "Calendar has role='dialog'",
+          "Arrow keys navigate dates",
+          "ESC closes calendar"
+        ]
+      },
+      "file_upload": {
+        "name": "File Upload",
+        "structure": "Drop zone + Browse button + Preview",
+        "best_practices": [
+          "Drag and drop support",
+          "Show accepted file types",
+          "Display file size limits",
+          "Upload progress indicator",
+          "Preview before upload",
+          "Multiple file support",
+          "Remove uploaded files"
+        ],
+        "accessibility": [
+          "Input type='file' with label",
+          "Keyboard accessible",
+          "Announce upload status"
+        ]
+      }
+    }
+  },
+  "anti_patterns": [
+    {
+      "name": "Placeholder as Label",
+      "problem": "Placeholder disappears when user types, hard to remember what field is for",
+      "solution": "Always use visible labels above fields"
+    },
+    {
+      "name": "Infinite Scroll Only",
+      "problem": "Can't return to specific item, no footer access, hard to bookmark",
+      "solution": "Offer pagination option or 'Load More' button"
+    },
+    {
+      "name": "Carousel/Slider for Critical Content",
+      "problem": "Users rarely interact with slides beyond first, important content gets missed",
+      "solution": "Display critical information statically"
+    },
+    {
+      "name": "Disabled Buttons Without Explanation",
+      "problem": "Users don't know why they can't proceed",
+      "solution": "Show tooltip explaining what's needed to enable"
+    },
+    {
+      "name": "Generic 'Click Here' Links",
+      "problem": "Not accessible, no context out of flow",
+      "solution": "Use descriptive link text: 'Read the full report'"
+    }
+  ]
+}

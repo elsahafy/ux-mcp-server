@@ -1,0 +1,33 @@
+{
+  "name": "ux-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol server for UX best practices, accessibility, and design patterns",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "ux-mcp-server": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "tsc && node dist/index.js",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "ux",
+    "accessibility",
+    "wcag",
+    "design-systems",
+    "usability"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "version": "WCAG 2.1 Level AA",
+  "categories": {
+    "perceivable": {
+      "name": "Perceivable",
+      "description": "Information and user interface components must be presentable to users in ways they can perceive",
+      "guidelines": [
+        {
+          "id": "1.1.1",
+          "name": "Non-text Content",
+          "level": "A",
+          "description": "All non-text content has a text alternative",
+          "examples": [
+            "Images must have alt text",
+            "Form inputs must have labels",
+            "Icon buttons must have aria-label or aria-labelledby"
+          ],
+          "code_checks": [
+            "img elements have alt attribute",
+            "input elements have associated label",
+            "button elements with only icons have aria-label"
+          ]
+        },
+        {
+          "id": "1.3.1",
+          "name": "Info and Relationships",
+          "level": "A",
+          "description": "Information, structure, and relationships conveyed through presentation can be programmatically determined",
+          "examples": [
+            "Use semantic HTML (header, nav, main, footer)",
+            "Headings follow logical hierarchy (h1 > h2 > h3)",
+            "Lists use ul/ol elements",
+            "Tables use proper table markup with th and scope"
+          ]
+        },
+        {
+          "id": "1.4.3",
+          "name": "Contrast (Minimum)",
+          "level": "AA",
+          "description": "Text has contrast ratio of at least 4.5:1 (3:1 for large text)",
+          "examples": [
+            "Normal text: 4.5:1 contrast ratio",
+            "Large text (18pt+ or 14pt+ bold): 3:1 contrast ratio",
+            "Use tools to verify: WebAIM Contrast Checker"
+          ],
+          "code_checks": [
+            "Check color values against background",
+            "Verify contrast for all text states (hover, focus, disabled)"
+          ]
+        },
+        {
+          "id": "1.4.11",
+          "name": "Non-text Contrast",
+          "level": "AA",
+          "description": "UI components and graphical objects have contrast ratio of at least 3:1",
+          "examples": [
+            "Form borders and focus indicators",
+            "Interactive component boundaries",
+            "Icons and graphical elements"
+          ]
+        }
+      ]
+    },
+    "operable": {
+      "name": "Operable",
+      "description": "User interface components and navigation must be operable",
+      "guidelines": [
+        {
+          "id": "2.1.1",
+          "name": "Keyboard",
+          "level": "A",
+          "description": "All functionality available from keyboard",
+          "examples": [
+            "Tab through all interactive elements",
+            "Use Enter/Space to activate buttons",
+            "Arrow keys for radio groups and menus",
+            "Escape to close modals/dialogs"
+          ],
+          "code_checks": [
+            "No keyboard traps",
+            "Custom widgets handle keyboard events",
+            "Avoid onclick on non-interactive elements"
+          ]
+        },
+        {
+          "id": "2.4.3",
+          "name": "Focus Order",
+          "level": "A",
+          "description": "Focusable components receive focus in logical order",
+          "examples": [
+            "Tab order follows visual layout",
+            "Avoid positive tabindex values",
+            "Use tabindex=-1 for programmatic focus only"
+          ]
+        },
+        {
+          "id": "2.4.7",
+          "name": "Focus Visible",
+          "level": "AA",
+          "description": "Keyboard focus indicator is visible",
+          "examples": [
+            "Never use outline: none without replacement",
+            "Focus rings should be 2px minimum",
+            "High contrast focus indicators",
+            "Use :focus-visible for modern browsers"
+          ],
+          "code_checks": [
+            "All interactive elements show focus state",
+            "Focus indicator has 3:1 contrast ratio"
+          ]
+        },
+        {
+          "id": "2.5.5",
+          "name": "Target Size",
+          "level": "AAA",
+          "description": "Touch targets are at least 44x44 CSS pixels",
+          "examples": [
+            "Buttons should be minimum 44x44px",
+            "Add padding to increase clickable area",
+            "Ensure adequate spacing between targets"
+          ]
+        }
+      ]
+    },
+    "understandable": {
+      "name": "Understandable",
+      "description": "Information and operation of user interface must be understandable",
+      "guidelines": [
+        {
+          "id": "3.2.1",
+          "name": "On Focus",
+          "level": "A",
+          "description": "Focus does not trigger unexpected context changes",
+          "examples": [
+            "Don't auto-submit forms on focus",
+            "Don't navigate away when element receives focus"
+          ]
+        },
+        {
+          "id": "3.3.1",
+          "name": "Error Identification",
+          "level": "A",
+          "description": "Errors are clearly identified and described",
+          "examples": [
+            "Form validation messages are specific",
+            "Error messages appear near the field",
+            "Use aria-invalid and aria-describedby",
+            "Visual indicators beyond color"
+          ]
+        },
+        {
+          "id": "3.3.2",
+          "name": "Labels or Instructions",
+          "level": "A",
+          "description": "Labels or instructions provided when input required",
+          "examples": [
+            "Every form field has a label",
+            "Required fields are clearly marked",
+            "Format requirements stated upfront",
+            "Use aria-required or required attribute"
+          ]
+        }
+      ]
+    },
+    "robust": {
+      "name": "Robust",
+      "description": "Content must be robust enough to work with assistive technologies",
+      "guidelines": [
+        {
+          "id": "4.1.2",
+          "name": "Name, Role, Value",
+          "level": "A",
+          "description": "All UI components have accessible name and role",
+          "examples": [
+            "Use semantic HTML elements",
+            "ARIA roles when semantic HTML insufficient",
+            "aria-label or aria-labelledby for names",
+            "State changes announced (aria-expanded, aria-pressed)"
+          ],
+          "code_checks": [
+            "Custom components have role attribute",
+            "Interactive elements have accessible names",
+            "State changes update ARIA attributes"
+          ]
+        }
+      ]
+    }
+  },
+  "quick_checklist": [
+    "All images have alt text",
+    "Color is not the only visual means of conveying information",
+    "Text has sufficient contrast (4.5:1 minimum)",
+    "All functionality available via keyboard",
+    "Focus indicators are visible",
+    "Form inputs have labels",
+    "Error messages are clear and specific",
+    "Page has proper heading structure",
+    "Links have descriptive text (no 'click here')",
+    "Content is organized with semantic HTML"
+  ]
+}

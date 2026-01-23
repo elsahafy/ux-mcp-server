@@ -1,0 +1,286 @@
+{
+  "name": "Design System Principles & Tokens",
+  "description": "Foundational design system concepts and token structure",
+  "principles": {
+    "atomic_design": {
+      "name": "Atomic Design Methodology",
+      "levels": [
+        {
+          "name": "Atoms",
+          "description": "Basic building blocks (buttons, inputs, labels, icons)",
+          "examples": ["Button", "Input", "Label", "Icon", "Badge", "Avatar"],
+          "characteristics": [
+            "Cannot be broken down further",
+            "Highly reusable",
+            "Minimal logic"
+          ]
+        },
+        {
+          "name": "Molecules",
+          "description": "Simple combinations of atoms",
+          "examples": ["Search bar (input + button + icon)", "Form field (label + input + helper text)", "Card header (avatar + name + timestamp)"],
+          "characteristics": [
+            "Single responsibility",
+            "Reusable combinations",
+            "Simple interactions"
+          ]
+        },
+        {
+          "name": "Organisms",
+          "description": "Complex components made of molecules/atoms",
+          "examples": ["Navigation bar", "Product card", "Data table", "Form section"],
+          "characteristics": [
+            "Distinct section of interface",
+            "May contain business logic",
+            "More specific use cases"
+          ]
+        },
+        {
+          "name": "Templates",
+          "description": "Page-level layouts",
+          "examples": ["Dashboard layout", "Landing page template", "Admin panel"],
+          "characteristics": [
+            "Define page structure",
+            "Show content placement",
+            "No actual content yet"
+          ]
+        },
+        {
+          "name": "Pages",
+          "description": "Specific instances of templates with real content",
+          "examples": ["User dashboard", "Product listing", "Profile page"],
+          "characteristics": [
+            "Real data and content",
+            "Test components in context",
+            "End-user facing"
+          ]
+        }
+      ]
+    },
+    "design_tokens": {
+      "description": "Named design decisions that maintain consistency",
+      "categories": {
+        "color": {
+          "structure": {
+            "primitive": "Raw values (hex codes)",
+            "semantic": "Purpose-based names",
+            "component": "Component-specific tokens"
+          },
+          "example_structure": {
+            "primitive": {
+              "blue-50": "#eff6ff",
+              "blue-500": "#3b82f6",
+              "blue-900": "#1e3a8a"
+            },
+            "semantic": {
+              "color-primary": "var(--blue-500)",
+              "color-background": "var(--gray-50)",
+              "color-text": "var(--gray-900)",
+              "color-success": "var(--green-500)",
+              "color-error": "var(--red-500)"
+            },
+            "component": {
+              "button-primary-bg": "var(--color-primary)",
+              "button-primary-text": "white",
+              "input-border": "var(--gray-300)"
+            }
+          },
+          "best_practices": [
+            "Use semantic naming (not color names in app code)",
+            "Define light/dark mode variants",
+            "Maintain WCAG AA contrast ratios",
+            "Limit palette to 5-7 primary colors"
+          ]
+        },
+        "spacing": {
+          "description": "Consistent spacing scale for margins, padding, gaps",
+          "scale": {
+            "concept": "Base unit multiplied by scale factor",
+            "example": {
+              "base_unit": "4px or 8px",
+              "scale": {
+                "space-1": "4px",
+                "space-2": "8px",
+                "space-3": "12px",
+                "space-4": "16px",
+                "space-6": "24px",
+                "space-8": "32px",
+                "space-12": "48px",
+                "space-16": "64px"
+              }
+            }
+          },
+          "best_practices": [
+            "Use scale values only (no arbitrary values)",
+            "4px or 8px base unit most common",
+            "Consistent spacing creates visual rhythm",
+            "Larger spacing for grouping, smaller within groups"
+          ]
+        },
+        "typography": {
+          "scales": {
+            "modular_scale": {
+              "description": "Mathematically related font sizes",
+              "ratios": {
+                "minor_third": "1.200",
+                "major_third": "1.250",
+                "perfect_fourth": "1.333",
+                "golden_ratio": "1.618"
+              }
+            }
+          },
+          "structure": {
+            "font_family": {
+              "font-sans": "system-ui, -apple-system, sans-serif",
+              "font-serif": "Georgia, Cambria, serif",
+              "font-mono": "Menlo, Monaco, Courier, monospace"
+            },
+            "font_size": {
+              "text-xs": "0.75rem",
+              "text-sm": "0.875rem",
+              "text-base": "1rem",
+              "text-lg": "1.125rem",
+              "text-xl": "1.25rem",
+              "text-2xl": "1.5rem",
+              "text-3xl": "1.875rem",
+              "text-4xl": "2.25rem"
+            },
+            "font_weight": {
+              "font-normal": "400",
+              "font-medium": "500",
+              "font-semibold": "600",
+              "font-bold": "700"
+            },
+            "line_height": {
+              "leading-tight": "1.25",
+              "leading-normal": "1.5",
+              "leading-relaxed": "1.75"
+            }
+          },
+          "best_practices": [
+            "Limit to 2-3 font families maximum",
+            "Use system fonts for performance",
+            "Minimum 16px base font size",
+            "1.5 line-height for body text",
+            "Scale sizes proportionally"
+          ]
+        },
+        "shadows": {
+          "description": "Elevation and depth",
+          "levels": {
+            "shadow-sm": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+            "shadow": "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+            "shadow-md": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+            "shadow-lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+            "shadow-xl": "0 20px 25px -5px rgba(0, 0, 0, 0.1)"
+          },
+          "usage": {
+            "shadow-sm": "Subtle card separation",
+            "shadow": "Cards, buttons",
+            "shadow-md": "Dropdowns, tooltips",
+            "shadow-lg": "Modals, popovers",
+            "shadow-xl": "Full-screen overlays"
+          }
+        },
+        "border_radius": {
+          "scale": {
+            "rounded-none": "0",
+            "rounded-sm": "2px",
+            "rounded": "4px",
+            "rounded-md": "6px",
+            "rounded-lg": "8px",
+            "rounded-xl": "12px",
+            "rounded-full": "9999px"
+          },
+          "usage": {
+            "rounded": "Buttons, inputs",
+            "rounded-lg": "Cards, panels",
+            "rounded-xl": "Modals, large containers",
+            "rounded-full": "Pills, avatars, icon buttons"
+          }
+        },
+        "animation": {
+          "durations": {
+            "duration-fast": "150ms",
+            "duration-base": "200ms",
+            "duration-slow": "300ms",
+            "duration-slower": "500ms"
+          },
+          "easing": {
+            "ease-in": "cubic-bezier(0.4, 0, 1, 1)",
+            "ease-out": "cubic-bezier(0, 0, 0.2, 1)",
+            "ease-in-out": "cubic-bezier(0.4, 0, 0.2, 1)"
+          },
+          "best_practices": [
+            "Use ease-out for entrances",
+            "Use ease-in for exits",
+            "Keep durations under 300ms",
+            "Provide prefers-reduced-motion support"
+          ]
+        }
+      }
+    },
+    "component_api_design": {
+      "description": "Principles for designing component interfaces",
+      "guidelines": [
+        {
+          "principle": "Composition over Configuration",
+          "description": "Favor composable components over complex prop APIs",
+          "example": {
+            "good": "<Card>\n  <CardHeader>Title</CardHeader>\n  <CardContent>Body</CardContent>\n</Card>",
+            "bad": "<Card title='Title' content='Body' />"
+          }
+        },
+        {
+          "principle": "Sensible Defaults",
+          "description": "Components work well out-of-box without configuration",
+          "example": {
+            "good": "<Button>Click me</Button> // works without props",
+            "bad": "<Button type='button' color='primary' size='medium'>Click</Button> // requires many props"
+          }
+        },
+        {
+          "principle": "Progressive Enhancement",
+          "description": "Start simple, add features as needed",
+          "layers": [
+            "Basic functionality works with no props",
+            "Common customizations via props",
+            "Advanced use cases via composition/slots"
+          ]
+        },
+        {
+          "principle": "Consistent Naming",
+          "description": "Use consistent prop names across components",
+          "examples": [
+            "size: 'sm' | 'md' | 'lg' (not small/medium/large)",
+            "variant: 'primary' | 'secondary' | 'ghost'",
+            "disabled, loading, error (boolean props)",
+            "onX pattern for events: onClick, onChange, onSubmit"
+          ]
+        }
+      ]
+    }
+  },
+  "implementation_checklist": [
+    "Define color palette with semantic naming",
+    "Create spacing scale (base 4px or 8px)",
+    "Establish typography scale and weights",
+    "Define shadow levels for elevation",
+    "Set border-radius values",
+    "Create animation durations and easing",
+    "Build atomic components (buttons, inputs)",
+    "Compose molecules from atoms",
+    "Document component APIs",
+    "Provide usage examples",
+    "Test dark mode support",
+    "Ensure accessibility (WCAG AA)",
+    "Create component playground/storybook"
+  ],
+  "tools": [
+    "Figma Variables for design tokens",
+    "Style Dictionary for code generation",
+    "Storybook for component documentation",
+    "Chromatic for visual testing",
+    "Axe DevTools for accessibility"
+  ]
+}

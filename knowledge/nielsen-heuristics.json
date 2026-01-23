@@ -1,0 +1,253 @@
+{
+  "name": "Nielsen's 10 Usability Heuristics",
+  "description": "General principles for interaction design by Jakob Nielsen",
+  "heuristics": [
+    {
+      "id": 1,
+      "name": "Visibility of System Status",
+      "description": "The design should always keep users informed about what is going on through appropriate feedback within a reasonable amount of time",
+      "examples": [
+        "Loading spinners and progress bars",
+        "Success/error toast notifications",
+        "Button states (loading, disabled, active)",
+        "Form validation feedback",
+        "Upload progress indicators",
+        "Auto-save indicators"
+      ],
+      "bad_examples": [
+        "Long operations with no feedback",
+        "Buttons that don't show loading state",
+        "Forms that fail silently"
+      ],
+      "implementation_tips": [
+        "Show loading state for operations > 200ms",
+        "Use skeleton screens for content loading",
+        "Provide progress percentages for long operations",
+        "Confirm successful actions with visual feedback"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Match Between System and Real World",
+      "description": "The design should speak the users' language, using familiar words, phrases, and concepts",
+      "examples": [
+        "Use 'trash' or 'delete' instead of 'destroy'",
+        "Calendar widgets show weeks starting on cultural norm",
+        "Icons match real-world metaphors (envelope for email)",
+        "Date formats match user's locale"
+      ],
+      "bad_examples": [
+        "Technical jargon in user-facing messages",
+        "Error codes without explanations",
+        "Unfamiliar icons without labels"
+      ],
+      "implementation_tips": [
+        "Avoid technical terminology",
+        "Use culturally appropriate metaphors",
+        "Follow platform conventions",
+        "Localize content and formats"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "User Control and Freedom",
+      "description": "Users often perform actions by mistake and need a clearly marked 'emergency exit'",
+      "examples": [
+        "Undo/Redo functionality",
+        "Cancel buttons on forms and modals",
+        "Breadcrumbs for navigation",
+        "Back button support",
+        "Clear way to exit flows",
+        "Confirmation dialogs for destructive actions"
+      ],
+      "bad_examples": [
+        "No way to undo destructive actions",
+        "Forced multi-step flows with no exit",
+        "Modal dialogs without close button"
+      ],
+      "implementation_tips": [
+        "Always provide 'Cancel' alongside 'Submit'",
+        "Support browser back button",
+        "Allow users to exit wizards mid-flow",
+        "Implement undo for destructive actions"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Consistency and Standards",
+      "description": "Users should not have to wonder whether different words, situations, or actions mean the same thing",
+      "examples": [
+        "Consistent button placement (e.g., 'Submit' always bottom-right)",
+        "Same icon represents same action throughout",
+        "Uniform color scheme for statuses (green=success, red=error)",
+        "Consistent navigation structure",
+        "Standard form field patterns"
+      ],
+      "bad_examples": [
+        "Save button in different locations on different pages",
+        "Same action uses different icons",
+        "Inconsistent terminology (logout vs sign out)"
+      ],
+      "implementation_tips": [
+        "Create and follow design system",
+        "Use component library for consistency",
+        "Document naming conventions",
+        "Follow platform guidelines (iOS HIG, Material Design)"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Error Prevention",
+      "description": "Good designs prevent problems from occurring in the first place",
+      "examples": [
+        "Confirmation dialogs for destructive actions",
+        "Disabled submit button until form is valid",
+        "Input constraints (min/max, pattern validation)",
+        "Type-ahead suggestions",
+        "Auto-formatting (phone numbers, credit cards)",
+        "Warning before leaving unsaved changes"
+      ],
+      "bad_examples": [
+        "No validation until form submission",
+        "Easy to accidentally delete important data",
+        "No warnings for irreversible actions"
+      ],
+      "implementation_tips": [
+        "Validate inputs as user types",
+        "Use input types (email, tel, number)",
+        "Implement 'Are you sure?' for destructive actions",
+        "Prevent double-submission of forms"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Recognition Rather than Recall",
+      "description": "Minimize memory load by making elements, actions, and options visible",
+      "examples": [
+        "Dropdown menus instead of command line",
+        "Auto-complete in search boxes",
+        "Recently used items",
+        "Visual previews instead of file names",
+        "Tooltips on hover",
+        "Visible navigation breadcrumbs"
+      ],
+      "bad_examples": [
+        "Hidden features requiring memorization",
+        "Complex keyboard shortcuts with no hints",
+        "No search history or suggestions"
+      ],
+      "implementation_tips": [
+        "Show available options visibly",
+        "Provide search with autocomplete",
+        "Display keyboard shortcuts in tooltips",
+        "Keep navigation always visible"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Flexibility and Efficiency of Use",
+      "description": "Provide accelerators for expert users while remaining accessible to novices",
+      "examples": [
+        "Keyboard shortcuts for common actions",
+        "Bulk operations",
+        "Templates and saved preferences",
+        "Search filters and advanced search",
+        "Customizable dashboards",
+        "Quick actions menu"
+      ],
+      "bad_examples": [
+        "Must always go through multi-step wizard",
+        "No keyboard shortcuts",
+        "Can't customize frequent workflows"
+      ],
+      "implementation_tips": [
+        "Implement keyboard shortcuts (show in tooltips)",
+        "Allow skipping optional steps in wizards",
+        "Provide both simple and advanced modes",
+        "Remember user preferences"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Aesthetic and Minimalist Design",
+      "description": "Interfaces should not contain information that is irrelevant or rarely needed",
+      "examples": [
+        "Progressive disclosure (hide advanced options)",
+        "Clear visual hierarchy",
+        "Whitespace for breathing room",
+        "Focused single-column layouts",
+        "Collapse/expand sections for optional content"
+      ],
+      "bad_examples": [
+        "Cluttered interfaces with every feature visible",
+        "Too many options on one screen",
+        "Competing visual elements"
+      ],
+      "implementation_tips": [
+        "Show only what's needed for current task",
+        "Use progressive disclosure for advanced features",
+        "Remove unnecessary decorative elements",
+        "Group related information"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Help Users Recognize, Diagnose, and Recover from Errors",
+      "description": "Error messages should be expressed in plain language, precisely indicate the problem, and suggest a solution",
+      "examples": [
+        "Specific error messages: 'Password must contain at least 8 characters'",
+        "Inline validation with suggestions",
+        "Highlight problematic fields",
+        "Provide actionable next steps",
+        "Link to help documentation"
+      ],
+      "bad_examples": [
+        "Generic errors: 'An error occurred'",
+        "Technical error codes without explanation",
+        "Errors that don't say how to fix"
+      ],
+      "implementation_tips": [
+        "Use plain language (no error codes alone)",
+        "Explain what went wrong and why",
+        "Suggest specific actions to resolve",
+        "Keep user's input when showing errors"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Help and Documentation",
+      "description": "Provide help and documentation that is easy to search and focused on the user's task",
+      "examples": [
+        "Contextual help tooltips",
+        "FAQ section with search",
+        "Interactive tutorials",
+        "Inline examples and placeholders",
+        "Video guides for complex features",
+        "Searchable documentation"
+      ],
+      "bad_examples": [
+        "PDF manuals with no search",
+        "Help text hidden or hard to find",
+        "Generic help that doesn't address specific features"
+      ],
+      "implementation_tips": [
+        "Provide contextual help where needed",
+        "Use placeholder text to show format",
+        "Offer tooltips on complex features",
+        "Create searchable knowledge base"
+      ]
+    }
+  ],
+  "evaluation_questions": [
+    "Does the user always know what's happening? (Visibility)",
+    "Is the language familiar to users? (Match Real World)",
+    "Can users easily undo actions? (User Control)",
+    "Is the interface consistent? (Consistency)",
+    "Are errors prevented before they occur? (Error Prevention)",
+    "Are options visible vs requiring memorization? (Recognition)",
+    "Are there shortcuts for power users? (Flexibility)",
+    "Is the design clean and focused? (Minimalist)",
+    "Are error messages helpful and actionable? (Error Recovery)",
+    "Is help available when needed? (Help & Documentation)"
+  ]
+}
