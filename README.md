@@ -12,10 +12,13 @@ Access comprehensive UX knowledge bases:
 - **ux://usability/nielsen-heuristics** - Nielsen's 10 Usability Heuristics
 - **ux://patterns/ui-patterns** - Common UI patterns library
 - **ux://design-systems/tokens** - Design system principles & tokens
+- **ux://responsive/design** - Responsive design & mobile-first principles
+- **ux://themes/dark-mode** - Dark mode implementation guide
+- **ux://content/error-messages** - User-friendly error message library
 
 ### 🛠️ Tools (Dynamic Operations)
 
-Six powerful tools for UX analysis and generation:
+Eight powerful tools for UX analysis and generation:
 
 1. **analyze_accessibility** - Check code for WCAG violations
 2. **review_usability** - Evaluate against Nielsen's heuristics
@@ -23,6 +26,8 @@ Six powerful tools for UX analysis and generation:
 4. **generate_component_example** - Create accessible HTML/CSS examples
 5. **audit_design_system** - Review design token structure
 6. **check_contrast** - Verify WCAG color contrast ratios
+7. **check_responsive** - Analyze mobile-first and responsive design
+8. **suggest_error_message** - Get user-friendly error messages
 
 ### 💬 Prompts (Pre-configured Reviews)
 

@@ -84,6 +84,24 @@ server.setRequestHandler(ListResourcesRequestSchema, async () => {
         description: "Design tokens, atomic design, and component API guidelines",
         mimeType: "application/json",
       },
+      {
+        uri: "ux://responsive/design",
+        name: "Responsive Design Best Practices",
+        description: "Mobile-first principles, breakpoints, responsive patterns, and testing guidelines",
+        mimeType: "application/json",
+      },
+      {
+        uri: "ux://themes/dark-mode",
+        name: "Dark Mode Implementation Guide",
+        description: "Dark mode best practices, color considerations, and accessibility",
+        mimeType: "application/json",
+      },
+      {
+        uri: "ux://content/error-messages",
+        name: "Error Message Library",
+        description: "User-friendly error messages for common scenarios with tone guidelines",
+        mimeType: "application/json",
+      },
     ],
   };
 });
@@ -110,6 +128,18 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
     case "ux://design-systems/tokens":
       content = await loadKnowledge("design-tokens.json");
       description = "Design system principles, tokens, and atomic design methodology";
+      break;
+    case "ux://responsive/design":
+      content = await loadKnowledge("responsive-design.json");
+      description = "Mobile-first design, breakpoints, and responsive patterns";
+      break;
+    case "ux://themes/dark-mode":
+      content = await loadKnowledge("dark-mode.json");
+      description = "Dark mode implementation, color considerations, and accessibility";
+      break;
+    case "ux://content/error-messages":
+      content = await loadKnowledge("error-messages.json");
+      description = "User-friendly error messages with tone guidelines and examples";
       break;
     default:
       throw new Error(`Unknown resource: ${uri}`);
@@ -274,6 +304,51 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["foreground", "background"],
         },
       },
+      {
+        name: "check_responsive",
+        description:
+          "Analyze code for mobile-first principles and responsive design issues. Checks viewport meta, touch targets, and breakpoints.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            code: {
+              type: "string",
+              description: "HTML/CSS code to analyze",
+            },
+            check_type: {
+              type: "string",
+              enum: ["all", "viewport", "touch-targets", "breakpoints", "images"],
+              description: "Specific responsive aspect to check",
+              default: "all",
+            },
+          },
+          required: ["code"],
+        },
+      },
+      {
+        name: "suggest_error_message",
+        description:
+          "Get user-friendly error message suggestions for specific scenarios. Returns message, tone guidance, and accessibility considerations.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            scenario: {
+              type: "string",
+              description:
+                "Error scenario (e.g., 'invalid email', 'required field', 'payment failed', 'file too large')",
+            },
+            context: {
+              type: "string",
+              description: "Optional: Additional context about the error",
+            },
+            technical_message: {
+              type: "string",
+              description: "Optional: Technical error message to translate to user-friendly language",
+            },
+          },
+          required: ["scenario"],
+        },
+      },
     ],
   };
 });
@@ -295,6 +370,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         return await auditDesignSystem(args);
       case "check_contrast":
         return await checkContrast(args);
+      case "check_responsive":
+        return await checkResponsive(args);
+      case "suggest_error_message":
+        return await suggestErrorMessage(args);
       default:
         throw new Error(`Unknown tool: ${name}`);
     }
@@ -1003,6 +1082,202 @@ async function checkContrast(args: any) {
       ],
     };
   }
+}
+
+async function checkResponsive(args: any) {
+  const code = args.code as string;
+  const checkType = (args.check_type as string) || "all";
+
+  const issues: string[] = [];
+  const recommendations: string[] = [];
+
+  // Check viewport meta tag
+  if (checkType === "all" || checkType === "viewport") {
+    if (/<html/i.test(code)) {
+      const hasViewport = /<meta[^>]*name=["']viewport["']/i.test(code);
+      if (!hasViewport) {
+        issues.push("❌ Missing viewport meta tag");
+        recommendations.push("Add: <meta name='viewport' content='width=device-width, initial-scale=1'>");
+      } else {
+        const hasUserScalableNo = /user-scalable\s*=\s*["']?no["']?/i.test(code);
+        const hasMaxScale = /maximum-scale\s*=\s*["']?1["']?/i.test(code);
+        if (hasUserScalableNo || hasMaxScale) {
+          issues.push("⚠️ Viewport prevents zoom (accessibility issue)");
+          recommendations.push("Remove user-scalable=no and maximum-scale=1 to allow users to zoom");
+        }
+      }
+    }
+  }
+
+  // Check for mobile-first CSS
+  if (checkType === "all" || checkType === "breakpoints") {
+    const maxWidthQueries = (code.match(/@media[^{]*max-width/gi) || []).length;
+    const minWidthQueries = (code.match(/@media[^{]*min-width/gi) || []).length;
+
+    if (maxWidthQueries > minWidthQueries) {
+      issues.push("⚠️ Desktop-first approach detected (more max-width than min-width queries)");
+      recommendations.push("Consider mobile-first approach: base styles for mobile, min-width queries for larger screens");
+    }
+  }
+
+  // Check touch targets
+  if (checkType === "all" || checkType === "touch-targets") {
+    if (/<button/i.test(code) || /<a/i.test(code)) {
+      recommendations.push("Ensure interactive elements are at least 44x44px (iOS) or 48x48px (Android)");
+    }
+  }
+
+  // Check responsive images
+  if (checkType === "all" || checkType === "images") {
+    const hasImg = /<img/i.test(code);
+    if (hasImg) {
+      const hasSrcset = /srcset=/i.test(code);
+      const hasPicture = /<picture/i.test(code);
+      if (!hasSrcset && !hasPicture) {
+        issues.push("⚠️ Images without responsive sizing (srcset or picture element)");
+        recommendations.push("Use srcset attribute or picture element for responsive images");
+      }
+
+      const hasLazyLoading = /loading=["']lazy["']/i.test(code);
+      if (!hasLazyLoading) {
+        recommendations.push("Consider adding loading='lazy' to below-the-fold images");
+      }
+    }
+  }
+
+  const result = {
+    check_type: checkType,
+    issues,
+    recommendations,
+    best_practices: [
+      "Design for mobile first, then enhance for larger screens",
+      "Use relative units (rem, em) instead of pixels",
+      "Test on real devices, not just browser resize",
+      "Minimum 44x44px touch targets",
+      "Use responsive images with srcset",
+      "Support landscape orientation"
+    ],
+    reference: "See ux://responsive/design for complete guidelines"
+  };
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(result, null, 2),
+      },
+    ],
+  };
+}
+
+async function suggestErrorMessage(args: any) {
+  const scenario = (args.scenario as string).toLowerCase();
+  const context = args.context as string | undefined;
+  const technicalMessage = args.technical_message as string | undefined;
+
+  const errorMessages = await loadKnowledge("error-messages.json");
+
+  let suggestion: any = {
+    scenario,
+    message: "",
+    action: "",
+    tone_guidance: []
+  };
+
+  // Match scenario to error message library
+  if (scenario.includes("email") || scenario.includes("invalid") && scenario.includes("format")) {
+    suggestion = {
+      scenario: "Invalid email format",
+      message: "Please enter a valid email address (e.g., name@example.com)",
+      action: "Check your email format and try again",
+      accessibility: [
+        "Use aria-invalid='true' on input",
+        "Link error with aria-describedby",
+        "Display error with role='alert'"
+      ],
+      visual_placement: "Below the email input field",
+      tone_guidance: ["Be helpful, not judgmental", "Provide example format", "Keep it concise"]
+    };
+  } else if (scenario.includes("required")) {
+    suggestion = {
+      scenario: "Required field empty",
+      message: "Please enter [field name]",
+      action: "Fill in the required information",
+      accessibility: [
+        "Mark with aria-required='true'",
+        "Include asterisk (*) with aria-label='required'",
+        "Announce error to screen readers"
+      ],
+      visual: "Red border + error icon + text message",
+      tone_guidance: ["Be clear about what's needed", "Use 'please' to be polite"]
+    };
+  } else if (scenario.includes("password")) {
+    suggestion = {
+      scenario: "Weak password",
+      message: "Password must include at least one uppercase letter, one number, and one special character",
+      action: "Create a stronger password",
+      progressive: "Show requirements checklist that updates as user types",
+      accessibility: ["Announce each requirement met", "Use aria-live for updates"],
+      tone_guidance: ["Be encouraging, not critical", "Show progress", "Explain why (security)"]
+    };
+  } else if (scenario.includes("payment") || scenario.includes("declined")) {
+    suggestion = {
+      scenario: "Payment failed",
+      message: "Your payment couldn't be processed.",
+      reasons: [
+        "The card details might be incorrect",
+        "There might be insufficient funds",
+        "Your bank might be blocking the transaction"
+      ],
+      action: "Please check your payment details or try a different payment method",
+      support: "Contact your bank if the problem persists",
+      tone_guidance: ["Don't blame the user", "Provide possible reasons", "Offer alternatives", "Be reassuring"]
+    };
+  } else if (scenario.includes("file") && (scenario.includes("large") || scenario.includes("size"))) {
+    suggestion = {
+      scenario: "File too large",
+      message: "This file is too large. Maximum file size is X MB.",
+      action: "Please choose a smaller file or compress your image",
+      helpful: "Show current file size and limit",
+      tone_guidance: ["Be specific about the limit", "Suggest solutions", "Don't lose other form data"]
+    };
+  } else if (scenario.includes("offline") || scenario.includes("network") || scenario.includes("connection")) {
+    suggestion = {
+      scenario: "Network error",
+      message: "You appear to be offline. Please check your internet connection and try again.",
+      action: "Automatically retry when connection restored",
+      visual: "Show connection status indicator",
+      tone_guidance: ["Explain the problem clearly", "Provide reassurance", "Auto-retry when possible"]
+    };
+  } else {
+    suggestion = {
+      scenario: scenario,
+      message: "Please provide more specific scenario",
+      available_categories: Object.keys(errorMessages.categories),
+      tip: "Try scenarios like: 'invalid email', 'required field', 'password weak', 'payment failed', 'file too large', 'network error'",
+      reference: "See ux://content/error-messages for complete library"
+    };
+  }
+
+  if (technicalMessage) {
+    suggestion.technical_message = technicalMessage;
+    suggestion.translation_tip = "Avoid exposing technical details to users. Translate to friendly language.";
+  }
+
+  if (context) {
+    suggestion.context = context;
+  }
+
+  suggestion.general_principles = errorMessages.principles.good_error_messages;
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(suggestion, null, 2),
+      },
+    ],
+  };
 }
 
 // ========================================

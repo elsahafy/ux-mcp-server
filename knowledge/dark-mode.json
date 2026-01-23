@@ -1,0 +1,212 @@
+{
+  "name": "Dark Mode Best Practices",
+  "description": "Guidelines for implementing accessible and user-friendly dark mode",
+  "principles": {
+    "user_preference": {
+      "description": "Respect user's system preference and provide manual toggle",
+      "detection": {
+        "css": "@media (prefers-color-scheme: dark) { /* dark mode styles */ }",
+        "javascript": "window.matchMedia('(prefers-color-scheme: dark)').matches"
+      },
+      "best_practices": [
+        "Default to system preference",
+        "Provide manual toggle override",
+        "Persist user choice in localStorage",
+        "Sync across tabs/sessions",
+        "Show current mode in UI"
+      ]
+    },
+    "color_considerations": {
+      "backgrounds": {
+        "avoid_pure_black": {
+          "reason": "Causes eye strain, poor contrast on OLED",
+          "recommended": "#121212 to #1e1e1e instead of #000000"
+        },
+        "use_elevation": {
+          "description": "Lighter backgrounds for elevated surfaces",
+          "example": {
+            "base": "#121212",
+            "elevated": "#1e1e1e",
+            "cards": "#2a2a2a"
+          }
+        }
+      },
+      "text_colors": {
+        "primary": {
+          "light_on_dark": "#ffffff or rgba(255, 255, 255, 0.87)",
+          "contrast_ratio": "Maintain 4.5:1 minimum"
+        },
+        "secondary": {
+          "light_on_dark": "rgba(255, 255, 255, 0.60)",
+          "use_for": "Secondary text, labels"
+        },
+        "disabled": {
+          "light_on_dark": "rgba(255, 255, 255, 0.38)",
+          "use_for": "Disabled text, hints"
+        }
+      },
+      "color_saturation": {
+        "description": "Reduce saturation in dark mode",
+        "rationale": "Bright saturated colors cause eye strain on dark backgrounds",
+        "example": {
+          "light_mode_primary": "#2563eb (vibrant blue)",
+          "dark_mode_primary": "#60a5fa (desaturated blue)"
+        },
+        "adjustment": "Increase lightness by 20-30%, decrease saturation by 10-20%"
+      }
+    },
+    "contrast": {
+      "wcag_requirements": {
+        "normal_text": "4.5:1 contrast ratio minimum (WCAG AA)",
+        "large_text": "3:1 contrast ratio minimum",
+        "ui_components": "3:1 contrast ratio for borders, icons"
+      },
+      "dark_mode_challenges": [
+        "Pure white on pure black is too harsh (15:1+)",
+        "Consider slight tint to reduce harshness",
+        "Test with actual dark mode users",
+        "Some colors need more adjustment than others"
+      ]
+    }
+  },
+  "implementation": {
+    "css_variables": {
+      "description": "Use CSS custom properties for theme switching",
+      "example": ":root {\n  /* Light mode (default) */\n  --bg-primary: #ffffff;\n  --bg-secondary: #f3f4f6;\n  --text-primary: #111827;\n  --text-secondary: #6b7280;\n  --border: #e5e7eb;\n}\n\n[data-theme='dark'] {\n  --bg-primary: #1e1e1e;\n  --bg-secondary: #2a2a2a;\n  --text-primary: #e5e7eb;\n  --text-secondary: #9ca3af;\n  --border: #374151;\n}\n\nbody {\n  background: var(--bg-primary);\n  color: var(--text-primary);\n}"
+    },
+    "javascript_toggle": {
+      "example": "// Toggle function\nfunction toggleDarkMode() {\n  const html = document.documentElement;\n  const currentTheme = html.getAttribute('data-theme');\n  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';\n  \n  html.setAttribute('data-theme', newTheme);\n  localStorage.setItem('theme', newTheme);\n}\n\n// Initialize from localStorage or system preference\nfunction initTheme() {\n  const saved = localStorage.getItem('theme');\n  const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';\n  const theme = saved || system;\n  \n  document.documentElement.setAttribute('data-theme', theme);\n}\n\n// Run on page load\ninitTheme();\n\n// Listen for system changes\nwindow.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {\n  if (!localStorage.getItem('theme')) {\n    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');\n  }\n});"
+    },
+    "prevent_flash": {
+      "description": "Prevent white flash on page load",
+      "solution": "Inline theme script in <head> before CSS",
+      "example": "<script>\n  (function() {\n    const theme = localStorage.getItem('theme') ||\n      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');\n    document.documentElement.setAttribute('data-theme', theme);\n  })();\n</script>"
+    }
+  },
+  "component_adaptations": {
+    "images": {
+      "problem": "Photos/images may look washed out in dark mode",
+      "solutions": [
+        {
+          "name": "Reduce opacity",
+          "implementation": "[data-theme='dark'] img { opacity: 0.9; }"
+        },
+        {
+          "name": "Different images",
+          "implementation": "Use picture element with media query for dark mode"
+        },
+        {
+          "name": "CSS filter",
+          "implementation": "[data-theme='dark'] img { filter: brightness(0.9) contrast(1.1); }"
+        }
+      ]
+    },
+    "shadows": {
+      "light_mode": "box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);",
+      "dark_mode": "box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);",
+      "note": "Increase shadow opacity in dark mode for visibility"
+    },
+    "borders": {
+      "light_mode": "border: 1px solid #e5e7eb;",
+      "dark_mode": "border: 1px solid #374151;",
+      "alternative": "Use subtle backgrounds instead of borders"
+    },
+    "icons": {
+      "svg_approach": "Use currentColor for SVG fill/stroke",
+      "icon_libraries": "Choose icons that work in both modes",
+      "consideration": "Some icons may need different styles in dark mode"
+    }
+  },
+  "testing_checklist": [
+    "Test all text for sufficient contrast (4.5:1 min)",
+    "Check all UI component colors",
+    "Verify images don't look washed out",
+    "Test shadows are visible",
+    "Check form inputs are clearly visible",
+    "Verify focus indicators stand out",
+    "Test disabled states",
+    "Check error/success colors work",
+    "Verify charts and data visualizations",
+    "Test on OLED screens (blacks should be true black)",
+    "Check loading states and skeletons",
+    "Verify all interactive elements are visible"
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Using pure black (#000000)",
+      "problem": "Too harsh, poor for OLED displays",
+      "solution": "Use dark grays (#121212, #1e1e1e)"
+    },
+    {
+      "mistake": "Not adjusting color saturation",
+      "problem": "Vibrant colors cause eye strain on dark backgrounds",
+      "solution": "Desaturate and lighten colors by 20-30%"
+    },
+    {
+      "mistake": "Same shadows in both modes",
+      "problem": "Shadows invisible in dark mode",
+      "solution": "Increase opacity or use lighter shadows"
+    },
+    {
+      "mistake": "Forgetting form inputs",
+      "problem": "Inputs blend into background",
+      "solution": "Distinct background/border for inputs"
+    },
+    {
+      "mistake": "No toggle UI",
+      "problem": "Users can't manually switch",
+      "solution": "Provide visible theme toggle"
+    },
+    {
+      "mistake": "Flash of wrong theme on load",
+      "problem": "Jarring experience",
+      "solution": "Inline script in <head> to set theme before render"
+    }
+  ],
+  "accessibility": [
+    "Maintain WCAG AA contrast ratios (4.5:1 text, 3:1 UI)",
+    "Don't rely on color alone to convey information",
+    "Ensure focus indicators are visible in both modes",
+    "Test with screen readers",
+    "Provide toggle with accessible label",
+    "Announce theme change to screen readers",
+    "Support prefers-color-scheme media query",
+    "Respect prefers-contrast media query"
+  ],
+  "color_palette_example": {
+    "light_mode": {
+      "background": {
+        "primary": "#ffffff",
+        "secondary": "#f9fafb",
+        "tertiary": "#f3f4f6"
+      },
+      "text": {
+        "primary": "#111827",
+        "secondary": "#6b7280",
+        "tertiary": "#9ca3af"
+      },
+      "border": "#e5e7eb",
+      "primary": "#3b82f6",
+      "success": "#10b981",
+      "warning": "#f59e0b",
+      "error": "#ef4444"
+    },
+    "dark_mode": {
+      "background": {
+        "primary": "#1e1e1e",
+        "secondary": "#2a2a2a",
+        "tertiary": "#363636"
+      },
+      "text": {
+        "primary": "#e5e7eb",
+        "secondary": "#9ca3af",
+        "tertiary": "#6b7280"
+      },
+      "border": "#374151",
+      "primary": "#60a5fa",
+      "success": "#34d399",
+      "warning": "#fbbf24",
+      "error": "#f87171"
+    }
+  }
+}

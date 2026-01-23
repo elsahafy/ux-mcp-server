@@ -1,28 +1,57 @@
 {
-  "name": "ux-mcp-server",
+  "name": "@elsahafy/ux-mcp-server",
   "version": "1.0.0",
-  "description": "Model Context Protocol server for UX best practices, accessibility, and design patterns",
+  "description": "Model Context Protocol server for UX best practices, accessibility guidelines (WCAG), usability heuristics (Nielsen), UI patterns, and design systems",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
     "ux-mcp-server": "dist/index.js"
   },
+  "files": [
+    "dist",
+    "knowledge",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
     "dev": "tsc && node dist/index.js",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "mcp",
+    "model-context-protocol",
     "ux",
+    "user-experience",
     "accessibility",
+    "a11y",
     "wcag",
+    "wcag-aa",
     "design-systems",
-    "usability"
+    "design-tokens",
+    "usability",
+    "nielsen-heuristics",
+    "ui-patterns",
+    "accessible",
+    "frontend",
+    "web-design",
+    "claude",
+    "ai-tools"
   ],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elsahafy/ux-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elsahafy/ux-mcp-server/issues"
+  },
+  "homepage": "https://github.com/elsahafy/ux-mcp-server#readme",
+  "author": "Ibrahim Elsahafy",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4"
   },

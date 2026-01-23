@@ -1,0 +1,258 @@
+{
+  "name": "Responsive Design Best Practices",
+  "description": "Mobile-first design principles, breakpoints, and responsive patterns",
+  "principles": {
+    "mobile_first": {
+      "description": "Design for mobile devices first, then progressively enhance for larger screens",
+      "rationale": [
+        "Forces focus on core content and features",
+        "Easier to scale up than down",
+        "Better performance on mobile devices",
+        "Mobile traffic often exceeds desktop"
+      ],
+      "implementation": {
+        "css_approach": "Base styles for mobile, media queries for desktop",
+        "example": "/* Mobile first (no media query) */\n.container { padding: 1rem; }\n\n/* Tablet and up */\n@media (min-width: 768px) {\n  .container { padding: 2rem; }\n}\n\n/* Desktop and up */\n@media (min-width: 1024px) {\n  .container { padding: 3rem; }\n}"
+      }
+    },
+    "breakpoints": {
+      "description": "Common device breakpoints for responsive layouts",
+      "standard_breakpoints": {
+        "mobile": "0px - 639px",
+        "tablet": "640px - 1023px",
+        "desktop": "1024px - 1279px",
+        "wide": "1280px+"
+      },
+      "tailwind_breakpoints": {
+        "sm": "640px",
+        "md": "768px",
+        "lg": "1024px",
+        "xl": "1280px",
+        "2xl": "1536px"
+      },
+      "bootstrap_breakpoints": {
+        "xs": "< 576px",
+        "sm": "576px",
+        "md": "768px",
+        "lg": "992px",
+        "xl": "1200px",
+        "xxl": "1400px"
+      },
+      "best_practices": [
+        "Design for content, not specific devices",
+        "Use 3-4 breakpoints maximum",
+        "Test actual devices, not just browser resize",
+        "Consider landscape orientations",
+        "Use relative units (rem, em) over px"
+      ]
+    },
+    "viewport_meta": {
+      "description": "Essential viewport configuration for mobile",
+      "required": "<meta name='viewport' content='width=device-width, initial-scale=1'>",
+      "explanation": {
+        "width=device-width": "Match screen width (prevents zoom out)",
+        "initial-scale=1": "No zoom on page load"
+      },
+      "avoid": {
+        "user-scalable=no": "Prevents pinch zoom (accessibility issue)",
+        "maximum-scale=1": "Prevents zoom (accessibility issue)"
+      }
+    },
+    "touch_targets": {
+      "description": "Minimum sizes for touch interactions",
+      "requirements": {
+        "minimum": "44x44px (Apple) or 48x48px (Android)",
+        "recommended": "48x48px minimum for all platforms",
+        "spacing": "8px minimum between targets"
+      },
+      "implementation": [
+        "Add padding to increase touch area",
+        "Use ::before/::after for larger hitbox",
+        "Avoid placing small targets near edges",
+        "Consider thumb zones on mobile"
+      ]
+    }
+  },
+  "responsive_patterns": {
+    "navigation": {
+      "mobile": {
+        "hamburger_menu": {
+          "when_to_use": "5+ navigation items",
+          "structure": "Hamburger icon → Full-screen or slide-in menu",
+          "best_practices": [
+            "Icon should be 44x44px minimum",
+            "Clearly labeled (aria-label='Menu')",
+            "Show/hide with smooth transition",
+            "Close button or overlay dismiss",
+            "Prevent body scroll when open"
+          ]
+        },
+        "bottom_navigation": {
+          "when_to_use": "Mobile apps, 3-5 primary destinations",
+          "structure": "Fixed bottom bar with icons + labels",
+          "best_practices": [
+            "Icons with text labels",
+            "Current page highlighted",
+            "56-72px height recommended",
+            "3-5 items only"
+          ]
+        }
+      },
+      "tablet_desktop": {
+        "horizontal_nav": "Traditional header navigation",
+        "sidebar": "Persistent side navigation for apps"
+      }
+    },
+    "layout": {
+      "single_column": {
+        "mobile": "All content stacks vertically",
+        "implementation": "Default layout, no grid needed"
+      },
+      "multi_column": {
+        "tablet": "2-column layouts",
+        "desktop": "3-4 column layouts",
+        "implementation": "CSS Grid or Flexbox with media queries"
+      },
+      "grid_examples": {
+        "responsive_grid": "/* Mobile: 1 column */\n.grid {\n  display: grid;\n  gap: 1rem;\n}\n\n/* Tablet: 2 columns */\n@media (min-width: 768px) {\n  .grid {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n\n/* Desktop: 3+ columns */\n@media (min-width: 1024px) {\n  .grid {\n    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n  }\n}"
+      }
+    },
+    "typography": {
+      "fluid_typography": {
+        "description": "Font sizes that scale with viewport",
+        "implementation": "clamp(min, preferred, max)",
+        "example": "font-size: clamp(1rem, 2.5vw, 2rem);",
+        "benefits": [
+          "Smooth scaling between breakpoints",
+          "No need for multiple media queries",
+          "Better readability across devices"
+        ]
+      },
+      "responsive_scale": {
+        "mobile": "Base size 16px, scale 1.2",
+        "desktop": "Base size 18px, scale 1.25",
+        "implementation": "Adjust root font-size at breakpoints"
+      }
+    },
+    "images": {
+      "responsive_images": {
+        "srcset": {
+          "description": "Provide multiple image sizes",
+          "example": "<img\n  src='image-800.jpg'\n  srcset='image-400.jpg 400w,\n          image-800.jpg 800w,\n          image-1200.jpg 1200w'\n  sizes='(max-width: 768px) 100vw,\n         (max-width: 1024px) 50vw,\n         800px'\n  alt='Description'\n/>"
+        },
+        "picture": {
+          "description": "Art direction or format switching",
+          "example": "<picture>\n  <source media='(max-width: 768px)' srcset='mobile.jpg'>\n  <source media='(max-width: 1024px)' srcset='tablet.jpg'>\n  <img src='desktop.jpg' alt='Description'>\n</picture>"
+        },
+        "css_background": {
+          "example": ".hero {\n  background-image: url('mobile.jpg');\n}\n\n@media (min-width: 768px) {\n  .hero {\n    background-image: url('desktop.jpg');\n  }\n}"
+        }
+      },
+      "lazy_loading": {
+        "native": "<img src='image.jpg' loading='lazy' alt='Description'>",
+        "best_for": "Below-the-fold images",
+        "avoid": "Above-the-fold or LCP images"
+      }
+    },
+    "forms": {
+      "mobile_optimization": [
+        "Large input fields (min 44px height)",
+        "Appropriate input types (tel, email, number)",
+        "Reduce form fields to minimum",
+        "Use autocomplete attributes",
+        "Large, tappable submit buttons",
+        "Inline validation",
+        "Auto-advance for OTP/PIN inputs"
+      ],
+      "input_types": {
+        "tel": "Numeric keyboard with tel symbols",
+        "email": "Keyboard with @ and .",
+        "number": "Numeric keypad",
+        "url": "Keyboard with / and .com",
+        "search": "Shows search action in keyboard",
+        "date": "Native date picker"
+      }
+    },
+    "tables": {
+      "responsive_strategies": [
+        {
+          "name": "Horizontal Scroll",
+          "when": "Few columns with important data",
+          "implementation": "overflow-x: auto on container"
+        },
+        {
+          "name": "Stack Columns",
+          "when": "2-3 columns",
+          "implementation": "Convert to vertical layout on mobile"
+        },
+        {
+          "name": "Card View",
+          "when": "Many columns",
+          "implementation": "Display each row as a card"
+        },
+        {
+          "name": "Hide Columns",
+          "when": "Non-critical columns",
+          "implementation": "Show only essential columns on mobile"
+        }
+      ],
+      "card_transform_example": "/* Desktop table */\ntable { display: table; }\n\n/* Mobile cards */\n@media (max-width: 768px) {\n  table, thead, tbody, tr, th, td {\n    display: block;\n  }\n  \n  tr {\n    margin-bottom: 1rem;\n    border: 1px solid #e5e7eb;\n    border-radius: 0.5rem;\n  }\n  \n  td::before {\n    content: attr(data-label);\n    font-weight: bold;\n  }\n}"
+    }
+  },
+  "testing_checklist": [
+    "Test on real devices (iOS, Android)",
+    "Check all breakpoints",
+    "Test portrait and landscape",
+    "Verify touch targets (44x44px min)",
+    "Test forms with mobile keyboard",
+    "Check image loading and sizes",
+    "Verify navigation works on mobile",
+    "Test with slow 3G network",
+    "Check accessibility on mobile screen readers",
+    "Verify no horizontal scroll",
+    "Test with large font sizes (accessibility)",
+    "Check dark mode if supported"
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Desktop-first CSS",
+      "problem": "Requires overriding styles for mobile",
+      "solution": "Start with mobile base styles"
+    },
+    {
+      "mistake": "Disabling zoom (user-scalable=no)",
+      "problem": "Accessibility violation (WCAG)",
+      "solution": "Never disable zoom"
+    },
+    {
+      "mistake": "Small touch targets",
+      "problem": "Hard to tap accurately",
+      "solution": "Minimum 44x44px"
+    },
+    {
+      "mistake": "Horizontal scroll",
+      "problem": "Poor mobile UX",
+      "solution": "Use overflow-x: hidden on body, design within viewport"
+    },
+    {
+      "mistake": "Tiny text on mobile",
+      "problem": "Unreadable",
+      "solution": "Minimum 16px font size"
+    },
+    {
+      "mistake": "Loading full desktop images on mobile",
+      "problem": "Slow, wastes data",
+      "solution": "Use srcset or picture element"
+    }
+  ],
+  "performance_tips": [
+    "Lazy load below-the-fold images",
+    "Use modern image formats (WebP, AVIF)",
+    "Minimize CSS and JavaScript",
+    "Avoid render-blocking resources",
+    "Use system fonts when possible",
+    "Implement critical CSS",
+    "Reduce network requests",
+    "Use CSS instead of JavaScript animations"
+  ]
+}

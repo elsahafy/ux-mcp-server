@@ -1,0 +1,307 @@
+{
+  "name": "Error Message Library",
+  "description": "User-friendly, accessible error messages for common scenarios",
+  "principles": {
+    "good_error_messages": [
+      "Explain what went wrong in plain language",
+      "Tell the user how to fix it",
+      "Be specific, not generic",
+      "Use positive, helpful tone",
+      "Avoid technical jargon",
+      "Include relevant context",
+      "Provide next steps or alternatives"
+    ],
+    "avoid": [
+      "Generic messages ('An error occurred')",
+      "Technical error codes alone ('Error 500')",
+      "Blaming the user ('You did X wrong')",
+      "Overwhelming details",
+      "Unclear next steps"
+    ]
+  },
+  "categories": {
+    "authentication": {
+      "invalid_credentials": {
+        "bad": "Invalid username or password",
+        "good": "We couldn't find an account with that email and password combination. Please check your credentials and try again.",
+        "extra_help": "Link to password reset",
+        "security_note": "Don't reveal which field is wrong (email vs password) to prevent enumeration attacks"
+      },
+      "account_locked": {
+        "message": "Your account has been temporarily locked for security reasons after multiple failed login attempts.",
+        "action": "Try again in 15 minutes or reset your password to unlock immediately.",
+        "tone": "Reassuring, not alarming"
+      },
+      "password_reset_required": {
+        "message": "For your security, you need to reset your password before continuing.",
+        "action": "Click the button below to reset your password.",
+        "context": "Explain why (policy, breach, etc.)"
+      },
+      "session_expired": {
+        "message": "Your session has expired for security reasons.",
+        "action": "Please log in again to continue.",
+        "helpful": "Save your work before expiration with auto-save"
+      }
+    },
+    "validation": {
+      "required_field": {
+        "generic": "[Field name] is required",
+        "specific_examples": {
+          "email": "Please enter your email address",
+          "password": "Please create a password",
+          "name": "Please enter your name"
+        }
+      },
+      "invalid_format": {
+        "email": {
+          "message": "Please enter a valid email address (e.g., name@example.com)",
+          "trigger": "After @ missing or invalid domain"
+        },
+        "phone": {
+          "message": "Please enter a valid phone number (e.g., (555) 123-4567)",
+          "show_format": "Display expected format in helper text"
+        },
+        "url": {
+          "message": "Please enter a valid URL starting with http:// or https://",
+          "example": "https://www.example.com"
+        },
+        "date": {
+          "message": "Please enter a valid date in MM/DD/YYYY format",
+          "provide_picker": "Use native date picker when possible"
+        }
+      },
+      "length_requirements": {
+        "too_short": {
+          "generic": "[Field] must be at least X characters",
+          "password_example": "Password must be at least 8 characters long",
+          "show_count": "Display character counter"
+        },
+        "too_long": {
+          "message": "[Field] must be less than X characters",
+          "show_count": "Display remaining characters"
+        }
+      },
+      "pattern_requirements": {
+        "password_weak": {
+          "message": "Password must include at least one uppercase letter, one number, and one special character",
+          "realtime": "Show requirements checklist that updates as user types"
+        },
+        "username_invalid": {
+          "message": "Username can only contain letters, numbers, and underscores",
+          "example": "For example: user_name123"
+        }
+      },
+      "value_constraints": {
+        "number_too_low": {
+          "message": "[Field] must be at least X",
+          "example": "Quantity must be at least 1"
+        },
+        "number_too_high": {
+          "message": "[Field] cannot exceed X",
+          "example": "You can order a maximum of 10 items"
+        },
+        "date_in_past": {
+          "message": "Date must be in the future",
+          "context": "For scheduling, bookings, etc."
+        },
+        "date_too_far": {
+          "message": "Date cannot be more than X days/months in the future",
+          "helpful": "Show available date range"
+        }
+      }
+    },
+    "network_errors": {
+      "offline": {
+        "message": "You appear to be offline. Please check your internet connection and try again.",
+        "action": "Automatically retry when connection restored",
+        "helpful": "Show connection status indicator"
+      },
+      "timeout": {
+        "message": "The request is taking longer than expected. This might be due to a slow connection.",
+        "action": "Would you like to keep waiting or try again?",
+        "buttons": ["Keep Waiting", "Try Again"]
+      },
+      "server_error": {
+        "user_facing": "Something went wrong on our end. We're working to fix it.",
+        "action": "Please try again in a few minutes.",
+        "helpful": "Include error ID for support: 'Error ID: ABC123'",
+        "avoid": "Exposing stack traces or technical details"
+      },
+      "rate_limited": {
+        "message": "You're doing that too quickly. Please wait a moment before trying again.",
+        "action": "You can try again in X seconds.",
+        "show_timer": "Display countdown"
+      }
+    },
+    "permissions": {
+      "not_authorized": {
+        "message": "You don't have permission to access this feature.",
+        "action": "Contact your administrator if you believe this is a mistake.",
+        "helpful": "Link to help or support"
+      },
+      "browser_permission": {
+        "camera": {
+          "message": "This feature needs access to your camera.",
+          "action": "Click 'Allow' in the browser prompt to continue.",
+          "alternative": "Or upload a photo instead"
+        },
+        "location": {
+          "message": "We need your location to show nearby results.",
+          "action": "Click 'Allow' when prompted, or enter your location manually.",
+          "privacy": "Explain how location is used"
+        },
+        "notifications": {
+          "message": "Enable notifications to stay updated.",
+          "action": "Click 'Allow' to receive notifications, or adjust this later in settings.",
+          "optional": "Make it clear notifications are optional"
+        }
+      }
+    },
+    "business_logic": {
+      "out_of_stock": {
+        "message": "This item is currently out of stock.",
+        "action": "Get notified when it's back in stock",
+        "alternative": "View similar items"
+      },
+      "promo_expired": {
+        "message": "This promotional code has expired.",
+        "action": "Check our current offers",
+        "helpful": "Show expiration date if known"
+      },
+      "payment_declined": {
+        "message": "Your payment couldn't be processed.",
+        "reasons": [
+          "The card details might be incorrect",
+          "There might be insufficient funds",
+          "Your bank might be blocking the transaction"
+        ],
+        "action": "Please check your payment details or try a different payment method.",
+        "support": "Contact your bank if the problem persists"
+      },
+      "age_restriction": {
+        "message": "You must be 18 or older to access this content.",
+        "action": "Please verify your age to continue.",
+        "comply": "Explain legal requirement"
+      }
+    },
+    "file_upload": {
+      "file_too_large": {
+        "message": "This file is too large. Maximum file size is X MB.",
+        "action": "Please choose a smaller file or compress your image.",
+        "helpful": "Show current file size"
+      },
+      "invalid_file_type": {
+        "message": "This file type isn't supported. Please upload a JPG, PNG, or PDF file.",
+        "show_accepted": "Display accepted formats clearly"
+      },
+      "upload_failed": {
+        "message": "Upload failed. This might be due to a connection issue.",
+        "action": "Please try again or choose a different file.",
+        "preserve": "Don't lose other form data on failure"
+      }
+    },
+    "search_results": {
+      "no_results": {
+        "message": "No results found for '[search term]'",
+        "suggestions": [
+          "Check your spelling",
+          "Try different keywords",
+          "Use fewer or more general terms"
+        ],
+        "alternatives": "Show popular searches or categories"
+      },
+      "too_many_results": {
+        "message": "Your search returned too many results to display.",
+        "action": "Try adding more specific terms to narrow your search.",
+        "helpful": "Suggest filters"
+      }
+    },
+    "system_messages": {
+      "maintenance": {
+        "planned": {
+          "advance_notice": "Scheduled maintenance on [date] from [time] to [time]. Some features may be unavailable.",
+          "during": "We're currently performing scheduled maintenance. We'll be back shortly.",
+          "estimate": "Always provide estimated completion time"
+        },
+        "unexpected": {
+          "message": "We're experiencing technical difficulties and are working to resolve them.",
+          "action": "Please check back shortly.",
+          "updates": "Link to status page for updates"
+        }
+      },
+      "deprecation": {
+        "message": "This feature will be discontinued on [date].",
+        "action": "Please switch to [new feature] before then.",
+        "migration": "Provide migration guide or support"
+      }
+    }
+  },
+  "tone_guidelines": {
+    "do": [
+      "Use conversational language",
+      "Be empathetic and understanding",
+      "Focus on solutions, not problems",
+      "Take responsibility when it's our fault",
+      "Provide clear next steps",
+      "Use 'we' and 'us' (not 'the system')"
+    ],
+    "dont": [
+      "Use jargon or technical terms",
+      "Blame the user",
+      "Be vague or unclear",
+      "Use angry or frustrated tone",
+      "Overwhelm with information",
+      "Make jokes about errors"
+    ]
+  },
+  "formatting": {
+    "structure": {
+      "title": "Brief summary (5-10 words)",
+      "description": "Explanation of what went wrong",
+      "action": "Clear next step(s)",
+      "additional_help": "Links or alternatives (optional)"
+    },
+    "visual_elements": [
+      "Icon to indicate error type (⚠️ warning, ❌ error, ℹ️ info)",
+      "Color coding (red for errors, yellow for warnings)",
+      "Highlight the problematic field in forms",
+      "Use sufficient contrast for readability"
+    ],
+    "placement": {
+      "inline": "Next to field for form validation",
+      "toast": "For non-critical system messages",
+      "modal": "For critical errors requiring acknowledgment",
+      "banner": "For system-wide issues"
+    }
+  },
+  "accessibility": [
+    "Use role='alert' for critical errors",
+    "Announce errors to screen readers with aria-live",
+    "Link error summary to specific fields with aria-describedby",
+    "Don't rely on color alone",
+    "Include text with icons",
+    "Make error messages keyboard accessible",
+    "Move focus to error on form submission"
+  ],
+  "internationalization": {
+    "considerations": [
+      "Write messages that can be easily translated",
+      "Avoid idioms or cultural references",
+      "Account for text expansion (some languages are 30-40% longer)",
+      "Use placeholders for dynamic content: '{fieldName} is required'",
+      "Provide context for translators"
+    ]
+  },
+  "testing": {
+    "checklist": [
+      "Test all error scenarios",
+      "Verify messages are clear to non-technical users",
+      "Check tone is appropriate",
+      "Ensure next steps are actionable",
+      "Test with screen readers",
+      "Verify error recovery flows work",
+      "Check messages in different languages",
+      "Validate character limits for UI"
+    ]
+  }
+}
