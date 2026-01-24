@@ -1,6 +1,7 @@
 {
   "name": "@elsahafy/ux-mcp-server",
   "version": "4.1.0",
+  "mcpName": "io.github.elsahafy/ux-mcp-server",
   "description": "MCP server providing 28 UX knowledge resources, 23 analysis tools & 4 workflow prompts. Works with Claude, Cursor, Continue.dev, Cline, Zed & any MCP client. Complete UX ecosystem coverage.",
   "type": "module",
   "main": "dist/index.js",

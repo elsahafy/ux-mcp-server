@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.elsahafy/ux-mcp-server",
+  "description": "Comprehensive UX toolkit with 28 knowledge resources (WCAG, Nielsen heuristics, design systems, e-commerce, voice UI, AR/VR, healthcare, finance) and 23 analysis tools for accessibility audits, color contrast, typography, dark pattern detection, and UX metrics.",
+  "repository": {
+    "url": "https://github.com/elsahafy/ux-mcp-server",
+    "source": "github"
+  },
+  "version": "4.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@elsahafy/ux-mcp-server",
+      "version": "4.1.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
