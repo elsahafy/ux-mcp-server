@@ -1,7 +1,7 @@
 {
   "name": "@elsahafy/ux-mcp-server",
-  "version": "4.0.0",
-  "description": "Model Context Protocol server for UX best practices, accessibility guidelines (WCAG), usability heuristics (Nielsen), UI patterns, and design systems",
+  "version": "4.1.0",
+  "description": "MCP server providing 28 UX knowledge resources, 23 analysis tools & 4 workflow prompts. Works with Claude, Cursor, Continue.dev, Cline, Zed & any MCP client. Complete UX ecosystem coverage.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -27,17 +27,18 @@
     "accessibility",
     "a11y",
     "wcag",
-    "wcag-aa",
     "design-systems",
-    "design-tokens",
     "usability",
     "nielsen-heuristics",
     "ui-patterns",
-    "accessible",
-    "frontend",
-    "web-design",
+    "ai-tools",
     "claude",
-    "ai-tools"
+    "cursor",
+    "continue-dev",
+    "cline",
+    "zed",
+    "llm-tools",
+    "ai-assistant"
   ],
   "repository": {
     "type": "git",

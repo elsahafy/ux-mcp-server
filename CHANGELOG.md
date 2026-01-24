@@ -18,6 +18,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [4.1.0] - 2025-01-24
+
+### Added
+- **Cross-client compatibility documentation** for:
+  - Claude Desktop
+  - Claude Code (CLI)
+  - Cursor IDE
+  - Continue.dev
+  - Cline (VS Code)
+  - Zed Editor
+  - Custom MCP clients (with TypeScript example)
+
+- **Professional repository documentation**:
+  - `LICENSE` - MIT License file
+  - `CONTRIBUTING.md` - Comprehensive contribution guidelines
+  - `CHANGELOG.md` - Full version history
+  - `SECURITY.md` - Security policy and vulnerability reporting
+  - `.github/ISSUE_TEMPLATE/bug_report.md` - Bug report template
+  - `.github/ISSUE_TEMPLATE/feature_request.md` - Feature request template
+  - `.github/PULL_REQUEST_TEMPLATE.md` - PR template with checklist
+
+### Changed
+- Updated README with compatibility table for all MCP clients
+- Expanded example usage section with client-agnostic prompts
+- Updated package description and keywords for broader discovery
+- Added badges for PRs welcome and GitHub issues
+
+---
+
 ## [4.0.0] - 2025-01-24
 
 ### Added
@@ -158,7 +187,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/elsahafy/ux-mcp-server/compare/v4.0.0...HEAD
+[Unreleased]: https://github.com/elsahafy/ux-mcp-server/compare/v4.1.0...HEAD
+[4.1.0]: https://github.com/elsahafy/ux-mcp-server/compare/v4.0.0...v4.1.0
 [4.0.0]: https://github.com/elsahafy/ux-mcp-server/compare/v3.2.0...v4.0.0
 [3.2.0]: https://github.com/elsahafy/ux-mcp-server/compare/v3.0.0...v3.2.0
 [3.0.0]: https://github.com/elsahafy/ux-mcp-server/compare/v2.0.1...v3.0.0
