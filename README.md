@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/@elsahafy%2Fux-mcp-server.svg)](https://www.npmjs.com/package/@elsahafy/ux-mcp-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Model Context Protocol server that provides comprehensive UX best practices, accessibility guidelines (WCAG), usability heuristics (Nielsen), UI patterns, performance optimization, SEO, internationalization, animation, and React patterns to AI assistants.
+Model Context Protocol server that provides comprehensive UX best practices covering the complete UX ecosystem: accessibility guidelines (WCAG), usability heuristics (Nielsen), UI patterns, design systems, performance optimization, SEO, internationalization, animation, framework patterns (React/Vue/Angular), e-commerce, testing, PWA, ethical design, SaaS, analytics, voice UI, AR/VR, AI/ML patterns, healthcare, finance, neurodiversity, and web components.
 
 ## Installation
 
@@ -30,10 +30,11 @@ npm run build
 
 ## Features
 
-### 📚 Resources (12 Knowledge Bases)
+### 📚 Resources (28 Knowledge Bases)
 
-Access comprehensive UX knowledge bases:
+Access comprehensive UX knowledge bases organized by category:
 
+**Foundation & Core (12 resources)**
 - **ux://accessibility/wcag** - WCAG 2.1 AA Guidelines with code checks
 - **ux://usability/nielsen-heuristics** - Nielsen's 10 Usability Heuristics
 - **ux://patterns/ui-patterns** - Common UI patterns library
@@ -47,10 +48,41 @@ Access comprehensive UX knowledge bases:
 - **ux://animation/motion** - Motion design principles & accessibility
 - **ux://react/patterns** - Advanced React patterns & state management
 
-### 🛠️ Tools (11 Dynamic Operations)
+**Critical Features (8 resources)**
+- **ux://forms/patterns** - Comprehensive form design, validation & accessibility
+- **ux://microcopy/guidelines** - UX writing, button labels, error messages & tone
+- **ux://typography/systems** - Type scales, font pairing, readability & responsive typography
+- **ux://color/theory** - Color harmony, WCAG contrast, semantic colors & palettes
+- **ux://mobile/patterns** - Touch targets, gestures, thumb zones & mobile-first design
+- **ux://vue/patterns** - Vue 3 Composition API, composables, Pinia & best practices
+- **ux://angular/patterns** - Angular standalone components, signals, RxJS & DI
+- **ux://data/visualization** - Chart selection, accessibility, D3.js & dashboard design
+
+**Advanced Features (8 resources)**
+- **ux://ecommerce/patterns** - Product pages, checkout, conversion & trust optimization
+- **ux://information-architecture/patterns** - IA systems, navigation, card sorting & tree testing
+- **ux://testing/validation** - Usability testing, A/B testing, surveys & analytics
+- **ux://pwa/patterns** - Service workers, offline-first, app manifest & progressive enhancement
+- **ux://ethical-design/patterns** - Dark patterns, privacy, GDPR/CCPA & ethical alternatives
+- **ux://design-systems/advanced** - Semantic tokens, theming, versioning & governance
+- **ux://saas/patterns** - Onboarding, pricing UX, activation metrics & retention
+- **ux://analytics/metrics** - UX metrics (HEART, AARRR), SUS, NPS & statistical analysis
+
+**Emerging Technologies (8 resources)**
+- **ux://voice/interface** - Voice UI design, conversation patterns, VUI principles
+- **ux://ar-vr/interfaces** - Spatial UI, comfort, presence, 6DOF & AR anchoring
+- **ux://ai-ml/patterns** - AI transparency, confidence indicators, recommendations & ethics
+- **ux://haptic/feedback** - Haptic types, timing patterns & platform APIs
+- **ux://healthcare/ux** - HIPAA compliance, patient safety, medical UI & telemedicine
+- **ux://finance/ux** - PCI-DSS, 2FA, transaction flows & fintech patterns
+- **ux://neurodiversity/design** - ADHD, autism, dyslexia accommodations & cognitive accessibility
+- **ux://web-components/patterns** - Custom elements, Shadow DOM, Lit, Stencil & encapsulation
+
+### 🛠️ Tools (23 Dynamic Operations)
 
 Powerful tools for UX analysis and generation:
 
+**Core Analysis (11 tools)**
 1. **analyze_accessibility** - Check code for WCAG violations
 2. **review_usability** - Evaluate against Nielsen's heuristics
 3. **suggest_pattern** - Find appropriate UI patterns for use cases
@@ -63,13 +95,32 @@ Powerful tools for UX analysis and generation:
 10. **check_seo** - Analyze HTML for SEO best practices
 11. **suggest_animation** - Recommend animations for UI interactions
 
-### 💬 Prompts (Pre-configured Reviews)
+**Design & Content (5 tools)**
+12. **generate_color_palette** - Create accessible color palettes from base colors
+13. **generate_typography_scale** - Generate type scales with modular ratios
+14. **suggest_microcopy** - Get UX writing recommendations for UI elements
+15. **recommend_form_pattern** - Find optimal form layouts and validation patterns
+16. **suggest_data_visualization** - Choose appropriate charts for data types
 
-Three comprehensive review workflows:
+**Testing & Validation (5 tools)**
+17. **generate_accessibility_report** - Comprehensive WCAG audit reports
+18. **suggest_ab_variant** - Generate A/B test variant suggestions
+19. **analyze_information_architecture** - Evaluate navigation and IA structure
+20. **detect_dark_patterns** - Identify deceptive UI practices
+21. **calculate_ux_metrics** - Calculate SUS, NPS, CSAT, task success rates
+
+**UI Generation (2 tools)**
+22. **generate_wireframe** - Create ASCII wireframes for pages/components
+23. **suggest_microinteraction** - Recommend microinteractions with timing/easing
+
+### 💬 Prompts (4 Pre-configured Workflows)
+
+Comprehensive review workflows:
 
 1. **accessibility_review** - Full WCAG accessibility audit
 2. **usability_audit** - Complete Nielsen heuristics evaluation
 3. **design_system_setup** - Guide for creating design systems
+4. **complete_ux_audit** - Comprehensive multi-dimensional UX audit (accessibility, usability, performance, responsive design, typography, color, forms, SEO)
 
 ## Usage with Claude Desktop
 
@@ -263,6 +314,69 @@ After updating the config, restart Claude Desktop.
 - Accessibility patterns in React
 - Testing best practices
 
+### Forms & Microcopy
+- Form layouts (single-column, multi-step wizards)
+- Validation patterns (inline, submit, hybrid)
+- Accessible form fields & error handling
+- UX writing principles (clarity, tone, voice)
+- Button labels & CTAs
+- User-friendly error messages
+
+### Typography & Color Systems
+- Type scales with modular ratios (1.2, 1.333, 1.618)
+- Font pairing strategies
+- Readability optimization (line length, spacing)
+- Color harmony (complementary, triadic, analogous)
+- WCAG contrast compliance (4.5:1, 3:1, 7:1)
+- Semantic color tokens
+
+### Mobile & Framework Patterns
+- Touch targets (44x44px minimum)
+- Gestures & thumb zones
+- Bottom navigation patterns
+- Vue 3 Composition API & composables
+- Angular signals & standalone components
+- Framework-agnostic best practices
+
+### E-commerce & Conversion
+- Product discovery (mega menus, faceted filters)
+- Product detail pages & variant selection
+- Shopping cart patterns (drawer vs page)
+- Checkout optimization (multi-step with progress)
+- Trust signals & abandoned cart recovery
+
+### Testing & Analytics
+- Usability testing (moderated/unmoderated/guerrilla)
+- A/B testing methodology & statistical significance
+- UX metrics (SUS, NPS, CSAT, CES)
+- HEART framework & AARRR pirate metrics
+- Accessibility testing (automated & manual)
+
+### PWA & Ethical Design
+- Service workers & caching strategies
+- Offline-first patterns
+- Web app manifest & add to home screen
+- Dark pattern detection & ethical alternatives
+- GDPR/CCPA compliance
+- Privacy-first design
+
+### SaaS & Advanced Design Systems
+- Onboarding flows & activation metrics
+- Pricing UX (freemium, trial, usage-based)
+- Semantic design tokens (3-tier architecture)
+- Multi-brand theming
+- Component versioning & governance
+
+### Emerging Technologies
+- Voice UI conversation design & VUI principles
+- AR/VR spatial interfaces & comfort optimization
+- AI/ML transparency & confidence indicators
+- Haptic feedback timing & platform APIs
+- Healthcare UX (HIPAA, patient safety)
+- Finance UX (PCI-DSS, 2FA, transaction flows)
+- Neurodiversity-inclusive design (ADHD, autism, dyslexia)
+- Web Components (Custom Elements, Shadow DOM, Lit)
+
 ## Development
 
 ```bash
@@ -287,12 +401,32 @@ All examples and guidelines are framework-agnostic, focusing on:
 
 Works with React, Vue, Svelte, Angular, or vanilla JavaScript.
 
-## What's New in v2.0.0
+## What's New in v4.0.0 🚀
 
-- ✨ 5 new knowledge resources: Performance, SEO, i18n, Animation, React Patterns
-- 🛠️ 3 new tools: analyze_performance, check_seo, suggest_animation
-- 📦 Total: 12 resources, 11 tools, 3 prompts
-- 🚀 Published to npm for easy installation
+**Complete UX Ecosystem Coverage (100%)**
+
+Major expansion with 24 new knowledge resources and 12 new tools across three implementation tiers:
+
+### Tier 1 - Critical Features (v3.0.0)
+- ✨ 8 new resources: Forms, Microcopy, Typography, Color Theory, Mobile Patterns, Vue, Angular, Data Visualization
+- 🛠️ 5 new tools: Color palettes, Typography scales, Microcopy suggestions, Form patterns, Data viz recommendations
+- 💬 1 new prompt: Complete UX Audit
+
+### Tier 2 - Advanced Features (v3.2.0)
+- ✨ 8 new resources: E-commerce, Information Architecture, Testing/Validation, PWA, Ethical Design, Advanced Design Systems, SaaS, Analytics/Metrics
+- 🛠️ 5 new tools: Accessibility reports, A/B variants, IA analysis, Dark pattern detection, UX metrics calculation
+
+### Tier 3 - Emerging Technologies (v4.0.0)
+- ✨ 8 new resources: Voice UI, AR/VR Interfaces, AI/ML Patterns, Haptic Feedback, Healthcare UX, Finance UX, Neurodiversity, Web Components
+- 🛠️ 2 new tools: Wireframe generation, Microinteraction suggestions
+
+### Final Metrics
+- 📚 **28 resources** (was 12) - 133% increase
+- 🛠️ **23 tools** (was 11) - 109% increase
+- 💬 **4 prompts** (was 3) - Comprehensive audit workflow added
+- ✅ **100% UX ecosystem coverage** - From foundational patterns to cutting-edge emerging technologies
+
+All implementations include best practices, anti-patterns, accessibility guidelines, code examples, and industry references.
 
 ## Contributing
 
@@ -317,8 +451,20 @@ MIT
 - Core Web Vitals from Google Web.dev
 - SEO best practices from Google Search Central
 - Animation principles from Disney and Material Design
-- React patterns from React community and best practices
+- React, Vue, Angular patterns from framework communities
 - i18n standards from Unicode CLDR and W3C
+- E-commerce patterns from Baymard Institute research
+- Information Architecture from Rosenfeld & Morville
+- PWA standards from W3C and Google
+- Ethical design principles from darkpatterns.org
+- UX metrics from HEART Framework (Google) and industry standards
+- Voice UI design from Amazon Alexa, Google Assistant guidelines
+- AR/VR best practices from Oculus, Meta, and Apple Vision Pro
+- AI/ML ethics from Partnership on AI and industry practices
+- HIPAA compliance from HHS.gov
+- PCI-DSS standards from PCI Security Standards Council
+- Neurodiversity guidelines from ADHD Foundation, National Autistic Society, British Dyslexia Association
+- Web Components standards from W3C and web.dev
 
 ## Links
 
@@ -328,4 +474,4 @@ MIT
 
 ---
 
-**Built for AI-assisted development with accessibility, usability, performance, and SEO as first-class citizens.**
+**Built for AI-assisted development with complete UX ecosystem coverage: accessibility, usability, performance, SEO, design systems, e-commerce, testing, ethical design, emerging technologies (Voice/AR/VR/AI), healthcare, finance, neurodiversity, and more—all as first-class citizens.**
