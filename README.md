@@ -1,7 +1,9 @@
 # UX MCP Server
 
 [![npm version](https://badge.fury.io/js/@elsahafy%2Fux-mcp-server.svg)](https://www.npmjs.com/package/@elsahafy/ux-mcp-server)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![GitHub issues](https://img.shields.io/github/issues/elsahafy/ux-mcp-server)](https://github.com/elsahafy/ux-mcp-server/issues)
 
 Model Context Protocol server that provides comprehensive UX best practices covering the complete UX ecosystem: accessibility guidelines (WCAG), usability heuristics (Nielsen), UI patterns, design systems, performance optimization, SEO, internationalization, animation, framework patterns (React/Vue/Angular), e-commerce, testing, PWA, ethical design, SaaS, analytics, voice UI, AR/VR, AI/ML patterns, healthcare, finance, neurodiversity, and web components.
 
@@ -430,17 +432,30 @@ All implementations include best practices, anti-patterns, accessibility guideli
 
 ## Contributing
 
-To add new patterns or guidelines:
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
 
-1. Add content to appropriate file in `knowledge/` directory
-2. Update tool implementations in `src/index.ts` if needed
-3. Rebuild: `npm run build`
-4. Test locally: `npm run dev`
-5. Submit a pull request
+- Development setup
+- Adding new resources, tools, or prompts
+- Coding standards
+- Pull request process
+
+**Quick Start:**
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## Security
+
+For security vulnerabilities, please see our [Security Policy](SECURITY.md).
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Credits
 
@@ -471,6 +486,9 @@ MIT
 - **npm Package**: https://www.npmjs.com/package/@elsahafy/ux-mcp-server
 - **GitHub Repository**: https://github.com/elsahafy/ux-mcp-server
 - **Issues & Feedback**: https://github.com/elsahafy/ux-mcp-server/issues
+- **Changelog**: [CHANGELOG.md](CHANGELOG.md)
+- **Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Security Policy**: [SECURITY.md](SECURITY.md)
 
 ---
 
