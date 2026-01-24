@@ -1,0 +1,148 @@
+{
+  "name": "Web Components",
+  "description": "Building framework-agnostic, reusable UI components using Web Components standards",
+  "definition": "Web Components are a set of web platform APIs that allow you to create reusable custom elements with encapsulated functionality",
+  "core_technologies": {
+    "custom_elements": {
+      "description": "Define new HTML tags",
+      "api": "customElements.define('my-element', MyElement)",
+      "example": "class MyButton extends HTMLElement { constructor() { super(); } }",
+      "lifecycle": {
+        "connectedCallback": "Called when element added to DOM",
+        "disconnectedCallback": "Called when element removed",
+        "attributeChangedCallback": "Called when attribute changes",
+        "adoptedCallback": "Called when moved to new document"
+      }
+    },
+    "shadow_dom": {
+      "description": "Encapsulated DOM and CSS",
+      "purpose": "Styles don't leak in or out, true encapsulation",
+      "example": "this.attachShadow({ mode: 'open' })",
+      "modes": {
+        "open": "JavaScript can access shadow root",
+        "closed": "Shadow root inaccessible from outside"
+      }
+    },
+    "html_templates": {
+      "description": "Reusable HTML chunks",
+      "element": "<template>",
+      "usage": "Define HTML structure that can be cloned",
+      "example": "<template id='my-template'><div>Content</div></template>"
+    },
+    "es_modules": {
+      "description": "Import/export for component code",
+      "example": "import './my-button.js';"
+    }
+  },
+  "creating_web_component": {
+    "basic_example": "class MyButton extends HTMLElement {\n  constructor() {\n    super();\n    const shadow = this.attachShadow({ mode: 'open' });\n    shadow.innerHTML = `\n      <style>button { background: blue; color: white; }</style>\n      <button><slot></slot></button>\n    `;\n  }\n}\ncustomElements.define('my-button', MyButton);\n\n// Usage: <my-button>Click Me</my-button>",
+    "with_attributes": "static get observedAttributes() { return ['label']; }\nattributeChangedCallback(name, oldValue, newValue) {\n  if (name === 'label') {\n    this.button.textContent = newValue;\n  }\n}",
+    "with_properties": "get value() { return this._value; }\nset value(val) {\n  this._value = val;\n  this.render();\n}"
+  },
+  "benefits": {
+    "framework_agnostic": "Works with React, Vue, Angular, vanilla JS",
+    "encapsulation": "Styles and DOM scoped, no conflicts",
+    "reusability": "Use across projects and frameworks",
+    "native": "No framework dependency, smaller bundle",
+    "future_proof": "Web standard, won't be deprecated like frameworks"
+  },
+  "limitations": {
+    "ssr": "Server-side rendering is complex (Declarative Shadow DOM helps)",
+    "seo": "Search engines may not index shadow DOM content well",
+    "browser_support": "Old browsers (IE11) don't support (use polyfills)",
+    "react_compat": "React has historical issues with Web Components (improving)",
+    "tooling": "Less mature than React/Vue ecosystems"
+  },
+  "libraries": {
+    "lit": {
+      "description": "Google's library for Web Components",
+      "features": ["Reactive properties", "Templating with lit-html", "Small size (5KB)"],
+      "example": "import { LitElement, html, css } from 'lit';\nclass MyButton extends LitElement {\n  static styles = css`:host { display: block; }`;\n  render() { return html`<button><slot></slot></button>`; }\n}\ncustomElements.define('my-button', MyButton);"
+    },
+    "stencil": {
+      "description": "Compiler for Web Components (Ionic team)",
+      "features": ["TypeScript", "JSX", "Lazy loading", "Pre-rendering for SEO"],
+      "use_when": "Building design systems"
+    },
+    "fast": {
+      "description": "Microsoft's Web Components framework",
+      "features": ["Fast rendering", "Design tokens", "Accessibility-first"]
+    },
+    "hybrids": {
+      "description": "Functional approach to Web Components",
+      "features": ["Simple API", "No classes", "Immutable"]
+    }
+  },
+  "patterns": {
+    "slots": {
+      "description": "Allow users to pass content",
+      "default_slot": "<slot></slot>",
+      "named_slots": "<slot name='header'></slot>",
+      "usage": "<my-card><h2 slot='header'>Title</h2>Content here</my-card>"
+    },
+    "css_custom_properties": {
+      "description": "Expose styling API",
+      "example": ":host { background: var(--button-bg, blue); }\n/* User can set: my-button { --button-bg: red; } */"
+    },
+    "events": {
+      "description": "Dispatch custom events",
+      "example": "this.dispatchEvent(new CustomEvent('change', { detail: value }));\n/* User: element.addEventListener('change', e => console.log(e.detail)); */"
+    },
+    "attributes_vs_properties": {
+      "attributes": "Strings only, reflect in HTML, use for configuration",
+      "properties": "Any type, JavaScript only, use for complex data",
+      "sync": "Reflect important properties to attributes for SSR/SEO"
+    }
+  },
+  "accessibility": {
+    "aria": "Use ARIA roles and properties (role, aria-label, etc.)",
+    "keyboard": "Implement keyboard navigation (Tab, Enter, Arrow keys)",
+    "focus": "Manage focus (delegatesFocus in attachShadow)",
+    "semantics": "Use semantic HTML inside component"
+  },
+  "testing": {
+    "unit_tests": "Use @web/test-runner or Jest with JSDOM",
+    "visual_regression": "Storybook + Chromatic",
+    "a11y": "axe-core for accessibility testing"
+  },
+  "best_practices": [
+    "Use Shadow DOM for encapsulation",
+    "Provide slots for flexibility",
+    "Expose styling via CSS custom properties",
+    "Emit custom events for communication",
+    "Use semantic HTML",
+    "Implement keyboard navigation",
+    "Reflect important properties to attributes",
+    "Use Lit or Stencil for better DX",
+    "Provide TypeScript definitions",
+    "Document component API (props, events, slots)",
+    "Test accessibility",
+    "Support SSR if needed (Declarative Shadow DOM)",
+    "Keep components small and focused",
+    "Use CSS Parts for deep styling access (::part)"
+  ],
+  "anti_patterns": [
+    "Not using Shadow DOM (loses encapsulation benefit)",
+    "Overusing global styles",
+    "Large, monolithic components",
+    "No keyboard navigation",
+    "Missing ARIA attributes",
+    "Not documenting API",
+    "Tight coupling to specific framework",
+    "Storing state in attributes (use properties)",
+    "Mutating props from outside"
+  ],
+  "use_cases": {
+    "design_systems": "Framework-agnostic component library (use across projects)",
+    "micro_frontends": "Independent teams, different frameworks",
+    "progressive_enhancement": "Add interactivity to server-rendered HTML",
+    "third_party_widgets": "Embeddable components (analytics, chat)"
+  },
+  "resources": [
+    "web.dev/web-components - Google's guide",
+    "Lit Documentation",
+    "Stencil Documentation",
+    "open-wc.org - Tools and recommendations",
+    "webcomponents.org - Component showcase"
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "name": "Vue.js Patterns & Best Practices",
+  "description": "Comprehensive guide to Vue.js component patterns, Composition API, state management, and performance optimization",
+  "version_note": "Patterns focus on Vue 3 with Composition API, with notes for Options API where relevant",
+  "composition_api": {
+    "description": "Modern Vue 3 API for organizing component logic",
+    "setup_function": {
+      "description": "Entry point for Composition API",
+      "example": "<script setup>\nimport { ref, computed, onMounted } from 'vue'\n\nconst count = ref(0)\nconst doubleCount = computed(() => count.value * 2)\n\nfunction increment() {\n  count.value++\n}\n\nonMounted(() => {\n  console.log('Component mounted')\n})\n</script>",
+      "benefits": ["Better TypeScript support", "Code organization by feature", "Easier reuse"]
+    },
+    "reactivity": {
+      "ref": {
+        "use": "Reactive primitive values",
+        "example": "const count = ref(0)\nconsole.log(count.value) // access with .value",
+        "when": "Numbers, strings, booleans"
+      },
+      "reactive": {
+        "use": "Reactive objects",
+        "example": "const state = reactive({ count: 0, name: 'John' })\nconsole.log(state.count) // no .value needed",
+        "when": "Objects with multiple properties"
+      },
+      "readonly": {
+        "use": "Immutable reactive state",
+        "example": "const state = reactive({ count: 0 })\nconst readonlyState = readonly(state)",
+        "when": "Prevent mutations from child components"
+      },
+      "toRefs": {
+        "use": "Convert reactive object to refs for destructuring",
+        "example": "const state = reactive({ count: 0, name: 'John' })\nconst { count, name } = toRefs(state)",
+        "benefit": "Preserve reactivity when destructuring"
+      }
+    },
+    "computed": {
+      "description": "Cached derived state",
+      "example": "const doubleCount = computed(() => count.value * 2)",
+      "benefits": ["Cached until dependencies change", "Read-only by default"],
+      "writable": "const fullName = computed({\n  get: () => `${firstName.value} ${lastName.value}`,\n  set: (value) => {\n    const names = value.split(' ')\n    firstName.value = names[0]\n    lastName.value = names[1]\n  }\n})"
+    },
+    "watchers": {
+      "watch": {
+        "description": "Watch single or multiple sources",
+        "example": "watch(count, (newVal, oldVal) => {\n  console.log(`Count changed from ${oldVal} to ${newVal}`)\n})",
+        "multiple": "watch([foo, bar], ([newFoo, newBar], [oldFoo, oldBar]) => { ... })"
+      },
+      "watchEffect": {
+        "description": "Auto-tracks dependencies",
+        "example": "watchEffect(() => {\n  console.log(`Count is ${count.value}`)\n})",
+        "when": "Don't need old value, automatic tracking"
+      }
+    }
+  },
+  "component_patterns": {
+    "composables": {
+      "description": "Reusable composition functions (like React hooks)",
+      "naming": "Prefix with 'use'",
+      "example": "// useCounter.js\nimport { ref, computed } from 'vue'\n\nexport function useCounter(initial = 0) {\n  const count = ref(initial)\n  const double = computed(() => count.value * 2)\n  \n  function increment() {\n    count.value++\n  }\n  \n  return { count, double, increment }\n}\n\n// In component:\nimport { useCounter } from './useCounter'\nconst { count, double, increment } = useCounter(10)",
+      "benefits": ["Logic reuse", "Code organization", "Testable"],
+      "best_practices": [
+        "Return reactive values and functions",
+        "Name with 'use' prefix",
+        "Keep focused (single responsibility)",
+        "Document parameters and return values"
+      ]
+    },
+    "provide_inject": {
+      "description": "Dependency injection for component tree",
+      "provide": "const theme = ref('dark')\nprovide('theme', theme)",
+      "inject": "const theme = inject('theme')",
+      "use_when": "Pass data deep without props drilling",
+      "with_typescript": "// Provide typed injection key\nconst themeKey = Symbol() as InjectionKey<Ref<string>>\nprovide(themeKey, theme)\nconst theme = inject(themeKey)",
+      "default_values": "const theme = inject('theme', 'light')"
+    },
+    "slots": {
+      "default_slot": {
+        "parent": "<Card>\n  <p>Default content</p>\n</Card>",
+        "component": "<template>\n  <div class='card'>\n    <slot />\n  </div>\n</template>"
+      },
+      "named_slots": {
+        "parent": "<Card>\n  <template #header>\n    <h2>Title</h2>\n  </template>\n  <template #default>\n    <p>Content</p>\n  </template>\n  <template #footer>\n    <button>Action</button>\n  </template>\n</Card>",
+        "component": "<template>\n  <div class='card'>\n    <header><slot name='header' /></header>\n    <main><slot /></main>\n    <footer><slot name='footer' /></footer>\n  </div>\n</template>"
+      },
+      "scoped_slots": {
+        "description": "Pass data to slot content",
+        "parent": "<List :items='items'>\n  <template #item='{ item, index }'>\n    <div>{{ index }}: {{ item.name }}</div>\n  </template>\n</List>",
+        "component": "<template>\n  <div>\n    <div v-for='(item, index) in items' :key='item.id'>\n      <slot name='item' :item='item' :index='index' />\n    </div>\n  </div>\n</template>"
+      }
+    },
+    "teleport": {
+      "description": "Render component content elsewhere in DOM",
+      "example": "<teleport to='body'>\n  <Modal v-if='showModal'>\n    <p>Modal content</p>\n  </Modal>\n</teleport>",
+      "use_when": "Modals, toasts, tooltips that need to escape parent overflow"
+    },
+    "async_components": {
+      "description": "Lazy load components",
+      "example": "const AsyncComp = defineAsyncComponent(() =>\n  import('./HeavyComponent.vue')\n)\n\n// With loading/error states:\nconst AsyncComp = defineAsyncComponent({\n  loader: () => import('./HeavyComponent.vue'),\n  loadingComponent: LoadingSpinner,\n  errorComponent: ErrorDisplay,\n  delay: 200,\n  timeout: 3000\n})",
+      "use_when": "Large components, route-based code splitting"
+    }
+  },
+  "state_management": {
+    "local_state": {
+      "use_when": "Component-specific state",
+      "composition_api": "const count = ref(0)",
+      "options_api": "data() { return { count: 0 } }"
+    },
+    "props_state": {
+      "description": "Receive data from parent",
+      "composition_api": "const props = defineProps<{\n  count: number\n  name?: string\n}>()",
+      "with_defaults": "const props = withDefaults(defineProps<{\n  count?: number\n}>(), {\n  count: 0\n})",
+      "validation": "defineProps({\n  count: {\n    type: Number,\n    required: true,\n    validator: (value) => value >= 0\n  }\n})"
+    },
+    "emits": {
+      "description": "Emit events to parent",
+      "composition_api": "const emit = defineEmits<{\n  update: [value: number]\n  delete: [id: string]\n}>()\n\nemit('update', 42)",
+      "v_model": "// Component\nconst emit = defineEmits(['update:modelValue'])\n\n// Parent\n<CustomInput v-model='text' />"
+    },
+    "pinia": {
+      "description": "Official state management for Vue 3",
+      "store_definition": "import { defineStore } from 'pinia'\n\nexport const useCounterStore = defineStore('counter', () => {\n  const count = ref(0)\n  const doubled = computed(() => count.value * 2)\n  \n  function increment() {\n    count.value++\n  }\n  \n  return { count, doubled, increment }\n})",
+      "usage": "import { useCounterStore } from '@/stores/counter'\n\nconst counter = useCounterStore()\ncounter.increment()\nconsole.log(counter.count)",
+      "features": ["DevTools support", "TypeScript", "Composition API style", "Lightweight"],
+      "when_to_use": "Global state, shared between routes/components"
+    },
+    "vuex": {
+      "description": "Legacy state management (Vue 2)",
+      "note": "Use Pinia for new Vue 3 projects",
+      "migration": "Pinia is easier and more flexible"
+    }
+  },
+  "routing": {
+    "vue_router": {
+      "setup": "import { createRouter, createWebHistory } from 'vue-router'\n\nconst router = createRouter({\n  history: createWebHistory(),\n  routes: [\n    { path: '/', component: Home },\n    { path: '/about', component: About },\n    { path: '/users/:id', component: User }\n  ]\n})",
+      "navigation": {
+        "declarative": "<router-link to='/about'>About</router-link>",
+        "programmatic": "import { useRouter } from 'vue-router'\nconst router = useRouter()\nrouter.push('/about')"
+      },
+      "params": "import { useRoute } from 'vue-router'\nconst route = useRoute()\nconst userId = route.params.id",
+      "guards": {
+        "global": "router.beforeEach((to, from) => {\n  if (!isAuthenticated && to.meta.requiresAuth) {\n    return '/login'\n  }\n})",
+        "route_level": "{\n  path: '/admin',\n  component: Admin,\n  beforeEnter: (to, from) => {\n    // route guard\n  }\n}",
+        "component_level": "import { onBeforeRouteLeave } from 'vue-router'\n\nonBeforeRouteLeave((to, from) => {\n  // component guard\n})"
+      }
+    }
+  },
+  "performance": {
+    "v_memo": {
+      "description": "Memoize template sub-tree (Vue 3.2+)",
+      "example": "<div v-memo='[count]'>\n  {{ heavyComputation }}\n</div>",
+      "when": "Heavy computations that depend on specific values"
+    },
+    "v_once": {
+      "description": "Render element/component once",
+      "example": "<div v-once>{{ staticContent }}</div>",
+      "when": "Static content that never changes"
+    },
+    "keep_alive": {
+      "description": "Cache component instances",
+      "example": "<keep-alive>\n  <component :is='currentTab' />\n</keep-alive>",
+      "with_include": "<keep-alive include='a,b' exclude='c'>\n  <component :is='view' />\n</keep-alive>",
+      "when": "Tabs, dynamic components, preserve state"
+    },
+    "lazy_loading": {
+      "routes": "const User = () => import('./User.vue')",
+      "components": "defineAsyncComponent(() => import('./Heavy.vue'))"
+    },
+    "shallowRef_shallowReactive": {
+      "description": "Shallow reactivity for large objects",
+      "use_when": "Large data structures, only top level changes",
+      "example": "const state = shallowReactive({ nested: { deep: { value: 1 } } })\n// Only state.nested triggers updates, not deep mutations"
+    }
+  },
+  "typescript": {
+    "component_props": "import { defineComponent } from 'vue'\n\nexport default defineComponent({\n  props: {\n    count: { type: Number, required: true },\n    name: String\n  }\n})\n\n// Or with script setup:\ninterface Props {\n  count: number\n  name?: string\n}\n\nconst props = defineProps<Props>()",
+    "refs": "const count = ref<number>(0)\nconst input = ref<HTMLInputElement | null>(null)",
+    "computed": "const double = computed<number>(() => count.value * 2)",
+    "emits": "const emit = defineEmits<{\n  update: [id: number, value: string]\n  delete: [id: number]\n}>()"
+  },
+  "directives": {
+    "built_in": {
+      "v_if": "Conditional rendering (removes from DOM)",
+      "v_show": "Toggle display (stays in DOM)",
+      "v_for": "List rendering",
+      "v_bind": "Bind attributes (:class, :style)",
+      "v_on": "Event listeners (@click, @input)",
+      "v_model": "Two-way binding",
+      "v_slot": "Slot content (#header)"
+    },
+    "custom_directives": {
+      "example": "// v-focus directive\nconst vFocus = {\n  mounted: (el) => el.focus()\n}\n\n// Usage:\n<input v-focus />",
+      "lifecycle_hooks": ["created", "beforeMount", "mounted", "beforeUpdate", "updated", "beforeUnmount", "unmounted"]
+    }
+  },
+  "testing": {
+    "vitest": {
+      "description": "Fast unit test framework for Vite projects",
+      "example": "import { describe, it, expect } from 'vitest'\nimport { mount } from '@vue/test-utils'\nimport Counter from './Counter.vue'\n\ndescribe('Counter', () => {\n  it('increments count on click', async () => {\n    const wrapper = mount(Counter)\n    await wrapper.find('button').trigger('click')\n    expect(wrapper.text()).toContain('Count: 1')\n  })\n})"
+    },
+    "vue_test_utils": {
+      "mount": "Full DOM mounting",
+      "shallowMount": "Shallow mounting (stub child components)",
+      "find": "Find element by selector",
+      "trigger": "Trigger events",
+      "setProps": "Update props",
+      "example": "const wrapper = mount(Component, {\n  props: { count: 0 },\n  global: {\n    stubs: ['ChildComponent']\n  }\n})"
+    },
+    "e2e": {
+      "cypress": "Recommended E2E testing framework",
+      "playwright": "Alternative E2E framework"
+    }
+  },
+  "best_practices": [
+    "Use Composition API for new Vue 3 projects",
+    "Prefer `<script setup>` syntax for cleaner code",
+    "Use ref for primitives, reactive for objects",
+    "Create composables for reusable logic",
+    "Use Pinia for state management (not Vuex)",
+    "Define prop types with TypeScript",
+    "Use computed for derived state (not methods)",
+    "Keep components small and focused",
+    "Use slots for flexible component composition",
+    "Lazy load routes and heavy components",
+    "Use v-memo for expensive re-renders",
+    "Provide meaningful key attributes in v-for",
+    "Use teleport for modals/tooltips",
+    "Follow Vue style guide naming conventions",
+    "Test components with Vue Test Utils + Vitest",
+    "Use provide/inject sparingly (prefer props)",
+    "Keep watchers simple (or use computed)",
+    "Use keep-alive for tab-like interfaces",
+    "Memoize expensive computations",
+    "Use shallowRef/shallowReactive for large objects"
+  ],
+  "anti_patterns": [
+    "Mutating props directly",
+    "Using v-if with v-for on same element",
+    "Not providing keys in v-for lists",
+    "Accessing $refs in computed properties",
+    "Overusing watchers (use computed instead)",
+    "Deep nesting of components (> 4 levels)",
+    "Large components (> 300 lines)",
+    "Not using TypeScript in new projects",
+    "Using Options API for new Vue 3 projects",
+    "Mixing Options API and Composition API",
+    "Not using Pinia (using Vuex for Vue 3)",
+    "Not lazy loading routes",
+    "Ignoring Vue DevTools warnings",
+    "Not testing components",
+    "Overusing provide/inject (creates hidden dependencies)"
+  ],
+  "migration": {
+    "from_vue2": {
+      "breaking_changes": [
+        "Global API changes (Vue.createApp instead of new Vue)",
+        "v-model changes",
+        "Filters removed (use computed or methods)",
+        "$children removed",
+        "Events API removed ($on, $off, $once)"
+      ],
+      "tools": ["@vue/compat (migration build)", "Vue 3 Migration Guide"],
+      "strategy": "Incremental migration using compat mode"
+    },
+    "from_react": {
+      "equivalents": {
+        "useState": "ref or reactive",
+        "useEffect": "watchEffect or watch",
+        "useMemo": "computed",
+        "useCallback": "Not needed (functions are not recreated)",
+        "useContext": "provide/inject",
+        "custom_hooks": "composables"
+      }
+    }
+  },
+  "ecosystem": {
+    "ui_libraries": ["Vuetify", "Quasar", "Element Plus", "Ant Design Vue", "PrimeVue"],
+    "build_tools": ["Vite (recommended)", "Vue CLI (legacy)"],
+    "devtools": ["Vue DevTools", "Vite plugin"],
+    "meta_frameworks": ["Nuxt 3 (SSR/SSG)", "Quasar (Mobile/Desktop)"]
+  }
+}

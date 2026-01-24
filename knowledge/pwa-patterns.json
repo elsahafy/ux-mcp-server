@@ -1,0 +1,429 @@
+{
+  "name": "Progressive Web App (PWA) Patterns",
+  "description": "Comprehensive guide to building progressive web apps with optimal UX patterns and best practices",
+  "definition": "Progressive Web Apps are web applications that use modern web capabilities to deliver app-like experiences to users. They work for every user, regardless of browser, are responsive, connectivity-independent, fresh, safe, discoverable, re-engageable, installable, and linkable.",
+  "core_characteristics": {
+    "progressive": "Work for every user, regardless of browser choice (progressive enhancement)",
+    "responsive": "Fit any form factor: desktop, mobile, tablet, or future devices",
+    "connectivity_independent": "Work offline or on low-quality networks (service workers)",
+    "app_like": "Feel like an app with app-style interactions and navigation",
+    "fresh": "Always up-to-date (service worker update process)",
+    "safe": "Served via HTTPS to prevent snooping and ensure content integrity",
+    "discoverable": "Identifiable as 'applications' via web app manifest",
+    "re_engageable": "Make re-engagement easy through push notifications",
+    "installable": "Allow users to 'add to home screen' without app store",
+    "linkable": "Share via URL, don't require complex installation"
+  },
+  "core_technologies": {
+    "service_workers": {
+      "description": "JavaScript that runs in the background, separate from web page",
+      "capabilities": ["Offline functionality", "Background sync", "Push notifications", "Caching strategies", "Network interception"],
+      "lifecycle": {
+        "register": {
+          "when": "On page load (after window.load to not block rendering)",
+          "code": "if ('serviceWorker' in navigator) {\n  window.addEventListener('load', () => {\n    navigator.serviceWorker.register('/sw.js');\n  });\n}"
+        },
+        "install": {
+          "event": "First time SW is downloaded",
+          "use": "Cache essential assets (app shell)",
+          "code": "self.addEventListener('install', event => {\n  event.waitUntil(\n    caches.open('v1').then(cache => {\n      return cache.addAll(['/index.html', '/styles.css', '/app.js']);\n    })\n  );\n});"
+        },
+        "activate": {
+          "event": "After install, when SW takes control",
+          "use": "Clean up old caches",
+          "code": "self.addEventListener('activate', event => {\n  event.waitUntil(\n    caches.keys().then(names => {\n      return Promise.all(\n        names.filter(name => name !== 'v1').map(name => caches.delete(name))\n      );\n    })\n  );\n});"
+        },
+        "fetch": {
+          "event": "Every network request",
+          "use": "Intercept requests, serve from cache or network",
+          "code": "self.addEventListener('fetch', event => {\n  event.respondWith(\n    caches.match(event.request).then(response => {\n      return response || fetch(event.request);\n    })\n  );\n});"
+        }
+      },
+      "caching_strategies": {
+        "cache_first": {
+          "description": "Serve from cache, fallback to network",
+          "use_when": "Static assets (CSS, JS, images)",
+          "pattern": "caches.match(request) || fetch(request)",
+          "pros": ["Fast", "Offline support"],
+          "cons": ["May serve stale content"]
+        },
+        "network_first": {
+          "description": "Try network, fallback to cache",
+          "use_when": "API calls, dynamic content",
+          "pattern": "fetch(request).catch(() => caches.match(request))",
+          "pros": ["Fresh content when online"],
+          "cons": ["Slower when network is slow"]
+        },
+        "stale_while_revalidate": {
+          "description": "Serve from cache, update cache in background",
+          "use_when": "Balance freshness and speed (images, non-critical data)",
+          "pattern": "Cache response AND fetch to update cache",
+          "pros": ["Fast + eventually fresh"],
+          "cons": ["May serve slightly stale content"]
+        },
+        "cache_only": {
+          "description": "Only serve from cache (never network)",
+          "use_when": "Fully offline apps, precached content",
+          "pattern": "caches.match(request)",
+          "cons": ["No updates after install"]
+        },
+        "network_only": {
+          "description": "Always use network (no caching)",
+          "use_when": "Real-time data, analytics",
+          "pattern": "fetch(request)",
+          "cons": ["Fails offline"]
+        }
+      },
+      "update_pattern": {
+        "description": "How to handle service worker updates",
+        "detection": "Listen for 'updatefound' event on registration",
+        "user_notification": "Show 'Update available' message with 'Reload' button",
+        "best_practice": "Don't force reload (let user choose)",
+        "code": "registration.addEventListener('updatefound', () => {\n  const newWorker = registration.installing;\n  newWorker.addEventListener('statechange', () => {\n    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {\n      // New version available, show update prompt\n      showUpdateNotification();\n    }\n  });\n});"
+      }
+    },
+    "web_app_manifest": {
+      "description": "JSON file that describes the app (name, icons, display mode)",
+      "file": "manifest.json",
+      "link": "<link rel='manifest' href='/manifest.json'>",
+      "required_fields": {
+        "name": { "description": "Full name of the app", "example": "My Awesome PWA" },
+        "short_name": { "description": "Short name for home screen (12 chars max)", "example": "AwesomePWA" },
+        "start_url": { "description": "URL to load on launch", "example": "/" },
+        "display": {
+          "description": "Display mode",
+          "options": {
+            "fullscreen": "No browser UI (games, immersive apps)",
+            "standalone": "Looks like native app (recommended for most PWAs)",
+            "minimal-ui": "Minimal browser UI (back button, refresh)",
+            "browser": "Normal browser tab"
+          },
+          "recommended": "standalone"
+        },
+        "background_color": { "description": "Splash screen background", "example": "#ffffff" },
+        "theme_color": { "description": "UI chrome color (address bar on mobile)", "example": "#4285f4" },
+        "icons": {
+          "description": "Array of icon objects",
+          "sizes_required": ["192x192 (minimum)", "512x512 (recommended)", "maskable icon"],
+          "example": "[\n  { \"src\": \"/icon-192.png\", \"sizes\": \"192x192\", \"type\": \"image/png\" },\n  { \"src\": \"/icon-512.png\", \"sizes\": \"512x512\", \"type\": \"image/png\" },\n  { \"src\": \"/icon-maskable.png\", \"sizes\": \"196x196\", \"type\": \"image/png\", \"purpose\": \"maskable\" }\n]"
+        }
+      },
+      "optional_fields": {
+        "description": { "description": "What the app does", "example": "A fast and reliable way to..." },
+        "orientation": { "description": "Portrait or landscape", "options": ["any", "portrait", "landscape"] },
+        "scope": { "description": "Navigation scope", "example": "/" },
+        "screenshots": { "description": "App screenshots for install prompt", "sizes": "540x720 or 1280x720" },
+        "categories": { "description": "App categories", "example": ["productivity", "utilities"] },
+        "shortcuts": {
+          "description": "Quick actions from home screen",
+          "example": "[\n  { \"name\": \"New Note\", \"url\": \"/new\", \"icon\": \"/new-icon.png\" }\n]"
+        }
+      },
+      "maskable_icons": {
+        "description": "Icons that adapt to different shapes (Android adaptive icons)",
+        "safe_zone": "80% of icon in center (20% may be masked)",
+        "purpose": "\"maskable\"",
+        "tool": "https://maskable.app/ for preview"
+      }
+    },
+    "https_requirement": {
+      "description": "PWAs must be served over HTTPS",
+      "why": "Service workers have powerful capabilities (intercept network requests)",
+      "exception": "localhost (for development)",
+      "deployment": ["Use Let's Encrypt (free SSL)", "Cloudflare (free SSL)", "Netlify/Vercel (automatic HTTPS)"]
+    }
+  },
+  "ux_patterns": {
+    "app_shell_pattern": {
+      "description": "Cache minimal HTML/CSS/JS to display app UI, load content dynamically",
+      "components": {
+        "shell": "Header, navigation, footer (cached, always available)",
+        "content": "Dynamic content (fetched as needed)"
+      },
+      "benefits": ["Fast initial load", "Works offline (shows shell even without content)"],
+      "implementation": "Cache shell assets in service worker install event",
+      "example_apps": "Twitter Lite, Google Maps"
+    },
+    "offline_fallback": {
+      "description": "Show meaningful offline page instead of browser's default",
+      "types": {
+        "offline_page": {
+          "description": "Generic 'You are offline' page",
+          "content": ["Clear message", "Cached content available", "Try again button"],
+          "cache_in": "Service worker install event"
+        },
+        "offline_ux": {
+          "description": "Graceful degradation",
+          "patterns": [
+            "Show cached version with 'Offline' indicator",
+            "Disable actions that require network (dim buttons)",
+            "Show last sync time",
+            "Queue actions for background sync"
+          ]
+        }
+      },
+      "best_practices": [
+        "Don't just show 'No connection' (offer cached content)",
+        "Make it clear what's available offline",
+        "Use background sync to sync when back online",
+        "Show sync status (syncing, synced, failed)"
+      ]
+    },
+    "add_to_home_screen": {
+      "description": "Prompt users to install PWA to home screen",
+      "criteria": {
+        "automatic": "Browser shows prompt if criteria met (HTTPS, manifest, service worker, engagement)",
+        "manual": "You can defer and show custom prompt"
+      },
+      "deferring_prompt": {
+        "code": "let deferredPrompt;\nwindow.addEventListener('beforeinstallprompt', (e) => {\n  e.preventDefault();\n  deferredPrompt = e;\n  showInstallPromo(); // Your custom UI\n});\n\ninstallButton.addEventListener('click', async () => {\n  deferredPrompt.prompt();\n  const { outcome } = await deferredPrompt.userChoice;\n  console.log(outcome); // 'accepted' or 'dismissed'\n  deferredPrompt = null;\n});",
+        "when_to_show": ["After user engages (not immediately)", "Contextual moment (completed task successfully)", "Dismissible (don't force)"]
+      },
+      "install_ux": {
+        "placement": ["Floating button (bottom-right)", "Banner (top or bottom)", "Within empty state", "After successful action"],
+        "messaging": ["Clear value prop ('Access faster', 'Works offline')", "Short and actionable", "Not pushy"],
+        "examples": {
+          "good": "Install for faster access and offline use",
+          "bad": "Install our app now!"
+        }
+      },
+      "post_install": {
+        "detection": "window.addEventListener('appinstalled', ...)",
+        "ux": ["Hide install prompt", "Show onboarding (if first launch)", "Track analytics"]
+      }
+    },
+    "push_notifications": {
+      "description": "Re-engage users with timely notifications",
+      "permission_flow": {
+        "1_explain": "Explain value BEFORE asking permission",
+        "2_ask": "Request permission only after user interaction",
+        "3_respect": "If denied, don't ask again (browser blocks)"
+      },
+      "best_practices": [
+        "Never ask for permission on page load",
+        "Explain why notifications are valuable",
+        "Provide notification settings (frequency, types)",
+        "Allow users to disable notifications",
+        "Make notifications relevant and timely",
+        "Don't spam (reduce frequency if not engaging)"
+      ],
+      "notification_anatomy": {
+        "title": { "required": true, "example": "New message from Sarah" },
+        "body": { "optional": true, "example": "Hey, are you free for coffee?" },
+        "icon": { "optional": true, "size": "192x192 or 512x512" },
+        "badge": { "optional": true, "description": "Small icon (72x72)" },
+        "image": { "optional": true, "description": "Large image (2:1 ratio)" },
+        "actions": { "optional": true, "example": "[{action: 'reply', title: 'Reply'}, {action: 'dismiss', title: 'Dismiss'}]" },
+        "tag": { "optional": true, "use": "Replace previous notifications with same tag" }
+      },
+      "when_to_use": ["New messages/emails", "Order updates", "Social interactions", "Time-sensitive alerts"],
+      "when_not_to_use": ["Marketing spam", "Trivial updates", "Non-urgent info", "Asking for permission immediately"]
+    },
+    "background_sync": {
+      "description": "Defer actions until stable connection (send message, post form)",
+      "use_cases": ["Send chat message while offline", "Submit form", "Upload photo", "Like/favorite action"],
+      "user_experience": [
+        "Show action as pending (dim, 'Sending...')",
+        "Queue action in background",
+        "Sync when online",
+        "Show success/failure notification"
+      ],
+      "code_pattern": "navigator.serviceWorker.ready.then(registration => {\n  return registration.sync.register('post-message');\n});\n\n// In service worker:\nself.addEventListener('sync', event => {\n  if (event.tag === 'post-message') {\n    event.waitUntil(sendPendingMessages());\n  }\n});"
+    },
+    "app_updates": {
+      "description": "How to handle PWA updates gracefully",
+      "patterns": {
+        "silent_update": {
+          "description": "Update in background, apply on next load",
+          "pro": "No interruption",
+          "con": "User may miss new features"
+        },
+        "prompt_update": {
+          "description": "Show 'Update available' banner",
+          "pro": "User is informed",
+          "con": "Slight interruption",
+          "recommended": true,
+          "ux": "Non-blocking banner with 'Update' and 'Dismiss' buttons"
+        },
+        "force_update": {
+          "description": "Reload page immediately on update",
+          "pro": "Always latest version",
+          "con": "Disruptive (may lose unsaved data)",
+          "use_only": "Critical security fixes"
+        }
+      },
+      "best_practice": "Prompt user, but don't force. Let them choose when to update."
+    }
+  },
+  "performance_patterns": {
+    "lazy_loading": {
+      "description": "Load resources only when needed",
+      "techniques": {
+        "images": "loading='lazy' attribute or Intersection Observer",
+        "routes": "Code-split by route (React.lazy, dynamic import)",
+        "components": "Below-the-fold components loaded on scroll"
+      }
+    },
+    "precaching": {
+      "description": "Cache critical assets during service worker install",
+      "what_to_precache": ["App shell (HTML, CSS, JS)", "Critical images (logo, icons)", "Fonts", "Core routes"],
+      "what_not_to_precache": ["Large media files", "Infrequently used pages", "User-specific content"]
+    },
+    "runtime_caching": {
+      "description": "Cache assets as user navigates",
+      "strategies": "Use appropriate caching strategy per resource type",
+      "example": "Images: stale-while-revalidate, API: network-first, Static: cache-first"
+    },
+    "code_splitting": {
+      "description": "Split JavaScript into smaller bundles",
+      "benefits": ["Faster initial load", "Only load what's needed"],
+      "implementation": {
+        "webpack": "Dynamic import() syntax",
+        "react": "React.lazy(() => import('./Component'))",
+        "vue": "() => import('./Component.vue')"
+      }
+    },
+    "compression": {
+      "description": "Compress assets for faster transfer",
+      "techniques": {
+        "gzip": "Standard compression (server config)",
+        "brotli": "Better compression than gzip (modern browsers)",
+        "minification": "Remove whitespace, shorten variable names"
+      }
+    }
+  },
+  "installation_process": {
+    "criteria": {
+      "https": "Site served over HTTPS (or localhost)",
+      "manifest": "Valid web app manifest with name, icons, start_url, display",
+      "service_worker": "Registered service worker with fetch event handler",
+      "engagement": "User has visited site at least once (Chrome: 30 seconds)",
+      "icons": "192x192 and 512x512 icons in manifest"
+    },
+    "browser_support": {
+      "chrome_android": "Full support (most mature)",
+      "edge": "Full support (Windows, Android)",
+      "safari_ios": "Limited (no beforeinstallprompt, manual 'Add to Home Screen')",
+      "firefox": "Partial support",
+      "samsung_internet": "Full support"
+    },
+    "ios_specific": {
+      "install": "User must manually tap Share → Add to Home Screen",
+      "no_prompt": "Cannot programmatically trigger install prompt",
+      "meta_tags": "<meta name='apple-mobile-web-app-capable' content='yes'>\n<meta name='apple-mobile-web-app-status-bar-style' content='black'>\n<link rel='apple-touch-icon' href='/icon-180.png'>",
+      "icon_size": "180x180 for apple-touch-icon",
+      "limitations": ["No push notifications (WebKit limitation)", "No background sync"]
+    }
+  },
+  "developer_tools": {
+    "lighthouse": {
+      "description": "PWA audit in Chrome DevTools",
+      "checks": ["Installable", "Service worker", "Offline", "HTTPS", "Manifest", "Icons"],
+      "score": "0-100, aim for 90+",
+      "access": "Chrome DevTools → Lighthouse tab"
+    },
+    "chrome_devtools": {
+      "application_tab": ["Manifest preview", "Service worker status", "Storage (caches, IndexedDB)", "Clear site data"],
+      "service_worker_testing": ["Offline checkbox", "Update on reload", "Bypass for network"]
+    },
+    "workbox": {
+      "description": "Google's library for service worker development",
+      "benefits": ["Pre-built caching strategies", "Precaching", "Routing", "Background sync"],
+      "install": "npm install workbox-webpack-plugin",
+      "usage": "import { precacheAndRoute } from 'workbox-precaching';"
+    },
+    "pwa_builder": {
+      "description": "Tool to package PWA for app stores",
+      "url": "https://www.pwabuilder.com/",
+      "features": ["Manifest generator", "Service worker generator", "Package for Windows, Android, iOS"]
+    }
+  },
+  "testing": {
+    "offline_testing": {
+      "chrome": "DevTools → Network tab → Offline checkbox",
+      "real_device": "Enable airplane mode",
+      "test": ["App loads", "Cached content accessible", "Meaningful offline page", "Queue actions work"]
+    },
+    "install_testing": {
+      "chrome": "DevTools → Application → Manifest → 'Add to home screen'",
+      "ios": "Safari → Share → Add to Home Screen",
+      "test": ["Icon appears on home screen", "Opens in standalone mode", "Splash screen shows"]
+    },
+    "update_testing": {
+      "method": "Change service worker, reload with DevTools 'Update on reload' checked",
+      "test": ["Update detected", "Update prompt shown", "New version applied after reload"]
+    },
+    "lighthouse_audit": {
+      "run": "DevTools → Lighthouse → Progressive Web App",
+      "fix_issues": "Address failed audits",
+      "target_score": "90+"
+    }
+  },
+  "best_practices": [
+    "Serve over HTTPS (required for service workers)",
+    "Create valid web app manifest with all required fields",
+    "Register service worker after page load (don't block rendering)",
+    "Cache app shell for fast, offline-capable UI",
+    "Use appropriate caching strategies per resource type",
+    "Provide offline fallback page",
+    "Show meaningful offline UX (not just 'You are offline')",
+    "Don't ask for notification permission immediately",
+    "Defer install prompt, show at contextual moment",
+    "Update service worker gracefully (prompt user, don't force)",
+    "Test offline functionality thoroughly",
+    "Optimize performance (lazy load, code split, compress)",
+    "Use Workbox for easier service worker development",
+    "Provide 192x192 and 512x512 icons (and maskable)",
+    "Test on real devices (especially iOS for limitations)",
+    "Monitor Core Web Vitals (LCP, FID, CLS)",
+    "Use background sync for offline actions",
+    "Show sync status (pending, synced, failed)",
+    "Make notifications timely and relevant",
+    "Provide notification preferences"
+  ],
+  "anti_patterns": [
+    "Asking for notification permission on page load",
+    "Forcing install prompt immediately",
+    "Not providing offline functionality (defeats PWA purpose)",
+    "Caching too much (wastes user's storage)",
+    "Not handling service worker updates (users stuck on old version)",
+    "Using 'cache-only' strategy for dynamic content",
+    "Not testing offline experience",
+    "Ignoring iOS limitations (assuming all features work)",
+    "Not providing meaningful offline fallback",
+    "Forcing updates (may lose user data)",
+    "Showing generic 'No internet' message (offer cached content)",
+    "Not versioning caches (old caches pile up)",
+    "Blocking rendering with service worker registration",
+    "Not using HTTPS (service workers won't work)",
+    "Missing required manifest fields",
+    "Not testing on real devices",
+    "Spamming push notifications",
+    "Not explaining notification value before asking permission",
+    "Not providing way to disable notifications",
+    "Assuming PWA = native app (it's still web with limitations)"
+  ],
+  "case_studies": {
+    "twitter_lite": {
+      "results": ["65% increase in pages per session", "75% increase in Tweets sent", "20% decrease in bounce rate"],
+      "techniques": ["App shell pattern", "Service worker caching", "Push notifications", "Add to home screen"]
+    },
+    "pinterest": {
+      "results": ["60% increase in core engagements", "44% increase in ad revenue", "40% increase in time spent"],
+      "techniques": ["Service worker", "Lazy loading", "Code splitting"]
+    },
+    "starbucks": {
+      "results": ["2x daily active users", "Works offline for browsing menu"],
+      "techniques": ["Offline-first", "App shell", "Service worker caching"]
+    }
+  },
+  "resources": [
+    "web.dev/progressive-web-apps/ - Google's PWA guide",
+    "Progressive Web Apps (Jason Grigsby) - Book",
+    "Workbox - https://developers.google.com/web/tools/workbox",
+    "PWA Builder - https://www.pwabuilder.com/",
+    "Can I Use - Service Worker browser support",
+    "Lighthouse - Chrome DevTools auditing tool",
+    "PWA Stats - https://www.pwastats.com/ (case studies)"
+  ]
+}

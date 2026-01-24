@@ -1,6 +1,6 @@
 {
   "name": "@elsahafy/ux-mcp-server",
-  "version": "2.0.1",
+  "version": "4.0.0",
   "description": "Model Context Protocol server for UX best practices, accessibility guidelines (WCAG), usability heuristics (Nielsen), UI patterns, and design systems",
   "type": "module",
   "main": "dist/index.js",

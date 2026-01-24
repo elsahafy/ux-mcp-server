@@ -1,0 +1,139 @@
+{
+  "name": "AR/VR Interface Design",
+  "description": "Design principles and patterns for Augmented Reality (AR) and Virtual Reality (VR) interfaces",
+  "types": {
+    "vr": {
+      "description": "Fully immersive, replaces real world",
+      "devices": ["Meta Quest", "PlayStation VR", "HTC Vive", "Apple Vision Pro"],
+      "use_cases": ["Gaming", "Training simulations", "Virtual meetings", "3D modeling"]
+    },
+    "ar": {
+      "description": "Overlays digital content on real world",
+      "devices": ["Smartphones (AR Kit, AR Core)", "AR glasses (HoloLens, Magic Leap)", "Apple Vision Pro (mixed)"],
+      "use_cases": ["Navigation", "Product visualization", "Maintenance/repair", "Education"]
+    },
+    "mixed_reality": {
+      "description": "Blend of VR and AR",
+      "example": "Apple Vision Pro, HoloLens",
+      "capability": "Interact with virtual and real objects"
+    }
+  },
+  "vr_design_principles": {
+    "comfort": {
+      "motion_sickness": {
+        "causes": ["Frame rate < 90fps", "Latency > 20ms", "Acceleration without user control"],
+        "mitigation": ["Maintain 90+ fps", "Teleportation movement", "Fixed reference points", "Vignetting during motion"]
+      },
+      "field_of_view": "110° minimum to feel natural",
+      "ergonomics": "Avoid prolonged head tilting (up/down), position UI at eye level"
+    },
+    "presence": {
+      "description": "Feeling of 'being there'",
+      "techniques": ["Spatial audio (3D sound)", "Realistic scale (1:1 mapping)", "Hand tracking", "Shadows and lighting"]
+    },
+    "interaction": {
+      "gaze": {
+        "use": "Selection (dwell timer or blink)",
+        "issue": "Eye strain, 'Midas touch' (everything activates)"
+      },
+      "controllers": {
+        "types": ["6DOF controllers (position + rotation)", "Hand tracking (gesture-based)"],
+        "best_practice": "Provide haptic feedback, clear button mappings"
+      },
+      "voice": "Hands-free interaction, ideal for menus and commands"
+    },
+    "spatial_ui": {
+      "placement": "1.5-3 meters from user, at eye level",
+      "size": "Large enough to read (min 36pt font equivalent)",
+      "canvas_vs_world_space": {
+        "canvas": "Follows user (HUD, menus)",
+        "world": "Fixed in 3D space (signs, objects)"
+      }
+    }
+  },
+  "ar_design_principles": {
+    "context_awareness": {
+      "description": "AR must understand real-world context",
+      "techniques": ["Plane detection (floor, walls)", "Object recognition", "Lighting estimation"]
+    },
+    "occlusion": {
+      "description": "Virtual objects behind real objects should be hidden",
+      "importance": "Critical for realism"
+    },
+    "anchoring": {
+      "description": "Virtual objects stay fixed to real-world location",
+      "methods": ["Surface anchors (table, floor)", "Image anchors (QR code, poster)"]
+    },
+    "ui_placement": {
+      "avoid": "Floating UI in center of view (blocks real world)",
+      "prefer": "Edge-anchored or world-anchored UI"
+    }
+  },
+  "interaction_patterns": {
+    "vr_locomotion": {
+      "teleportation": { "pros": ["Comfortable", "No motion sickness"], "cons": ["Less immersive"] },
+      "smooth_locomotion": { "pros": ["Immersive"], "cons": ["Motion sickness risk"], "mitigation": "Vignetting, slow speed" },
+      "room_scale": { "description": "Walk in real space", "limitation": "Requires large physical space" }
+    },
+    "selection": {
+      "ray_casting": "Point and click with controller (like laser pointer)",
+      "direct_touch": "Reach and grab (more natural, limited by arm reach)",
+      "gaze_dwell": "Look at object for 2 seconds to select"
+    },
+    "manipulation": {
+      "grab_and_move": "Natural for VR, use hand tracking or controllers",
+      "scale_rotate": "Pinch gestures (two-handed) or controller buttons"
+    }
+  },
+  "accessibility": {
+    "vr_limitations": {
+      "motion_sickness": "10-30% of users experience it",
+      "physical_disabilities": "May not be able to stand or move freely",
+      "visual_impairments": "Depth perception issues, low vision",
+      "mitigation": ["Seated experiences", "Teleportation movement", "Audio descriptions", "Adjustable text size"]
+    },
+    "ar_limitations": {
+      "outdoor_usability": "Bright sunlight makes AR hard to see",
+      "accessibility": "Blind users can't see AR overlays (provide audio alternative)"
+    }
+  },
+  "best_practices": [
+    "Maintain 90+ fps in VR (comfort)",
+    "Avoid user-triggered acceleration (motion sickness)",
+    "Use spatial audio for immersion",
+    "Position UI at eye level, 1.5-3m away",
+    "Provide multiple locomotion options (teleport, smooth)",
+    "Use haptic feedback for interactions",
+    "Test with diverse users (motion sensitivity varies)",
+    "Anchor AR content to real-world surfaces",
+    "Handle occlusion in AR",
+    "Provide tutorials for VR (controls aren't obvious)",
+    "Design for seated and standing experiences",
+    "Use large text (36pt+ equivalent)",
+    "Avoid small, precise interactions (hard in VR)",
+    "Limit session duration (VR fatigue after 30-60 min)"
+  ],
+  "anti_patterns": [
+    "< 90 fps (causes nausea)",
+    "High latency (> 20ms head tracking)",
+    "Acceleration without user control",
+    "Tiny text (unreadable in VR)",
+    "UI too close (< 1m, eye strain)",
+    "Ignoring motion sickness users",
+    "No tutorial (users lost in VR)",
+    "Requiring precise hand movements (hand tracking jitter)",
+    "Long VR sessions without breaks",
+    "AR UI blocking real world"
+  ],
+  "tools": {
+    "vr_development": ["Unity + XR Interaction Toolkit", "Unreal Engine + VR Template", "A-Frame (WebVR)"],
+    "ar_development": ["Unity + AR Foundation", "AR Kit (iOS)", "AR Core (Android)", "8th Wall (WebAR)"],
+    "design_tools": ["Figma + VR plugins", "Gravity Sketch (VR 3D modeling)", "Tilt Brush (VR painting)"]
+  },
+  "resources": [
+    "Oculus Design Guidelines",
+    "Google AR Design Guidelines",
+    "Apple Human Interface Guidelines - visionOS",
+    "Unity Learn - VR Best Practices"
+  ]
+}

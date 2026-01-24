@@ -1,0 +1,509 @@
+{
+  "name": "Typography System",
+  "description": "Comprehensive guide to creating type scales, font pairing, hierarchy, and responsive typography for web and mobile interfaces",
+  "fundamentals": {
+    "type_anatomy": {
+      "baseline": "Invisible line where letters sit",
+      "cap_height": "Height of capital letters",
+      "x_height": "Height of lowercase 'x'",
+      "ascender": "Part that extends above x-height (like 'b', 'd')",
+      "descender": "Part that extends below baseline (like 'g', 'y')",
+      "leading": "Vertical space between lines (line-height in CSS)",
+      "tracking": "Horizontal spacing between all characters (letter-spacing)",
+      "kerning": "Space between specific character pairs"
+    },
+    "font_classifications": {
+      "serif": {
+        "description": "Letters with decorative strokes (serifs)",
+        "characteristics": "Traditional, formal, elegant, readable in print",
+        "examples": ["Georgia", "Times New Roman", "Merriweather", "Playfair Display"],
+        "use_for": "Body text in long-form content, headings, traditional brands"
+      },
+      "sans_serif": {
+        "description": "Letters without decorative strokes",
+        "characteristics": "Modern, clean, simple, readable on screens",
+        "examples": ["Helvetica", "Arial", "Inter", "Roboto", "Open Sans"],
+        "use_for": "UI text, body copy on screen, modern brands"
+      },
+      "monospace": {
+        "description": "Fixed-width characters",
+        "characteristics": "Each character same width, technical feel",
+        "examples": ["Courier", "Monaco", "Fira Code", "Source Code Pro"],
+        "use_for": "Code, technical content, tabular data"
+      },
+      "display": {
+        "description": "Decorative fonts for large sizes",
+        "characteristics": "Unique, expressive, attention-grabbing",
+        "examples": ["Bebas Neue", "Abril Fatface", "Lobster"],
+        "use_for": "Large headings only, short text, branding"
+      },
+      "handwriting": {
+        "description": "Script or cursive fonts",
+        "characteristics": "Personal, elegant, or casual",
+        "examples": ["Dancing Script", "Pacifico", "Kalam"],
+        "use_for": "Accents, quotes, signatures (sparingly)"
+      }
+    }
+  },
+  "type_scale": {
+    "description": "Systematic progression of font sizes",
+    "ratios": {
+      "minor_second": {
+        "ratio": 1.067,
+        "feel": "Subtle, gentle",
+        "use": "Small interfaces, dense layouts"
+      },
+      "major_second": {
+        "ratio": 1.125,
+        "feel": "Conservative, readable",
+        "use": "Body-heavy sites, documentation"
+      },
+      "minor_third": {
+        "ratio": 1.2,
+        "feel": "Balanced, versatile",
+        "use": "General purpose, most common"
+      },
+      "major_third": {
+        "ratio": 1.25,
+        "feel": "Clear hierarchy",
+        "use": "Marketing sites, blogs"
+      },
+      "perfect_fourth": {
+        "ratio": 1.333,
+        "feel": "Strong contrast",
+        "use": "Editorial, content-focused"
+      },
+      "augmented_fourth": {
+        "ratio": 1.414,
+        "feel": "Dramatic",
+        "use": "High contrast needed"
+      },
+      "perfect_fifth": {
+        "ratio": 1.5,
+        "feel": "Very dramatic",
+        "use": "Large screens, hero sections"
+      },
+      "golden_ratio": {
+        "ratio": 1.618,
+        "feel": "Classic, harmonious",
+        "use": "Large displays, special projects"
+      }
+    },
+    "recommended_ratio": "1.2 (minor third) for general use",
+    "example_scale": {
+      "base": "16px (1rem)",
+      "ratio": 1.2,
+      "sizes": {
+        "xs": "0.694rem (11.1px)",
+        "sm": "0.833rem (13.3px)",
+        "base": "1rem (16px)",
+        "lg": "1.2rem (19.2px)",
+        "xl": "1.44rem (23px)",
+        "2xl": "1.728rem (27.6px)",
+        "3xl": "2.074rem (33.2px)",
+        "4xl": "2.488rem (39.8px)",
+        "5xl": "2.986rem (47.8px)"
+      }
+    },
+    "calculating_scale": {
+      "formula": "size = base × ratio^n",
+      "example": "16px × 1.2^2 = 23.04px",
+      "tools": [
+        "https://typescale.com",
+        "https://www.modularscale.com"
+      ]
+    }
+  },
+  "hierarchy": {
+    "levels": {
+      "h1": {
+        "purpose": "Page title, main heading",
+        "size": "2.5-3.5rem (40-56px)",
+        "weight": "700-900 (Bold/Black)",
+        "usage": "One per page",
+        "line_height": "1.1-1.2"
+      },
+      "h2": {
+        "purpose": "Section headers",
+        "size": "2-2.5rem (32-40px)",
+        "weight": "600-700 (SemiBold/Bold)",
+        "usage": "Multiple per page",
+        "line_height": "1.2-1.3"
+      },
+      "h3": {
+        "purpose": "Subsection headers",
+        "size": "1.5-2rem (24-32px)",
+        "weight": "600-700",
+        "line_height": "1.3-1.4"
+      },
+      "h4": {
+        "purpose": "Minor headings",
+        "size": "1.25-1.5rem (20-24px)",
+        "weight": "600",
+        "line_height": "1.4"
+      },
+      "h5_h6": {
+        "purpose": "Smallest headings",
+        "size": "1-1.25rem (16-20px)",
+        "weight": "600",
+        "usage": "Rare, use sparingly"
+      },
+      "body": {
+        "purpose": "Main text content",
+        "size": "1rem (16px) - never smaller",
+        "weight": "400 (Regular)",
+        "line_height": "1.5-1.7",
+        "max_width": "60-75 characters per line"
+      },
+      "small": {
+        "purpose": "Secondary text, captions",
+        "size": "0.875rem (14px)",
+        "weight": "400",
+        "usage": "Captions, disclaimers, metadata"
+      },
+      "tiny": {
+        "purpose": "Legal text, footnotes",
+        "size": "0.75rem (12px)",
+        "weight": "400",
+        "min_size": "Don't go below 12px for accessibility"
+      }
+    },
+    "contrast_techniques": {
+      "size": "Large vs small text",
+      "weight": "Bold vs regular",
+      "color": "Dark vs light (maintain 4.5:1 contrast)",
+      "case": "UPPERCASE vs Sentence case (use sparingly)",
+      "spacing": "Tight vs loose letter-spacing",
+      "style": "Different font families for contrast"
+    }
+  },
+  "font_pairing": {
+    "principles": {
+      "contrast": "Pair fonts with clear differences",
+      "harmony": "Should work together, not clash",
+      "purpose": "Each font should have clear role"
+    },
+    "safe_combinations": {
+      "serif_sans": {
+        "description": "Most common and safe",
+        "pattern": "Serif for headings, sans-serif for body (or vice versa)",
+        "examples": [
+          "Playfair Display + Open Sans",
+          "Merriweather + Lato",
+          "Georgia + Helvetica",
+          "Spectral + Karla"
+        ]
+      },
+      "sans_sans": {
+        "description": "Modern, clean look",
+        "pattern": "Geometric for headings, humanist for body",
+        "examples": [
+          "Montserrat + Open Sans",
+          "Poppins + Inter",
+          "Raleway + Roboto"
+        ],
+        "tip": "Ensure enough contrast in weight/width"
+      },
+      "serif_serif": {
+        "description": "Traditional, elegant",
+        "pattern": "Display serif for headings, text serif for body",
+        "examples": [
+          "Playfair Display + Crimson Text",
+          "Abril Fatface + Lora"
+        ],
+        "tip": "Use different styles (old-style vs modern)"
+      },
+      "monospace_accent": {
+        "description": "Technical or modern edge",
+        "pattern": "Monospace for code/accents, sans-serif for main text",
+        "examples": [
+          "Fira Code + Fira Sans",
+          "Source Code Pro + Source Sans Pro"
+        ]
+      }
+    },
+    "superfamilies": {
+      "description": "Font families with multiple styles (serif, sans, mono)",
+      "benefits": "Guaranteed harmony, maintained proportions",
+      "examples": [
+        "IBM Plex (Sans, Serif, Mono)",
+        "Source (Sans Pro, Serif Pro, Code Pro)",
+        "Alegreya (Regular, Sans)",
+        "Roboto (Regular, Slab, Mono)"
+      ]
+    },
+    "rules": {
+      "limit_fonts": "2-3 font families maximum",
+      "test_together": "Always preview pairings together",
+      "check_weights": "Ensure both fonts have needed weights",
+      "consider_x_height": "Similar x-heights work better together",
+      "avoid_similar": "Don't pair fonts that are too similar"
+    }
+  },
+  "readability": {
+    "line_length": {
+      "optimal": "45-75 characters per line",
+      "ideal": "60-66 characters",
+      "css": "max-width: 65ch; (ch = character width)",
+      "mobile": "Shorter OK (35-50 characters)",
+      "avoid": "Very long lines (>85 characters) cause eye fatigue"
+    },
+    "line_height": {
+      "body_text": "1.5-1.7 (150-170%)",
+      "headings": "1.1-1.3 (tighter for large text)",
+      "ui_elements": "1.3-1.5",
+      "formula": "Smaller text needs more line-height",
+      "css": "line-height: 1.6; (unitless preferred)"
+    },
+    "letter_spacing": {
+      "body_text": "0 (default) to slight positive",
+      "all_caps": "+0.05em to +0.1em (always increase)",
+      "headings": "Slight negative (-0.01em to -0.03em) for large text",
+      "small_text": "Slight positive (+0.01em to +0.02em)",
+      "css": "letter-spacing: 0.05em;"
+    },
+    "paragraph_spacing": {
+      "between_paragraphs": "1em (equal to font size)",
+      "alternative": "Text indent for first line (1.5em)",
+      "avoid": "Both indent and spacing (choose one)"
+    },
+    "text_alignment": {
+      "left": "Default, best for readability",
+      "right": "Rarely for UI (RTL languages)",
+      "center": "Short text only (headings, CTAs)",
+      "justify": "Avoid for web (creates rivers, poor on small screens)"
+    },
+    "font_size": {
+      "minimum": "16px for body text (mobile and desktop)",
+      "mobile": "Never below 16px (prevents zoom on iOS)",
+      "optimal_body": "16-18px",
+      "large_screens": "18-21px for comfortable reading",
+      "accessibility": "Allow users to increase text size"
+    }
+  },
+  "responsive_typography": {
+    "fluid_typography": {
+      "description": "Font size scales smoothly between breakpoints",
+      "css_clamp": "font-size: clamp(1rem, 2.5vw, 2rem);",
+      "explanation": "clamp(minimum, preferred, maximum)",
+      "example": {
+        "h1": "font-size: clamp(2rem, 5vw, 4rem);",
+        "body": "font-size: clamp(1rem, 1.5vw, 1.125rem);"
+      },
+      "tools": ["https://utopia.fyi", "https://fluid-type-scale.com"]
+    },
+    "breakpoint_scales": {
+      "mobile": {
+        "breakpoint": "< 640px",
+        "base_size": "16px",
+        "scale_ratio": "1.125-1.2",
+        "considerations": ["Smaller screens", "Thumb reach", "Scrolling"]
+      },
+      "tablet": {
+        "breakpoint": "640px - 1024px",
+        "base_size": "16px",
+        "scale_ratio": "1.2-1.25"
+      },
+      "desktop": {
+        "breakpoint": "> 1024px",
+        "base_size": "18px",
+        "scale_ratio": "1.25-1.333",
+        "considerations": ["Viewing distance", "Screen size", "Content density"]
+      }
+    },
+    "mobile_first": {
+      "approach": "Design type for mobile, enhance for larger screens",
+      "css_example": ".heading {\n  font-size: 1.5rem; /* mobile */\n}\n\n@media (min-width: 768px) {\n  .heading {\n    font-size: 2.5rem; /* desktop */\n  }\n}"
+    }
+  },
+  "web_fonts": {
+    "formats": {
+      "woff2": "Modern, best compression (use this)",
+      "woff": "Fallback for older browsers",
+      "ttf_otf": "Avoid for web (larger files)"
+    },
+    "loading_strategies": {
+      "font_display": {
+        "auto": "Browser default",
+        "swap": "Show fallback, swap when loaded (recommended)",
+        "block": "Invisible text for ~3s (FOIT - Flash of Invisible Text)",
+        "fallback": "Show fallback after 100ms",
+        "optional": "Only use font if cached"
+      },
+      "recommended": "font-display: swap;",
+      "css": "@font-face {\n  font-family: 'MyFont';\n  src: url('font.woff2') format('woff2');\n  font-display: swap;\n}"
+    },
+    "preloading": {
+      "critical_fonts": "Preload fonts used above fold",
+      "html": "<link rel='preload' href='font.woff2' as='font' type='font/woff2' crossorigin>",
+      "limit": "Only preload 1-2 most critical fonts"
+    },
+    "self_hosting": {
+      "pros": ["Better performance", "Privacy", "Reliability"],
+      "cons": ["Manual updates", "Setup required"],
+      "tools": ["https://google-webfonts-helper.herokuapp.com"]
+    },
+    "google_fonts": {
+      "pros": ["Easy setup", "Free", "Regularly updated"],
+      "cons": ["External dependency", "Privacy concerns (GDPR)"],
+      "optimize": "Only include weights you need",
+      "example": "<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap' rel='stylesheet'>"
+    },
+    "font_subsetting": {
+      "description": "Include only characters you need",
+      "benefits": "Smaller file size, faster loading",
+      "example": "Latin only vs Latin + Cyrillic + Greek",
+      "tools": ["Glyphhanger", "Font Squirrel"]
+    },
+    "variable_fonts": {
+      "description": "Single file with multiple weights/styles",
+      "benefits": ["One file vs many", "Smooth animations", "Smaller total size"],
+      "examples": ["Inter Variable", "Recursive", "Source Sans Variable"],
+      "css": "font-variation-settings: 'wght' 650;"
+    }
+  },
+  "accessibility": {
+    "contrast": {
+      "wcag_aa": "4.5:1 for normal text, 3:1 for large text (18px+)",
+      "wcag_aaa": "7:1 for normal text, 4.5:1 for large text",
+      "large_text": "18px+ or 14px+ bold",
+      "tool": "Use contrast checker tools"
+    },
+    "font_size": {
+      "minimum": "16px for body text",
+      "allow_scaling": "Use rem, not px (respects user preferences)",
+      "zoom": "Support 200% zoom without breaking layout"
+    },
+    "font_choice": {
+      "avoid": "Overly decorative fonts for body text",
+      "prefer": "Simple, clear, distinguishable characters",
+      "dyslexia": "Consider dyslexia-friendly fonts (OpenDyslexic, Comic Sans alternative)"
+    },
+    "all_caps": {
+      "avoid": "Hard to read, especially for dyslexic users",
+      "limit": "Short text only (buttons, labels)",
+      "never": "Don't use for paragraphs or long headings"
+    },
+    "text_images": {
+      "avoid": "Don't put text in images (not scalable, not translatable)",
+      "use_html": "Real text is always better",
+      "exception": "Logos (but provide alt text)"
+    }
+  },
+  "css_implementation": {
+    "font_family_stack": {
+      "pattern": "Primary, fallback, generic",
+      "example": "font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;",
+      "system_fonts": {
+        "apple": "-apple-system, BlinkMacSystemFont",
+        "windows": "'Segoe UI'",
+        "android": "Roboto",
+        "linux": "Ubuntu, Cantarell",
+        "generic": "sans-serif, serif, monospace"
+      },
+      "system_font_stack": "font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;"
+    },
+    "css_custom_properties": {
+      "approach": "Define type scale as CSS variables",
+      "example": ":root {\n  --font-size-xs: 0.75rem;\n  --font-size-sm: 0.875rem;\n  --font-size-base: 1rem;\n  --font-size-lg: 1.125rem;\n  --font-size-xl: 1.25rem;\n  \n  --font-weight-normal: 400;\n  --font-weight-medium: 500;\n  --font-weight-bold: 700;\n  \n  --line-height-tight: 1.25;\n  --line-height-normal: 1.5;\n  --line-height-relaxed: 1.75;\n}",
+      "usage": "font-size: var(--font-size-lg);"
+    },
+    "utility_classes": {
+      "example": ".text-xs { font-size: 0.75rem; }\n.text-sm { font-size: 0.875rem; }\n.text-base { font-size: 1rem; }\n.text-lg { font-size: 1.125rem; }\n\n.font-normal { font-weight: 400; }\n.font-bold { font-weight: 700; }",
+      "frameworks": "Tailwind CSS has built-in type scale utilities"
+    }
+  },
+  "common_patterns": {
+    "hero_heading": {
+      "size": "4-6rem (64-96px) on desktop",
+      "weight": "700-900",
+      "line_height": "1-1.1",
+      "considerations": ["Large and bold", "Short text only", "Reduce size significantly on mobile"]
+    },
+    "article_body": {
+      "font": "Serif or humanist sans-serif",
+      "size": "18-21px",
+      "line_height": "1.6-1.7",
+      "line_length": "60-70 characters",
+      "paragraph_spacing": "1.5em"
+    },
+    "ui_text": {
+      "font": "Sans-serif",
+      "size": "14-16px",
+      "line_height": "1.4-1.5",
+      "weight": "400-600"
+    },
+    "button_text": {
+      "size": "14-16px",
+      "weight": "500-600",
+      "letter_spacing": "+0.01em to +0.02em",
+      "case": "Sentence case preferred"
+    },
+    "labels": {
+      "size": "12-14px",
+      "weight": "500-600",
+      "case": "Sentence case",
+      "color": "Slightly muted (70-80% opacity)"
+    }
+  },
+  "testing": {
+    "checklist": [
+      "Test on actual devices (not just browser resize)",
+      "Check readability at arm's length",
+      "Test with different user font size preferences",
+      "Verify contrast ratios",
+      "Test with screen readers",
+      "Check at 200% zoom",
+      "Test with long text (German, Finnish)",
+      "Verify line length isn't too long",
+      "Check text doesn't overflow containers",
+      "Test on different browsers"
+    ],
+    "tools": [
+      "Contrast checker: WebAIM Contrast Checker",
+      "Type scale: typescale.com",
+      "Font pairing: fontpair.co",
+      "Web font analyzer: wakamaifondue.com",
+      "Readability: Hemingway Editor"
+    ]
+  },
+  "best_practices": [
+    "Start with 16px base font size (never smaller)",
+    "Use modular scale for consistent sizes",
+    "Limit to 2-3 font families maximum",
+    "Choose fonts with multiple weights (400, 600, 700 minimum)",
+    "Prefer web-safe or Google Fonts for reliability",
+    "Use rem units for font sizes (respects user preferences)",
+    "Maintain 4.5:1 contrast ratio minimum",
+    "Keep line length 45-75 characters",
+    "Use 1.5-1.7 line-height for body text",
+    "Increase letter-spacing for ALL CAPS",
+    "Test typography on real devices",
+    "Left-align body text (don't justify)",
+    "Use system fonts for performance",
+    "Preload critical fonts only",
+    "Include font-display: swap",
+    "Create visual hierarchy with size, weight, and color",
+    "Don't use more than 3-4 font sizes for body content",
+    "Make headings significantly larger than body",
+    "Use font weights consistently (don't mix randomly)",
+    "Test with long and short text"
+  ],
+  "anti_patterns": [
+    "Body text smaller than 16px",
+    "Too many different font families (> 3)",
+    "Overuse of decorative fonts",
+    "ALL CAPS for long text",
+    "Justified text on web",
+    "Insufficient line-height (< 1.4)",
+    "Too long line lengths (> 85 characters)",
+    "Poor contrast",
+    "Text in images",
+    "Not loading fallback fonts",
+    "Using px units for all font sizes",
+    "Skipping font preloading",
+    "Loading unnecessary font weights",
+    "Not testing on mobile devices",
+    "Mixing too many font weights"
+  ]
+}

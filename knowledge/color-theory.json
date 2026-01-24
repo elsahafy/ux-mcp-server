@@ -1,0 +1,499 @@
+{
+  "name": "Color Theory & Palettes",
+  "description": "Comprehensive guide to color theory, palette generation, accessibility, and color usage in UI/UX design",
+  "color_fundamentals": {
+    "color_models": {
+      "rgb": {
+        "description": "Red, Green, Blue - additive color (screens)",
+        "range": "0-255 per channel",
+        "format": "rgb(255, 100, 50)",
+        "use": "Digital displays, web, mobile"
+      },
+      "hex": {
+        "description": "Hexadecimal RGB representation",
+        "format": "#FF6432 (RRGGBB)",
+        "short": "#F64 (same as #FF6644)",
+        "use": "Web, CSS, most common"
+      },
+      "hsl": {
+        "description": "Hue, Saturation, Lightness",
+        "hue": "0-360 degrees (color wheel position)",
+        "saturation": "0-100% (color intensity)",
+        "lightness": "0-100% (brightness)",
+        "format": "hsl(210, 80%, 50%)",
+        "benefits": "Easier to create color variations",
+        "use": "CSS, design tools, palette generation"
+      },
+      "hsb_hsv": {
+        "description": "Hue, Saturation, Brightness/Value",
+        "use": "Photoshop, some design tools",
+        "similar_to": "HSL but different lightness calculation"
+      }
+    },
+    "color_properties": {
+      "hue": {
+        "description": "The color itself (red, blue, yellow)",
+        "measurement": "0-360 degrees on color wheel",
+        "examples": {
+          "red": "0°",
+          "yellow": "60°",
+          "green": "120°",
+          "cyan": "180°",
+          "blue": "240°",
+          "magenta": "300°"
+        }
+      },
+      "saturation": {
+        "description": "Color intensity (vivid vs gray)",
+        "range": "0% (gray) to 100% (full color)",
+        "high": "Vibrant, energetic, attention-grabbing",
+        "low": "Muted, subtle, sophisticated"
+      },
+      "lightness_brightness": {
+        "description": "How light or dark a color is",
+        "range": "0% (black) to 100% (white)",
+        "mid": "50% is pure hue in HSL"
+      }
+    }
+  },
+  "color_harmony": {
+    "description": "Combinations that work well together",
+    "schemes": {
+      "monochromatic": {
+        "description": "Variations of a single hue",
+        "method": "Same hue, different saturation/lightness",
+        "example": "Navy, blue, light blue, sky blue",
+        "pros": ["Harmonious", "Easy to create", "Clean look"],
+        "cons": ["Can be boring", "Lacks contrast"],
+        "use_when": "Professional, minimalist designs"
+      },
+      "analogous": {
+        "description": "Adjacent colors on color wheel",
+        "method": "Base color ± 30-60 degrees",
+        "example": "Blue, blue-green, green",
+        "pros": ["Harmonious", "Natural feel", "Versatile"],
+        "cons": ["Low contrast", "Can blend too much"],
+        "use_when": "Nature themes, calming interfaces"
+      },
+      "complementary": {
+        "description": "Opposite colors on color wheel",
+        "method": "Base color + 180 degrees",
+        "example": "Blue and orange, red and green",
+        "pros": ["High contrast", "Vibrant", "Energetic"],
+        "cons": ["Can be harsh", "Difficult to balance"],
+        "use_when": "Need strong contrast, CTAs, emphasis",
+        "tip": "Use one color dominant, other as accent (70-30 rule)"
+      },
+      "split_complementary": {
+        "description": "Base + two colors adjacent to complement",
+        "method": "Base color + (complement ± 30°)",
+        "example": "Blue, yellow-orange, red-orange",
+        "pros": ["High contrast", "More versatile than complementary", "Visually interesting"],
+        "use_when": "More options than complementary, still vibrant"
+      },
+      "triadic": {
+        "description": "Three colors equally spaced on wheel",
+        "method": "Base color + 120° + 240°",
+        "example": "Red, yellow, blue (primary colors)",
+        "pros": ["Vibrant", "Balanced", "Dynamic"],
+        "cons": ["Can be overwhelming", "Hard to balance"],
+        "use_when": "Playful brands, children's products",
+        "tip": "Let one color dominate, others as accents"
+      },
+      "tetradic": {
+        "description": "Four colors (two complementary pairs)",
+        "method": "Two sets of complements",
+        "example": "Blue, orange, yellow, purple",
+        "pros": ["Lots of variety"],
+        "cons": ["Very hard to balance", "Can look chaotic"],
+        "use_when": "Complex designs, need many colors",
+        "tip": "Let one color dominate strongly"
+      }
+    },
+    "60_30_10_rule": {
+      "description": "Color distribution formula",
+      "60_percent": "Dominant color (backgrounds, large areas)",
+      "30_percent": "Secondary color (supporting elements)",
+      "10_percent": "Accent color (CTAs, highlights, emphasis)",
+      "example": "60% white/light gray, 30% blue, 10% orange (CTA)",
+      "application": "Helps maintain balance and hierarchy"
+    }
+  },
+  "creating_palettes": {
+    "brand_colors": {
+      "primary": {
+        "description": "Main brand color",
+        "use": "Logo, main CTAs, headers, links",
+        "quantity": "1 color",
+        "considerations": ["Brand identity", "Industry norms", "Audience"]
+      },
+      "secondary": {
+        "description": "Supporting brand color(s)",
+        "use": "Accents, illustrations, secondary CTAs",
+        "quantity": "1-2 colors",
+        "relationship": "Complements primary"
+      },
+      "accent": {
+        "description": "Highlight and emphasis colors",
+        "use": "Buttons, badges, notifications, highlights",
+        "quantity": "1-3 colors",
+        "note": "Should stand out from primary/secondary"
+      }
+    },
+    "neutral_colors": {
+      "description": "Grays for text, backgrounds, borders",
+      "grayscale": {
+        "white": "#FFFFFF",
+        "gray_50": "#F9FAFB (lightest gray)",
+        "gray_100": "#F3F4F6",
+        "gray_200": "#E5E7EB",
+        "gray_300": "#D1D5DB",
+        "gray_400": "#9CA3AF",
+        "gray_500": "#6B7280 (mid gray)",
+        "gray_600": "#4B5563",
+        "gray_700": "#374151",
+        "gray_800": "#1F2937",
+        "gray_900": "#111827 (almost black)",
+        "black": "#000000"
+      },
+      "need": "7-10 shades for flexibility",
+      "warm_vs_cool": "Add slight color tint (warm: red/yellow, cool: blue)"
+    },
+    "semantic_colors": {
+      "description": "Colors with specific meanings",
+      "success": {
+        "color": "Green",
+        "use": "Success messages, confirmations, positive states",
+        "shades": "Light (backgrounds), Medium (borders), Dark (text/icons)"
+      },
+      "error": {
+        "color": "Red",
+        "use": "Error messages, warnings, destructive actions",
+        "accessibility": "Don't rely on color alone - use icons"
+      },
+      "warning": {
+        "color": "Yellow/Orange",
+        "use": "Warnings, alerts, caution",
+        "note": "Yellow can have contrast issues - use orange"
+      },
+      "info": {
+        "color": "Blue",
+        "use": "Informational messages, tips, neutral notifications"
+      }
+    },
+    "shades_and_tints": {
+      "tints": {
+        "description": "Adding white (lighter)",
+        "use": "Backgrounds, hover states, disabled states",
+        "method": "Increase lightness in HSL"
+      },
+      "shades": {
+        "description": "Adding black (darker)",
+        "use": "Text, emphasis, active states",
+        "method": "Decrease lightness in HSL"
+      },
+      "recommended_scale": {
+        "description": "Create 9-11 variations per color",
+        "50": "Lightest (backgrounds)",
+        "100_200_300_400": "Light variations",
+        "500": "Base color",
+        "600_700_800_900": "Dark variations",
+        "950": "Darkest"
+      },
+      "generation_method": {
+        "hsl_approach": "Adjust lightness: 95%, 90%, 80%, 70%, 50%, 40%, 30%, 20%, 10%",
+        "saturation_curve": "Reduce saturation slightly in very light/dark shades",
+        "tools": ["https://tailwindshades.com", "https://colorbox.io"]
+      }
+    }
+  },
+  "color_psychology": {
+    "description": "Emotions and associations evoked by colors",
+    "meanings": {
+      "red": {
+        "emotions": ["Passion", "Energy", "Urgency", "Danger", "Love", "Power"],
+        "use": "Sales, food, calls-to-action, warnings",
+        "industries": "Restaurants, retail, entertainment",
+        "negative": "Aggression, danger, debt",
+        "note": "Use sparingly - very attention-grabbing"
+      },
+      "orange": {
+        "emotions": ["Friendly", "Cheerful", "Confident", "Playful", "Affordable"],
+        "use": "CTAs, highlights, youth brands",
+        "industries": "Kids products, sports, technology",
+        "note": "Less aggressive than red, still energetic"
+      },
+      "yellow": {
+        "emotions": ["Optimistic", "Happy", "Warm", "Attention", "Caution"],
+        "use": "Highlights, warnings, happiness",
+        "industries": "Food, children, summer/travel",
+        "negative": "Anxiety, caution",
+        "accessibility": "Poor contrast - use sparingly for text"
+      },
+      "green": {
+        "emotions": ["Nature", "Growth", "Health", "Success", "Fresh", "Calm"],
+        "use": "Success states, health, eco-friendly, finance",
+        "industries": "Environment, health, finance, food",
+        "note": "Universally positive in most cultures"
+      },
+      "blue": {
+        "emotions": ["Trust", "Calm", "Professional", "Stable", "Secure"],
+        "use": "Corporate, finance, healthcare, technology",
+        "industries": "Most common - banks, tech, healthcare",
+        "note": "Most universally liked color",
+        "negative": "Can feel cold or unemotional"
+      },
+      "purple": {
+        "emotions": ["Luxury", "Creativity", "Wisdom", "Mystery", "Royalty"],
+        "use": "Premium products, beauty, creative fields",
+        "industries": "Beauty, luxury, creative, spiritual",
+        "note": "Rare in nature - feels special"
+      },
+      "pink": {
+        "emotions": ["Feminine", "Sweet", "Romantic", "Playful", "Youthful"],
+        "use": "Beauty, fashion, romance",
+        "industries": "Beauty, fashion, children (girls)",
+        "modern_use": "Millennial pink less gendered"
+      },
+      "brown": {
+        "emotions": ["Natural", "Earthy", "Reliable", "Rustic", "Warm"],
+        "use": "Organic products, coffee, chocolate",
+        "industries": "Food, outdoor, crafts",
+        "note": "Uncommon in digital UI"
+      },
+      "black": {
+        "emotions": ["Sophisticated", "Powerful", "Elegant", "Modern", "Formal"],
+        "use": "Luxury, fashion, text, minimalism",
+        "note": "Use dark gray (#1a1a1a) instead of pure black for less harshness"
+      },
+      "white": {
+        "emotions": ["Clean", "Simple", "Pure", "Modern", "Minimal"],
+        "use": "Backgrounds, spacing, minimalism",
+        "note": "Use off-white (#fafafa) for less eye strain"
+      },
+      "gray": {
+        "emotions": ["Neutral", "Professional", "Calm", "Balanced", "Formal"],
+        "use": "Text, backgrounds, borders, shadows",
+        "note": "Foundation of most UIs"
+      }
+    },
+    "cultural_differences": {
+      "note": "Color meanings vary by culture",
+      "examples": {
+        "red": "Luck (China), Danger (West), Mourning (South Africa)",
+        "white": "Purity (West), Mourning (East Asia)",
+        "yellow": "Happiness (West), Sacred (Buddhism)",
+        "green": "Nature (most), Sacred (Islam)"
+      },
+      "recommendation": "Research target audience's cultural context"
+    }
+  },
+  "accessibility": {
+    "contrast_ratios": {
+      "wcag_aa": {
+        "normal_text": "4.5:1 minimum (< 18px or < 14px bold)",
+        "large_text": "3:1 minimum (≥ 18px or ≥ 14px bold)"
+      },
+      "wcag_aaa": {
+        "normal_text": "7:1 minimum",
+        "large_text": "4.5:1 minimum"
+      },
+      "ui_components": {
+        "minimum": "3:1 for icons, borders, focus indicators",
+        "examples": "Buttons, form fields, graphical objects"
+      },
+      "tools": [
+        "WebAIM Contrast Checker",
+        "Stark plugin (Figma/Sketch)",
+        "Chrome DevTools Contrast Checker"
+      ]
+    },
+    "color_blindness": {
+      "types": {
+        "deuteranopia": "Red-green (most common, 5% of men)",
+        "protanopia": "Red-green variant",
+        "tritanopia": "Blue-yellow (rare)",
+        "achromatopsia": "Complete color blindness (very rare)"
+      },
+      "best_practices": [
+        "Don't rely on color alone to convey information",
+        "Use icons, labels, patterns in addition to color",
+        "Avoid red-green combinations for critical info",
+        "Test designs with color blindness simulators",
+        "Use high contrast",
+        "Provide alternative indicators (text, icons, underlines)"
+      ],
+      "tools": [
+        "Stark (color blindness simulator)",
+        "Color Oracle (free simulator)",
+        "Chrome DevTools vision simulator"
+      ]
+    },
+    "safe_combinations": {
+      "high_contrast": [
+        "Black on white",
+        "White on dark blue (#003366)",
+        "Dark gray (#333) on white",
+        "White on dark gray (#1a1a1a)"
+      ],
+      "avoid": [
+        "Red text on green background",
+        "Light gray on white",
+        "Yellow on white",
+        "Light blue on white"
+      ]
+    }
+  },
+  "ui_color_usage": {
+    "backgrounds": {
+      "primary": "White or very light gray (#fafafa, #f5f5f5)",
+      "secondary": "Light gray for sections (#f0f0f0, #e5e5e5)",
+      "tertiary": "Medium gray for cards (#e0e0e0)",
+      "dark_mode": "Dark gray (#121212), not pure black",
+      "avoid": "Bright colors for large background areas"
+    },
+    "text": {
+      "primary": "Dark gray (#1a1a1a, #333) on light backgrounds",
+      "secondary": "Medium gray (#666, #757575) for less important text",
+      "tertiary": "Light gray (#999, #aaa) for disabled or placeholder",
+      "on_dark": "White (#fff) or very light gray (#f5f5f5)",
+      "avoid": "Pure black (#000) - too harsh",
+      "links": "Blue (#0066cc) is convention, ensure 4.5:1 contrast"
+    },
+    "buttons": {
+      "primary_cta": {
+        "color": "Brand primary color",
+        "contrast": "High contrast with text",
+        "states": {
+          "default": "Base color",
+          "hover": "10-15% darker",
+          "active": "20% darker",
+          "disabled": "Low saturation, reduced opacity"
+        }
+      },
+      "secondary": {
+        "color": "Outline or ghost (transparent)",
+        "style": "Border with brand color"
+      },
+      "destructive": {
+        "color": "Red (#dc2626)",
+        "use": "Delete, remove, cancel subscriptions"
+      }
+    },
+    "borders": {
+      "subtle": "Light gray (#e0e0e0, #d0d0d0)",
+      "medium": "Medium gray (#c0c0c0)",
+      "strong": "Dark gray (#999)",
+      "avoid": "Black borders unless intentional"
+    },
+    "shadows": {
+      "color": "Black with low opacity (0.05-0.15)",
+      "approach": "Multiple layers for depth",
+      "example": "box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);"
+    },
+    "focus_indicators": {
+      "color": "High contrast outline (often blue #0066cc)",
+      "requirement": "Must meet 3:1 contrast ratio",
+      "style": "2-3px outline or ring"
+    }
+  },
+  "dark_mode": {
+    "principles": [
+      "Don't just invert colors",
+      "Use dark gray (#121212), not pure black",
+      "Reduce white intensity (use #e0e0e0 instead of #fff)",
+      "Lower saturation for colors",
+      "Maintain contrast ratios",
+      "Use elevation with lighter grays"
+    ],
+    "palette_adjustments": {
+      "backgrounds": "#121212, #1e1e1e, #2a2a2a (elevation levels)",
+      "text": "#e0e0e0 (primary), #a0a0a0 (secondary), #707070 (tertiary)",
+      "colors": "Reduce saturation by 10-20%, increase lightness slightly",
+      "borders": "Lighter grays (#3a3a3a, #4a4a4a)"
+    }
+  },
+  "tools": {
+    "palette_generators": [
+      "Coolors.co - Generate color palettes",
+      "Adobe Color - Color wheel and harmony rules",
+      "Paletton - Color scheme designer",
+      "Colorbox.io - Accessible color systems",
+      "Happy Hues - Palette inspiration with examples"
+    ],
+    "contrast_checkers": [
+      "WebAIM Contrast Checker",
+      "Contrast Ratio (Lea Verou)",
+      "Stark (Figma/Sketch plugin)"
+    ],
+    "shade_generators": [
+      "Tailwind Shades - Generate color scales",
+      "Colorbox.io - Perceptually uniform scales",
+      "0to255.com - Find lighter/darker shades"
+    ],
+    "accessibility": [
+      "Who Can Use - Preview contrast accessibility",
+      "Color Oracle - Color blindness simulator",
+      "Stark - Complete accessibility toolkit"
+    ]
+  },
+  "best_practices": [
+    "Start with grayscale design, add color intentionally",
+    "Limit to 1-2 primary colors + neutrals",
+    "Use color to guide attention to important elements",
+    "Create 9-11 shades of each color for flexibility",
+    "Maintain 4.5:1 contrast for text",
+    "Don't rely on color alone to convey information",
+    "Test with color blindness simulators",
+    "Use semantic colors consistently (green = success, red = error)",
+    "Apply 60-30-10 rule for balance",
+    "Use color psychology appropriate for brand/audience",
+    "Create distinct hover/active states (10-20% darker)",
+    "Use warm grays for friendly feel, cool for professional",
+    "Avoid pure black and pure white in UI",
+    "Test colors in context, not isolation",
+    "Document your palette (design system)",
+    "Use CSS custom properties for maintainability",
+    "Consider cultural color meanings for global audiences",
+    "Provide dark mode alternative",
+    "Use desaturated colors for large areas",
+    "Reserve vibrant colors for small accents"
+  ],
+  "anti_patterns": [
+    "Too many colors (> 5 brand colors)",
+    "Using color alone for critical information",
+    "Insufficient contrast (< 4.5:1 for text)",
+    "Pure black (#000) text or backgrounds",
+    "Overly saturated backgrounds",
+    "Neon colors for large areas",
+    "Red-green combinations without alternatives",
+    "No hover states on interactive elements",
+    "Using color without testing accessibility",
+    "Inconsistent use of semantic colors",
+    "Too many shades (> 15 per color)",
+    "Ignoring cultural color meanings",
+    "Not testing with color blindness simulators",
+    "Vibrant colors for body text",
+    "No visual hierarchy through color"
+  ],
+  "color_naming": {
+    "approaches": {
+      "descriptive": {
+        "example": "sky-blue, forest-green, sunset-orange",
+        "pros": "Intuitive",
+        "cons": "Ambiguous, hard to maintain"
+      },
+      "numeric": {
+        "example": "blue-500, gray-700, red-300",
+        "pros": "Scalable, clear hierarchy",
+        "cons": "Less intuitive"
+      },
+      "functional": {
+        "example": "primary, secondary, accent, text-primary, bg-surface",
+        "pros": "Clear usage",
+        "cons": "Less flexible"
+      }
+    },
+    "recommended": "Combine numeric for scales (gray-100 to gray-900) with functional for semantic colors (primary, success, error)"
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "name": "Neurodiversity-Inclusive Design",
+  "description": "Designing for neurodivergent users including ADHD, autism, dyslexia, and other cognitive differences",
+  "definition": "Neurodiversity recognizes that neurological differences (autism, ADHD, dyslexia, etc.) are natural variations, not deficits. Inclusive design accommodates diverse cognitive needs.",
+  "neurodivergent_conditions": {
+    "adhd": {
+      "characteristics": ["Difficulty focusing", "Easily distracted", "Impulsivity", "Difficulty with organization"],
+      "population": "5-10% of adults, 8-12% of children"
+    },
+    "autism": {
+      "characteristics": ["Sensory sensitivities", "Preference for routine", "Literal interpretation", "Social communication differences"],
+      "population": "1-2% of population"
+    },
+    "dyslexia": {
+      "characteristics": ["Difficulty reading", "Letter/word reversals", "Slow reading speed"],
+      "population": "10-20% of population"
+    },
+    "dyscalculia": {
+      "characteristics": ["Difficulty with numbers", "Math anxiety", "Trouble with time/money"],
+      "population": "3-7% of population"
+    },
+    "anxiety_depression": {
+      "characteristics": ["Overwhelm easily", "Need for control", "Avoidance of difficult tasks"],
+      "population": "~20% of adults"
+    }
+  },
+  "design_principles": {
+    "reduce_cognitive_load": {
+      "description": "Make tasks easier to process",
+      "practices": [
+        "One task per screen",
+        "Clear visual hierarchy",
+        "Chunk information",
+        "Progressive disclosure",
+        "Avoid sensory overload (animations, sounds)"
+      ]
+    },
+    "support_focus": {
+      "description": "Help users stay on task (ADHD)",
+      "practices": [
+        "Minimize distractions (no auto-play, popups)",
+        "Focus mode (hide non-essential UI)",
+        "Progress indicators (show how much left)",
+        "Break long tasks into steps",
+        "Allow saving and resuming"
+      ]
+    },
+    "provide_consistency": {
+      "description": "Predictable patterns reduce anxiety (autism)",
+      "practices": [
+        "Consistent navigation",
+        "Same actions in same places",
+        "Clear labels (no clever copy)",
+        "Warn before changes",
+        "Avoid sudden changes"
+      ]
+    },
+    "flexibility": {
+      "description": "Allow customization for individual needs",
+      "practices": [
+        "Adjustable text size, spacing, contrast",
+        "Dark mode option",
+        "Disable animations",
+        "Keyboard shortcuts",
+        "Customizable interface"
+      ]
+    }
+  },
+  "specific_accommodations": {
+    "adhd": {
+      "focus": [
+        "Minimize distractions (no auto-play, limit notifications)",
+        "Single-task interface (no sidebars during task)",
+        "Timers and reminders",
+        "Progress tracking (gamification)",
+        "Allow hyperfocus (don't interrupt with popups)"
+      ],
+      "organization": [
+        "Clear categorization",
+        "Search and filters",
+        "Tags and labels",
+        "Auto-save (don't lose work)",
+        "Task lists and deadlines"
+      ]
+    },
+    "autism": {
+      "sensory": [
+        "Reduce sensory input (mute auto-play, limit animations)",
+        "High contrast mode",
+        "Avoid flashing (seizure risk, also overwhelming)",
+        "Simple, clean design"
+      ],
+      "communication": [
+        "Literal language (no idioms, sarcasm)",
+        "Clear instructions (explicit steps)",
+        "Visual aids (icons, images)",
+        "No ambiguity"
+      ],
+      "routine": [
+        "Predictable navigation",
+        "Consistent layout",
+        "Warn before updates (change is stressful)",
+        "Allow customization (control)"
+      ]
+    },
+    "dyslexia": {
+      "reading": [
+        "Sans-serif fonts (Arial, Verdana) or dyslexia fonts (OpenDyslexic)",
+        "Larger text (16px+)",
+        "Increased line spacing (1.5-2)",
+        "Shorter line length (50-70 characters)",
+        "Left-aligned (not justified)",
+        "Avoid walls of text (chunk content)",
+        "Use headings and bullets"
+      ],
+      "support": [
+        "Text-to-speech option",
+        "Spell-check and autocorrect",
+        "Search instead of browse",
+        "Visual aids (icons, images)"
+      ]
+    },
+    "anxiety": {
+      "control": [
+        "Clear next steps",
+        "Undo option",
+        "Save progress (no pressure)",
+        "No timers (unless necessary)",
+        "Non-judgmental language"
+      ],
+      "reassurance": [
+        "Progress indicators",
+        "Confirmation messages",
+        "Help easily accessible",
+        "No sudden errors",
+        "Gentle error messages"
+      ]
+    }
+  },
+  "ui_patterns": {
+    "simple_navigation": {
+      "avoid": "Mega menus, hidden navigation, complex hierarchies",
+      "prefer": "Clear, visible navigation, breadcrumbs, search"
+    },
+    "clear_labels": {
+      "avoid": "Icons without labels, clever copy, ambiguous terms",
+      "prefer": "Text labels, simple language, tooltips"
+    },
+    "reduced_animation": {
+      "respect": "prefers-reduced-motion media query",
+      "implementation": "@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }"
+    },
+    "focus_mode": {
+      "feature": "Hide non-essential UI to reduce distraction",
+      "examples": "Zen mode (writing apps), Focus mode (Windows 11), Do Not Disturb"
+    },
+    "customization": {
+      "options": ["Font size", "Font family", "Line spacing", "Color scheme", "Layout density"],
+      "implementation": "Settings panel, remember preferences"
+    }
+  },
+  "content_guidelines": {
+    "plain_language": {
+      "practices": ["Short sentences (< 25 words)", "Common words (not jargon)", "Active voice", "One idea per sentence"]
+    },
+    "structure": {
+      "practices": ["Headings and subheadings", "Bullet points", "Short paragraphs (3-4 sentences)", "White space"],
+      "avoid": "Walls of text, complex sentences, passive voice"
+    },
+    "visual_support": {
+      "practices": ["Icons with labels", "Images to explain concepts", "Diagrams for complex info", "Videos (with captions)"]
+    }
+  },
+  "testing": {
+    "user_testing": {
+      "participants": "Include neurodivergent users (ADHD, autism, dyslexia)",
+      "scenarios": "Real tasks, observe struggles",
+      "feedback": "Ask about overwhelm, confusion, stress"
+    },
+    "tools": {
+      "readability": "Hemingway Editor, Grammarly (reading level)",
+      "dyslexia_simulation": "Dyslexia simulator browser extensions",
+      "screen_reader": "Test with NVDA, JAWS (many neurodivergent users rely on it)"
+    }
+  },
+  "best_practices": [
+    "Simple, clean design (avoid clutter)",
+    "One task per screen",
+    "Clear, literal language",
+    "Consistent navigation and layout",
+    "Allow customization (font, spacing, colors)",
+    "Respect prefers-reduced-motion",
+    "No auto-play (videos, sounds)",
+    "Progress indicators and save points",
+    "Undo option",
+    "Help easily accessible",
+    "Large touch targets (44x44px+)",
+    "High contrast mode option",
+    "Text-to-speech support",
+    "Chunk content (headings, bullets)",
+    "Gentle error messages",
+    "Test with neurodivergent users"
+  ],
+  "anti_patterns": [
+    "Cluttered, busy interfaces",
+    "Auto-play videos/sounds",
+    "Flashing or rapid animations",
+    "Clever copy (use literal language)",
+    "Hidden navigation",
+    "Complex multi-step tasks without save",
+    "No undo option",
+    "Tiny text (< 14px)",
+    "Justified text (rivers of white space)",
+    "Walls of text",
+    "Ambiguous icons without labels",
+    "Sudden, unexpected changes",
+    "Timed tasks (pressure)",
+    "Inaccessible error messages",
+    "No way to customize interface"
+  ],
+  "resources": [
+    "ADHD-Friendly Design (ADHD Foundation)",
+    "Autism-Friendly Design (National Autistic Society)",
+    "Dyslexia Style Guide (British Dyslexia Association)",
+    "Neurodiversity Design System (Microsoft)",
+    "Inclusive Design for Cognition (W3C)"
+  ]
+}

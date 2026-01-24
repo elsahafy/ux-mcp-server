@@ -1,0 +1,208 @@
+{
+  "name": "Financial Services UX Patterns",
+  "description": "User experience design for banking, fintech, and financial applications",
+  "regulations": {
+    "pci_dss": {
+      "name": "Payment Card Industry Data Security Standard",
+      "scope": "Apps that handle credit card data",
+      "key_requirements": ["Never store CVV", "Encrypt card data", "Secure transmission", "PCI-compliant payment processors"],
+      "ux_impact": "Use Stripe, PayPal for card handling (don't build own)"
+    },
+    "kyc_aml": {
+      "name": "Know Your Customer / Anti-Money Laundering",
+      "requirement": "Verify user identity",
+      "ux_impact": ["ID upload", "Proof of address", "Longer onboarding", "Explain why required"]
+    },
+    "gdpr_privacy": "Right to access and delete financial data"
+  },
+  "core_principles": {
+    "security": {
+      "description": "Financial apps are high-value targets",
+      "practices": [
+        "Multi-factor authentication (2FA)",
+        "Biometric authentication (Touch ID, Face ID)",
+        "Session timeouts",
+        "Transaction confirmation (SMS, email)",
+        "Fraud detection alerts",
+        "Encryption at rest and in transit"
+      ]
+    },
+    "trust": {
+      "description": "Users must trust app with their money",
+      "practices": [
+        "Clear security indicators (lock icon, SSL)",
+        "Transparent fees (no hidden costs)",
+        "Bank-level security language",
+        "Show credentials (FDIC insured, regulated by...)",
+        "Customer support easy to reach"
+      ]
+    },
+    "clarity": {
+      "description": "Financial info must be crystal clear",
+      "practices": [
+        "Display amounts prominently",
+        "Show fees separately from total",
+        "Explain terms in plain language",
+        "Use tables for comparisons",
+        "Highlight key numbers"
+      ]
+    },
+    "error_prevention": {
+      "description": "Financial errors are costly",
+      "practices": [
+        "Confirm large transactions",
+        "Show recipient info before sending money",
+        "Allow undo (if possible, e.g., pending transfers)",
+        "Validate account numbers (checksums)",
+        "Prevent duplicate transactions"
+      ]
+    }
+  },
+  "common_fintech_apps": {
+    "banking_apps": {
+      "features": ["Check balance", "Transfer money", "Pay bills", "Deposit checks (photo)", "View transactions"],
+      "ux_patterns": {
+        "dashboard": "Balance prominent, recent transactions below",
+        "transfers": "Saved recipients, confirm before send, show delivery time",
+        "search": "Filter by date, amount, merchant",
+        "notifications": "Transaction alerts, low balance warnings"
+      }
+    },
+    "payment_apps": {
+      "examples": ["Venmo", "Cash App", "PayPal", "Zelle"],
+      "ux_patterns": {
+        "send_money": "Recipient autocomplete, amount large and clear, add note",
+        "request_money": "Send request, set reminder",
+        "social_feed": "Opt-in (privacy concern), like/comment on transactions",
+        "split_bill": "Select contacts, app divides amount"
+      }
+    },
+    "investment_apps": {
+      "examples": ["Robinhood", "Coinbase", "Acorns"],
+      "ux_patterns": {
+        "portfolio_view": "Total value, gain/loss ($ and %), holdings breakdown",
+        "stock_detail": "Real-time price chart, buy/sell buttons, news feed",
+        "risk_warnings": "Disclosures for risky investments (crypto, options)",
+        "educational": "Explain concepts for beginners"
+      }
+    },
+    "budgeting_apps": {
+      "examples": ["Mint", "YNAB", "PocketGuard"],
+      "ux_patterns": {
+        "spending_breakdown": "Pie chart by category, compare to budget",
+        "budget_setting": "Suggest based on history, allow customization",
+        "alerts": "Overspending warnings, bill reminders",
+        "trends": "Month-over-month comparisons, insights"
+      }
+    },
+    "lending_apps": {
+      "examples": ["LendingClub", "SoFi", "Upstart"],
+      "ux_patterns": {
+        "loan_application": "Progress indicator, clear requirements, real-time approval",
+        "rate_display": "APR prominent, total cost shown, payment schedule",
+        "disclosures": "Terms and conditions clear, not buried"
+      }
+    }
+  },
+  "critical_ux_patterns": {
+    "authentication": {
+      "login": ["Email/password", "Biometric (Touch ID, Face ID)", "SMS code (2FA)", "Authenticator app"],
+      "best_practice": "Offer biometric for convenience, require 2FA for sensitive actions",
+      "session": "Timeout after 5-10 min inactivity, require re-auth for sensitive actions"
+    },
+    "transaction_flow": {
+      "steps": {
+        "1_amount": "Large, clear input. Show balance. Suggest amounts (loan payoff, split bill).",
+        "2_recipient": "Autocomplete saved recipients. Show profile pic. Verify account/routing number.",
+        "3_details": "Add memo/note (optional). Select account (if multiple). Choose speed (instant fee vs free 1-3 days).",
+        "4_review": "Summary: To, From, Amount, Fee, Total, Delivery time. Edit option.",
+        "5_confirm": "2FA or biometric. Confirmation message with transaction ID.",
+        "6_receipt": "Email/push notification. View in transaction history. Undo option (if pending)."
+      }
+    },
+    "fees_pricing": {
+      "transparency": "Show all fees before confirmation",
+      "breakdown": "Separate amount, fee, total. Explain each fee.",
+      "comparison": "If offering tiers, clear comparison table",
+      "avoid": "Hidden fees, surprise charges"
+    },
+    "data_visualization": {
+      "spending": "Pie chart by category, bar chart by month",
+      "portfolio": "Line chart for performance over time, current value prominent",
+      "budget": "Progress bars, green (under budget) / red (over budget)",
+      "best_practice": "Show data, don't hide it in menus"
+    },
+    "error_states": {
+      "insufficient_funds": "Clear message: 'Not enough balance. Current: $50, Needed: $75.' Suggest add funds or lower amount.",
+      "invalid_account": "'Account number invalid. Please check and try again.' (Don't just say 'Error').",
+      "fraud_alert": "'Unusual activity detected. Confirm this is you.' Escalate to support if needed.",
+      "network_error": "'Connection lost. Your transaction did not go through. Try again.' (Don't charge if failed)."
+    }
+  },
+  "security_ux": {
+    "multi_factor_auth": {
+      "types": ["SMS code", "Authenticator app (TOTP)", "Biometric", "Email code"],
+      "ux": "Offer multiple options, default to most secure, remember device (checkbox)"
+    },
+    "fraud_detection": {
+      "alert": "Push notification for large/unusual transactions",
+      "confirm": "'Did you make this $500 purchase at X?' Yes/No buttons",
+      "freeze": "Quick freeze card option in app"
+    },
+    "password_reset": {
+      "security": "Send code to email + SMS, or security questions",
+      "ux": "Clear process, show expected wait time, don't lock account after failed attempts (provide recovery)"
+    }
+  },
+  "best_practices": [
+    "Use 2FA for login and sensitive actions",
+    "Biometric authentication for convenience",
+    "Session timeout after 5-10 min",
+    "Show all fees before confirmation",
+    "Confirm large transactions",
+    "Clear error messages with recovery steps",
+    "Use PCI-compliant payment processors",
+    "Encrypt all data (at rest and in transit)",
+    "Fraud detection and alerts",
+    "Quick account freeze option",
+    "Transaction history easy to search/filter",
+    "Display balances prominently",
+    "Explain financial terms in plain language",
+    "Allow transaction disputes",
+    "Customer support easy to reach (in-app chat)",
+    "Show security credentials (FDIC, regulations)",
+    "Send transaction receipts (email/push)",
+    "Test with diverse income levels and financial literacy"
+  ],
+  "anti_patterns": [
+    "Storing credit card CVV",
+    "No 2FA option",
+    "Hidden fees revealed at confirmation",
+    "No transaction confirmation for large amounts",
+    "Unclear error messages",
+    "Auto-logout too fast (< 2 min, annoying)",
+    "No session timeout (security risk)",
+    "Complex financial jargon without explanation",
+    "Hard to find customer support",
+    "No fraud alerts",
+    "Allowing transactions with insufficient funds (overdraft without warning)",
+    "No way to freeze card in app",
+    "Transaction history hard to search",
+    "Confusing fee structure",
+    "Requiring unnecessary personal data"
+  ],
+  "regulations_compliance": {
+    "gdpr": "Right to access, delete, export data",
+    "pci_dss": "Secure card data handling (use Stripe, not custom)",
+    "kyc_aml": "Verify identity for accounts > certain amount",
+    "cfpb": "Consumer Financial Protection Bureau (US) - fair lending, clear disclosures",
+    "sox": "Sarbanes-Oxley (public companies) - accurate financial reporting"
+  },
+  "resources": [
+    "PCI DSS Compliance Guide",
+    "Stripe UX Guidelines",
+    "Plaid UX Patterns (fintech)",
+    "Square Design System",
+    "Banking UX Design (Chase, Capital One case studies)"
+  ]
+}

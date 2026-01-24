@@ -1,0 +1,102 @@
+{
+  "name": "Haptic Feedback Design",
+  "description": "Design guide for tactile feedback in user interfaces across devices",
+  "definition": "Haptic feedback is the use of vibrations and forces to communicate with users through touch",
+  "types": {
+    "vibration": {
+      "description": "Most common haptic feedback (smartphones, game controllers)",
+      "types": {
+        "notification": "Short vibration for alerts (200-500ms)",
+        "error": "Double or irregular vibration pattern",
+        "success": "Single, smooth vibration",
+        "button_press": "Very short tap (10-50ms)"
+      }
+    },
+    "force_feedback": {
+      "description": "Resistance or push-back (game controllers, VR)",
+      "examples": ["Trigger resistance in games", "Simulated texture on touchscreens"]
+    },
+    "taptic_engine": {
+      "description": "Precise haptics (Apple devices)",
+      "capabilities": ["Different intensities", "Various patterns", "Localized feedback"]
+    }
+  },
+  "design_principles": {
+    "purposeful": "Every haptic must have clear meaning",
+    "consistent": "Same haptic for same action across app",
+    "subtle": "Not overwhelming or annoying",
+    "accessible": "Not only way to communicate info (redundant with visual/audio)"
+  },
+  "use_cases": {
+    "button_feedback": {
+      "pattern": "Light tap on press",
+      "duration": "10-20ms",
+      "when": "Touchscreen buttons (no physical click)"
+    },
+    "notifications": {
+      "pattern": "Medium vibration",
+      "duration": "200-300ms",
+      "variations": "Different patterns for different notification types"
+    },
+    "errors": {
+      "pattern": "Sharp double-tap or buzz",
+      "purpose": "Alert user to mistake",
+      "example": "Wrong password, invalid input"
+    },
+    "success": {
+      "pattern": "Smooth single vibration",
+      "purpose": "Confirm completion",
+      "example": "Payment successful, file uploaded"
+    },
+    "scrolling": {
+      "pattern": "Subtle ticks at each item",
+      "example": "iOS time picker, number selectors"
+    },
+    "gaming": {
+      "use": "Immersion (gunfire, collisions, explosions)",
+      "best_practice": "Vary intensity based on in-game events"
+    }
+  },
+  "platform_apis": {
+    "ios": {
+      "api": "UIImpactFeedbackGenerator, UINotificationFeedbackGenerator",
+      "types": ["Light", "Medium", "Heavy", "Soft", "Rigid", "Success", "Warning", "Error"]
+    },
+    "android": {
+      "api": "Vibrator, VibrationEffect",
+      "control": "Duration, amplitude, pattern"
+    },
+    "web": {
+      "api": "navigator.vibrate([duration])",
+      "support": "Limited (Android Chrome mainly)"
+    }
+  },
+  "best_practices": [
+    "Use haptics for important moments only",
+    "Keep vibrations brief (< 500ms)",
+    "Vary patterns for different actions",
+    "Allow users to disable haptics",
+    "Don't rely solely on haptics (accessibility)",
+    "Test on real devices (varies by hardware)",
+    "Consider battery impact",
+    "Use system-provided haptics when possible"
+  ],
+  "anti_patterns": [
+    "Haptics for every tap (annoying)",
+    "Long vibrations (> 1 second)",
+    "Same pattern for everything",
+    "No way to disable",
+    "Relying only on haptics for critical info",
+    "Overly intense vibrations"
+  ],
+  "accessibility": {
+    "deaf_hard_of_hearing": "Haptics can replace audio alerts",
+    "blind": "Haptics provide feedback for touchscreen interactions",
+    "motor_impairments": "May trigger haptics unintentionally, must be disableable"
+  },
+  "resources": [
+    "Apple Human Interface Guidelines - Haptics",
+    "Android Haptics Guide",
+    "Designing with Haptics (Haptic Design Blog)"
+  ]
+}

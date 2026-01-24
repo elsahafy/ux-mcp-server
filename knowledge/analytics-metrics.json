@@ -1,0 +1,521 @@
+{
+  "name": "UX Analytics & Metrics",
+  "description": "Comprehensive guide to measuring user experience through analytics, metrics, and data-driven decision making",
+  "why_measure_ux": {
+    "reasons": [
+      "Identify usability issues at scale",
+      "Prioritize improvements (data > opinions)",
+      "Prove ROI of UX work",
+      "Track progress over time",
+      "Make informed decisions",
+      "Benchmark against competitors/industry"
+    ],
+    "quote": "In God we trust. All others must bring data. - W. Edwards Deming"
+  },
+  "types_of_metrics": {
+    "quantitative": {
+      "description": "Numerical data, answers 'what' and 'how many'",
+      "examples": ["Conversion rate", "Time on task", "Click-through rate", "Bounce rate"],
+      "tools": ["Google Analytics", "Mixpanel", "Amplitude", "Heap"],
+      "pros": ["Scalable", "Statistical significance", "Trackable over time"],
+      "cons": ["Doesn't explain 'why'", "Can miss context"]
+    },
+    "qualitative": {
+      "description": "Descriptive data, answers 'why' and 'how'",
+      "examples": ["User interviews", "Usability test observations", "Survey comments", "Session recordings"],
+      "tools": ["Hotjar", "FullStory", "UserTesting", "Surveys"],
+      "pros": ["Rich insights", "Explains behavior", "Uncovers unknown issues"],
+      "cons": ["Small sample size", "Not statistically significant", "Time-intensive"]
+    },
+    "attitudinal": {
+      "description": "What users say (opinions, preferences)",
+      "examples": ["Surveys", "NPS", "User interviews", "Ratings"],
+      "use_when": "Understanding satisfaction, preferences, perceptions"
+    },
+    "behavioral": {
+      "description": "What users do (actions, patterns)",
+      "examples": ["Analytics", "A/B tests", "Session recordings", "Heatmaps"],
+      "use_when": "Understanding actual behavior (more reliable than stated)"
+    },
+    "recommendation": "Combine quantitative + qualitative, and attitudinal + behavioral for complete picture"
+  },
+  "key_ux_metrics": {
+    "task_success_metrics": {
+      "task_success_rate": {
+        "definition": "% of users who complete a task successfully",
+        "formula": "Successful completions / Total attempts × 100",
+        "benchmark": "> 78% (Nielsen benchmark for usability)",
+        "measurement": "Usability testing or analytics (track goal completions)",
+        "use_when": "Evaluating specific workflows (checkout, onboarding, search)"
+      },
+      "time_on_task": {
+        "definition": "How long it takes to complete a task",
+        "goal": "Lower is better (efficiency)",
+        "measurement": "Usability testing (stopwatch) or analytics (time between events)",
+        "considerations": ["Compare to baseline or benchmark", "High variance? Task unclear or multiple paths"],
+        "note": "Long time may indicate confusion OR engagement (depends on task)"
+      },
+      "error_rate": {
+        "definition": "Number of errors per task attempt",
+        "types": ["Slips (typos, misclicks)", "Mistakes (wrong path, wrong action)"],
+        "measurement": "Usability testing (observe errors) or analytics (track failed attempts)",
+        "goal": "< 1 error per task (Nielsen)"
+      }
+    },
+    "user_satisfaction": {
+      "sus": {
+        "name": "System Usability Scale",
+        "description": "10-question standardized usability survey",
+        "scale": "1-5 Likert scale per question",
+        "scoring": "0-100 (68+ is above average, 80+ is excellent)",
+        "when": "Post-task or after using product",
+        "pros": ["Standardized (compare across products/time)", "Quick (< 5 min)", "Reliable"],
+        "cons": ["Retrospective (memory bias)", "Doesn't explain why"],
+        "sample_questions": [
+          "I think that I would like to use this system frequently",
+          "I found the system unnecessarily complex",
+          "I thought the system was easy to use"
+        ]
+      },
+      "nps": {
+        "name": "Net Promoter Score",
+        "question": "How likely are you to recommend [product] to a friend or colleague? (0-10)",
+        "calculation": "% Promoters (9-10) - % Detractors (0-6)",
+        "score_range": "-100 to +100",
+        "benchmark": "> 50 excellent, 0-30 good, < 0 poor",
+        "pros": ["Simple", "Industry standard", "Predictive of growth"],
+        "cons": ["Doesn't explain why", "Cultural bias (varies by country)"],
+        "follow_up": "Ask 'Why did you give that score?' (qualitative insight)"
+      },
+      "csat": {
+        "name": "Customer Satisfaction Score",
+        "question": "How satisfied are you with [product/feature]?",
+        "scale": "1-5 (Very Unsatisfied to Very Satisfied)",
+        "calculation": "% who selected 4 or 5 (Satisfied or Very Satisfied)",
+        "when": "After specific interaction (purchase, support ticket, feature use)",
+        "pros": ["Specific to experience", "Actionable"],
+        "cons": ["Not standardized across companies"]
+      },
+      "ces": {
+        "name": "Customer Effort Score",
+        "question": "How easy was it to [complete task]?",
+        "scale": "1-7 (Very Difficult to Very Easy)",
+        "calculation": "Average score or % who selected 6-7",
+        "when": "After task completion",
+        "finding": "Effort is more predictive of loyalty than satisfaction (CEB research)",
+        "use_when": "Evaluating task ease (support, checkout, onboarding)"
+      }
+    },
+    "engagement_metrics": {
+      "active_users": {
+        "dau": { "name": "Daily Active Users", "definition": "Users who interact with product daily" },
+        "wau": { "name": "Weekly Active Users", "definition": "Users who interact with product weekly" },
+        "mau": { "name": "Monthly Active Users", "definition": "Users who interact with product monthly" },
+        "dau_mau_ratio": {
+          "name": "Stickiness",
+          "formula": "DAU / MAU",
+          "benchmark": "> 20% good, > 50% excellent (varies by product type)",
+          "interpretation": "Higher = users return more frequently"
+        }
+      },
+      "session_metrics": {
+        "session_duration": {
+          "definition": "Time user spends in a session",
+          "interpretation": "Longer may indicate engagement OR confusion (depends on product)",
+          "use_case": "Content sites (longer good), task-based apps (shorter may be good)"
+        },
+        "pages_per_session": {
+          "definition": "Number of pages viewed per session",
+          "interpretation": "Higher = more engagement (content sites) OR poor IA (task sites)"
+        },
+        "bounce_rate": {
+          "definition": "% of sessions where user views only one page and leaves",
+          "formula": "Single-page sessions / Total sessions × 100",
+          "benchmark": "< 40% good (varies by page type)",
+          "high_bounce_causes": ["Irrelevant traffic", "Poor first impression", "Slow load time", "Found answer (not always bad)"]
+        }
+      },
+      "feature_adoption": {
+        "adoption_rate": {
+          "definition": "% of users who've used a feature",
+          "formula": "Users who used feature / Total users × 100",
+          "goal": "High for core features, lower OK for advanced features"
+        },
+        "frequency_of_use": {
+          "definition": "How often users engage with feature",
+          "measurement": "Average uses per user per time period"
+        },
+        "depth_of_use": {
+          "definition": "How deeply users engage",
+          "example": "% of users who use advanced settings vs basic"
+        }
+      }
+    },
+    "business_metrics": {
+      "conversion_rate": {
+        "definition": "% of users who complete desired action (purchase, sign-up, etc.)",
+        "formula": "Conversions / Total visitors × 100",
+        "benchmark": "1-3% (e-commerce), varies widely by industry",
+        "micro_conversions": "Smaller goals leading to main goal (add to cart, start checkout)"
+      },
+      "funnel_metrics": {
+        "drop_off_rate": {
+          "definition": "% who leave at each funnel step",
+          "formula": "Users who didn't proceed / Users who reached step × 100",
+          "use": "Identify bottlenecks in conversion funnel"
+        },
+        "funnel_visualization": "Visualize drop-off at each step (Analytics → Funnel report)"
+      },
+      "revenue_metrics": {
+        "arpu": { "name": "Average Revenue Per User", "formula": "Total Revenue / Total Users" },
+        "ltv": { "name": "Lifetime Value", "definition": "Average revenue per customer over their lifetime" },
+        "cac": { "name": "Customer Acquisition Cost", "formula": "Total marketing + sales cost / New customers" },
+        "ltv_cac_ratio": { "formula": "LTV / CAC", "benchmark": "> 3 (for every $1 spent acquiring, earn $3+)" }
+      }
+    },
+    "performance_metrics": {
+      "page_load_time": {
+        "definition": "Time for page to fully load",
+        "benchmark": "< 3 seconds (ideal < 1 second)",
+        "impact": "1 second delay = 7% reduction in conversions (Akamai study)",
+        "tools": ["Google PageSpeed Insights", "WebPageTest", "Lighthouse"]
+      },
+      "core_web_vitals": {
+        "lcp": {
+          "name": "Largest Contentful Paint",
+          "definition": "Time for largest element to render",
+          "target": "< 2.5 seconds",
+          "ux_impact": "Perceived load speed"
+        },
+        "fid": {
+          "name": "First Input Delay",
+          "definition": "Time from first interaction to browser response",
+          "target": "< 100ms",
+          "ux_impact": "Interactivity responsiveness"
+        },
+        "cls": {
+          "name": "Cumulative Layout Shift",
+          "definition": "Visual stability (elements shifting during load)",
+          "target": "< 0.1",
+          "ux_impact": "Visual stability (no unexpected jumps)"
+        }
+      },
+      "time_to_interactive": {
+        "definition": "Time until page is fully interactive",
+        "target": "< 3.8 seconds (mobile)",
+        "ux_impact": "User can interact without lag"
+      }
+    }
+  },
+  "analytics_tools": {
+    "web_analytics": {
+      "google_analytics": {
+        "pros": ["Free", "Comprehensive", "Industry standard", "Integrations"],
+        "cons": ["Privacy concerns", "Complex for beginners", "GA4 learning curve"],
+        "use_for": ["Traffic sources", "Page views", "Conversion funnels", "Demographics"]
+      },
+      "mixpanel": {
+        "pros": ["Event-based (track specific actions)", "User-centric", "Funnel analysis", "Cohort analysis"],
+        "cons": ["Expensive at scale", "Requires custom implementation"],
+        "use_for": ["Product analytics", "Feature adoption", "User journeys"]
+      },
+      "amplitude": {
+        "pros": ["Behavioral analytics", "Retention analysis", "Easy to use"],
+        "cons": ["Expensive", "Learning curve for advanced features"],
+        "use_for": ["Product analytics", "User behavior patterns", "Retention"]
+      },
+      "heap": {
+        "pros": ["Auto-capture all events", "Retroactive analysis", "No code changes for new events"],
+        "cons": ["Data overload", "Expensive"],
+        "use_for": ["When you don't know what to track yet", "Fast iteration"]
+      }
+    },
+    "qualitative_analytics": {
+      "hotjar": {
+        "features": ["Heatmaps", "Session recordings", "Surveys", "Feedback widgets"],
+        "pros": ["All-in-one", "Affordable", "Easy to use"],
+        "use_for": ["Understanding user behavior", "Finding usability issues"]
+      },
+      "fullstory": {
+        "features": ["Session replay", "Rage clicks", "Error tracking", "Funnel analysis"],
+        "pros": ["Powerful search", "Automatic error detection"],
+        "cons": ["Expensive"],
+        "use_for": ["Debugging UX issues", "Understanding confusion"]
+      },
+      "microsoft_clarity": {
+        "features": ["Heatmaps", "Session recordings", "Insights"],
+        "pros": ["FREE", "Privacy-focused", "Easy setup"],
+        "cons": ["Fewer features than Hotjar/FullStory"],
+        "use_for": ["Budget option for heatmaps and recordings"
+      }
+    },
+    "heatmap_tools": {
+      "types": {
+        "click_heatmap": "Where users click (find dead clicks, popular elements)",
+        "scroll_heatmap": "How far users scroll (where to place CTAs)",
+        "move_heatmap": "Mouse movement (attention, though imperfect on mobile)"
+      },
+      "tools": ["Hotjar", "Crazy Egg", "Microsoft Clarity"],
+      "insights": ["Dead clicks (non-clickable elements users click)", "Ignored CTAs", "Content below fold unseen"]
+    },
+    "ab_testing_tools": {
+      "google_optimize": {
+        "pros": ["Free", "Integrates with GA"],
+        "cons": ["Being sunset (2023)", "Limited features"],
+        "status": "Discontinued Sep 2023"
+      },
+      "optimizely": {
+        "pros": ["Enterprise-grade", "Multivariate testing", "Personalization"],
+        "cons": ["Expensive", "Complex"],
+        "use_for": "Large-scale experimentation programs"
+      },
+      "vwo": {
+        "pros": ["A/B testing + heatmaps + surveys", "Affordable", "Good UI"],
+        "use_for": "Mid-market companies"
+      }
+    },
+    "survey_tools": {
+      "typeform": {
+        "pros": ["Beautiful UI", "Conversational", "High completion rates"],
+        "cons": ["Expensive for high volume"],
+        "use_for": "Customer feedback, NPS, onboarding surveys"
+      },
+      "surveymonkey": {
+        "pros": ["Comprehensive", "Templates", "Analytics"],
+        "cons": ["Less modern UI"],
+        "use_for": "Traditional surveys, market research"
+      },
+      "google_forms": {
+        "pros": ["Free", "Simple", "Familiar"],
+        "cons": ["Basic features", "Less engaging"],
+        "use_for": "Quick surveys, internal feedback"
+      }
+    }
+  },
+  "measurement_frameworks": {
+    "heart_framework": {
+      "description": "Google's UX metrics framework",
+      "developed_by": "Google HEART team",
+      "dimensions": {
+        "happiness": {
+          "description": "User attitudes and satisfaction",
+          "metrics": ["NPS", "CSAT", "SUS"],
+          "method": "Surveys"
+        },
+        "engagement": {
+          "description": "Level of user involvement",
+          "metrics": ["DAU/MAU", "Session duration", "Feature usage", "Frequency"],
+          "method": "Analytics"
+        },
+        "adoption": {
+          "description": "New users of a product or feature",
+          "metrics": ["New user sign-ups", "First-time feature use", "Onboarding completion"],
+          "method": "Analytics"
+        },
+        "retention": {
+          "description": "Rate at which users return",
+          "metrics": ["Churn rate", "Day 1/7/30 retention", "Repeat usage"],
+          "method": "Analytics"
+        },
+        "task_success": {
+          "description": "Efficiency, effectiveness, error rate",
+          "metrics": ["Task completion rate", "Time on task", "Error rate"],
+          "method": "Usability testing or analytics"
+        }
+      },
+      "use": "Comprehensive UX measurement for products"
+    },
+    "aarrr_pirate_metrics": {
+      "description": "Dave McClure's startup metrics",
+      "stages": {
+        "acquisition": {
+          "description": "Users arrive",
+          "metrics": ["Traffic sources", "Cost per acquisition", "Conversion rate"],
+          "goal": "Bring users to product"
+        },
+        "activation": {
+          "description": "Users have good first experience",
+          "metrics": ["Onboarding completion", "Time to first value", "Activation rate"],
+          "goal": "Users experience 'aha moment'"
+        },
+        "retention": {
+          "description": "Users come back",
+          "metrics": ["Retention rate", "Churn rate", "DAU/MAU"],
+          "goal": "Users return and engage"
+        },
+        "revenue": {
+          "description": "Users pay",
+          "metrics": ["Conversion to paid", "ARPU", "MRR/ARR"],
+          "goal": "Monetize users"
+        },
+        "referral": {
+          "description": "Users refer others",
+          "metrics": ["Viral coefficient", "Referral rate", "Invites sent"],
+          "goal": "Users invite others (viral growth)"
+        }
+      },
+      "use": "Startup growth tracking (SaaS, apps)"
+    },
+    "pulse_framework": {
+      "description": "Google's lightweight HEART alternative",
+      "metrics": {
+        "page_views": "Overall usage",
+        "uptime": "Technical reliability",
+        "latency": "Performance (speed)",
+        "seven_day_active_users": "Engagement",
+        "earnings": "Revenue (if applicable)"
+      },
+      "use": "Quick health check for features/products"
+    }
+  },
+  "data_analysis": {
+    "segmentation": {
+      "description": "Break down metrics by user groups",
+      "segments": {
+        "demographic": "Age, gender, location",
+        "behavioral": "Power users, casual users, new users",
+        "acquisition": "Traffic source (organic, paid, referral)",
+        "device": "Mobile, tablet, desktop",
+        "temporal": "Time of day, day of week"
+      },
+      "benefit": "Uncover insights hidden in averages",
+      "example": "Overall conversion 5%, but mobile 2%, desktop 8% (mobile issue!)"
+    },
+    "cohort_analysis": {
+      "description": "Group users by shared characteristic (e.g., sign-up date)",
+      "use_cases": [
+        "Retention over time (Do users from Jan retain better than Feb?)",
+        "Feature impact (Do users who adopted feature X retain better?)",
+        "A/B test long-term effects"
+      ],
+      "tools": ["Mixpanel", "Amplitude", "Google Analytics (limited)"]
+    },
+    "funnel_analysis": {
+      "description": "Track users through multi-step process",
+      "steps": ["Identify funnel steps", "Measure drop-off at each step", "Analyze why drop-off occurs", "Optimize"],
+      "example": "E-commerce: View Product → Add to Cart → Checkout → Payment → Confirmation",
+      "tools": ["Google Analytics", "Mixpanel", "Amplitude"]
+    },
+    "statistical_significance": {
+      "description": "Determine if results are due to chance or real effect",
+      "p_value": {
+        "definition": "Probability result is due to chance",
+        "threshold": "p < 0.05 (95% confidence)",
+        "interpretation": "p = 0.03 means 3% chance result is due to chance (significant!)"
+      },
+      "sample_size": {
+        "importance": "Small samples = unreliable results",
+        "calculator": "Use A/B test sample size calculator",
+        "rule_of_thumb": "At least 30 users per variant (more for small effects)"
+      },
+      "duration": {
+        "minimum": "1 week (account for weekly cycles)",
+        "ideal": "2-4 weeks",
+        "avoid": "Stopping test early because winning (regression to mean)"
+      }
+    }
+  },
+  "reporting_dashboards": {
+    "dashboard_design": {
+      "principles": {
+        "hierarchy": "Most important metrics prominent",
+        "glanceability": "Understand at a glance (no hunting for info)",
+        "actionability": "Clear what action to take",
+        "context": "Show trends, comparisons, benchmarks (not just numbers)"
+      },
+      "elements": {
+        "kpis": "Key metrics (large, prominent)",
+        "trends": "Line charts showing change over time",
+        "comparisons": "Current vs previous period (%, absolute change)",
+        "targets": "Goal lines on charts",
+        "alerts": "Highlight when metric is outside normal range"
+      }
+    },
+    "visualization_types": {
+      "line_chart": { "use": "Trends over time", "example": "Daily active users over 30 days" },
+      "bar_chart": { "use": "Compare categories", "example": "Conversion rate by traffic source" },
+      "pie_chart": { "use": "Proportions (use sparingly, < 6 segments)", "example": "Traffic sources" },
+      "funnel_chart": { "use": "Multi-step process drop-off", "example": "Checkout funnel" },
+      "table": { "use": "Detailed data, multiple dimensions", "example": "Top pages by traffic and conversion" }
+    },
+    "tools": {
+      "google_data_studio": "Free, integrates with GA and other Google tools (now Looker Studio)",
+      "tableau": "Enterprise BI tool, powerful visualizations",
+      "power_bi": "Microsoft BI tool",
+      "mixpanel_dashboards": "Built-in product analytics dashboards",
+      "amplitude_dashboards": "Built-in behavioral analytics dashboards"
+    }
+  },
+  "best_practices": [
+    "Define goals before measuring (what do you want to improve?)",
+    "Combine quantitative and qualitative data (what + why)",
+    "Track both attitudinal and behavioral metrics",
+    "Use standardized surveys (SUS, NPS) for benchmarking",
+    "Segment data (don't rely on averages)",
+    "Ensure statistical significance (p < 0.05, sufficient sample size)",
+    "Run A/B tests long enough (1-4 weeks, not days)",
+    "Track Core Web Vitals (LCP, FID, CLS)",
+    "Use funnel analysis to find bottlenecks",
+    "Cohort analysis for retention insights",
+    "Set up dashboards for key metrics (glanceable)",
+    "Review metrics regularly (weekly or monthly)",
+    "Make data accessible to team (not siloed)",
+    "Focus on actionable metrics (not vanity metrics)",
+    "Validate insights with users (don't just trust data)",
+    "Use heatmaps and session recordings to understand behavior",
+    "Track both macro and micro conversions",
+    "Monitor performance metrics (speed impacts UX and conversion)",
+    "Test one variable at a time (A/B testing)",
+    "Document findings and decisions (build institutional knowledge)"
+  ],
+  "anti_patterns": [
+    "Vanity metrics (page views without context)",
+    "Measuring everything (focus on what matters)",
+    "Ignoring qualitative data (numbers don't explain why)",
+    "Small sample sizes (unreliable results)",
+    "Stopping A/B tests early (false positives)",
+    "Not segmenting data (averages hide insights)",
+    "Correlation = causation (confounding variables)",
+    "Analysis paralysis (measure but don't act)",
+    "No statistical significance testing (guessing)",
+    "Ignoring performance metrics (speed matters)",
+    "Not sharing data with team (siloed insights)",
+    "Optimizing for wrong metrics (engagement ≠ satisfaction)",
+    "No baseline/benchmark (can't measure improvement)",
+    "Testing multiple variables at once (can't isolate cause)",
+    "Ignoring mobile metrics (separate mobile/desktop)",
+    "Not tracking long-term impacts (optimize for short-term only)",
+    "Over-relying on one metric (need holistic view)",
+    "No action from insights (data without decisions is waste)",
+    "Privacy violations (GDPR, tracking without consent)",
+    "Ignoring outliers without investigation (may reveal issues)"
+  ],
+  "case_studies": {
+    "obama_campaign_ab_testing": {
+      "test": "Sign-up button text and media",
+      "result": "$60 million in additional donations from A/B testing",
+      "lesson": "Small changes, big impact"
+    },
+    "booking_com": {
+      "approach": "Runs 25,000+ A/B tests per year",
+      "culture": "Data-driven experimentation",
+      "result": "Continuous optimization, market leader"
+    },
+    "netflix": {
+      "metric": "Stream Starts (not just sign-ups)",
+      "insight": "Engagement matters more than acquisition",
+      "result": "Focus shifted to content and retention"
+    }
+  },
+  "resources": [
+    "Lean Analytics (Alistair Croll, Benjamin Yoskovitz) - Metrics for startups",
+    "Measuring the User Experience (Tullis & Albert) - UX metrics bible",
+    "Quantifying the User Experience (Sauro & Lewis) - Statistics for UX",
+    "Google Analytics Academy - Free GA training",
+    "HEART Framework (Google Research) - UX metrics framework",
+    "Nielsen Norman Group - UX measurement articles",
+    "Mixpanel University - Product analytics training",
+    "A/B Testing Mastery (Peep Laja) - CXL course",
+    "Web.dev - Core Web Vitals guide"
+  ]
+}

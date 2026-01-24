@@ -1,0 +1,192 @@
+{
+  "name": "AI/ML UX Patterns",
+  "description": "User experience patterns for AI and machine learning powered features",
+  "ai_ux_principles": {
+    "transparency": {
+      "description": "Users should understand AI is involved and how it works",
+      "practices": ["Explain AI decisions", "Show confidence levels", "Provide 'Why did I see this?' option", "Indicate when AI-generated"]
+    },
+    "control": {
+      "description": "Users should control AI, not be controlled by it",
+      "practices": ["Allow opt-out", "Provide override options", "Let users correct AI", "Give feedback mechanisms"]
+    },
+    "trust": {
+      "description": "Build confidence through reliability and honesty",
+      "practices": ["Show uncertainty when unsure", "Admit limitations", "Explain failures", "Consistent performance"]
+    }
+  },
+  "common_ai_patterns": {
+    "recommendations": {
+      "use_cases": ["Netflix (shows)", "Spotify (music)", "Amazon (products)", "LinkedIn (connections)"],
+      "ux_patterns": {
+        "explain_why": "Show reason ('Because you watched X' or 'Based on your history')",
+        "diversity": "Don't just show similar - introduce discovery",
+        "feedback": "Thumbs up/down or 'Not interested' option",
+        "transparency": "Allow viewing/editing preferences"
+      }
+    },
+    "search_autocomplete": {
+      "use_cases": ["Google Search", "E-commerce search"],
+      "best_practices": ["Show top 5-8 suggestions", "Highlight matching text", "Allow keyboard navigation", "Update as user types (debounced)"]
+    },
+    "content_moderation": {
+      "use_cases": ["Spam detection", "Inappropriate content filtering"],
+      "ux_considerations": {
+        "false_positives": "Allow appeal ('This was flagged incorrectly')",
+        "transparency": "Explain why content was removed",
+        "human_review": "Escalate to human for appeals"
+      }
+    },
+    "smart_compose": {
+      "examples": ["Gmail Smart Compose", "Grammarly"],
+      "ux_patterns": {
+        "ghost_text": "Show suggestion in gray, Tab to accept",
+        "non_intrusive": "Don't force acceptance, easy to ignore",
+        "learn_from_rejections": "Adapt when user doesn't accept"
+      }
+    },
+    "image_recognition": {
+      "use_cases": ["Photo tagging", "Visual search", "Accessibility (alt text)"],
+      "ux_patterns": {
+        "confidence_levels": "Show confidence (90% sure it's a cat)",
+        "allow_corrections": "Let users fix mistakes",
+        "fallback": "Provide manual option if AI fails"
+      }
+    },
+    "chatbots": {
+      "types": ["Customer service", "Virtual assistants", "FAQ bots"],
+      "ux_patterns": {
+        "set_expectations": "Clarify it's a bot, explain capabilities",
+        "escalation": "Offer human handoff when stuck",
+        "context": "Remember conversation history",
+        "typing_indicator": "Show bot is 'thinking'",
+        "error_handling": "Acknowledge misunderstanding, offer alternatives"
+      }
+    },
+    "personalization": {
+      "examples": ["Personalized dashboards", "Adaptive UI", "Dynamic pricing"],
+      "ux_considerations": {
+        "transparency": "Explain why content is personalized",
+        "control": "Allow disabling personalization",
+        "privacy": "Clear about data usage",
+        "filter_bubble": "Expose users to diverse content, not just personalized"
+      }
+    }
+  },
+  "ai_specific_patterns": {
+    "loading_states": {
+      "ai_processing": "AI is analyzing... (show progress if possible)",
+      "longer_waits": "AI tasks may take seconds-minutes, show estimates",
+      "skeleton_screens": "Show placeholder while AI generates content"
+    },
+    "confidence_indicators": {
+      "description": "Show how confident AI is in its prediction",
+      "examples": ["90% confidence", "High/Medium/Low confidence", "Progress bar"],
+      "use_when": "Predictions that users will act on (medical, financial)"
+    },
+    "explanation_interfaces": {
+      "description": "Help users understand AI decisions",
+      "techniques": {
+        "feature_importance": "This decision was based on: age (40%), location (30%), history (30%)",
+        "similar_examples": "This is like cases A, B, C",
+        "counterfactuals": "If X changed to Y, decision would be different"
+      }
+    },
+    "feedback_loops": {
+      "description": "Let users train the AI",
+      "examples": ["Thumbs up/down", "'Not interested'", "Report incorrect", "Edit suggestions"],
+      "benefit": "AI improves over time, users feel in control"
+    },
+    "fallback_options": {
+      "description": "What happens when AI fails",
+      "patterns": [
+        "Escalate to human (chatbots)",
+        "Provide manual alternative",
+        "Show uncertainty and ask for help",
+        "Graceful degradation (simpler AI or rule-based)"
+      ]
+    }
+  },
+  "ethical_considerations": {
+    "bias": {
+      "issue": "AI can perpetuate or amplify biases in training data",
+      "examples": ["Hiring tools biased against women", "Facial recognition worse for dark skin"],
+      "mitigation": ["Diverse training data", "Bias audits", "Human oversight", "Allow manual override"]
+    },
+    "privacy": {
+      "issue": "AI often requires large amounts of user data",
+      "practices": ["Minimize data collection", "Explain data usage", "Allow data deletion", "Anonymize when possible"]
+    },
+    "automation_bias": {
+      "issue": "Users over-trust AI recommendations",
+      "mitigation": ["Show confidence levels", "Encourage critical thinking", "Explain limitations"]
+    },
+    "filter_bubbles": {
+      "issue": "Personalization can create echo chambers",
+      "mitigation": "Expose users to diverse content, show 'Outside your usual' sections"
+    }
+  },
+  "testing_ai_features": {
+    "challenges": ["Non-deterministic (output varies)", "Hard to predict edge cases", "Requires large datasets"],
+    "approaches": {
+      "unit_tests": "Test AI model accuracy with test datasets",
+      "ux_testing": "Observe users interacting with AI features",
+      "a_b_testing": "Compare AI vs non-AI versions",
+      "monitoring": "Track AI accuracy, user corrections, escalations in production",
+      "red_teaming": "Deliberately try to break AI (adversarial testing)"
+    }
+  },
+  "best_practices": [
+    "Be transparent about AI involvement",
+    "Show confidence levels for predictions",
+    "Allow users to correct AI mistakes",
+    "Provide manual fallbacks",
+    "Explain AI decisions in plain language",
+    "Let users opt-out of AI features",
+    "Monitor for bias and fairness",
+    "Design for AI failures (they will happen)",
+    "Provide feedback mechanisms (thumbs up/down)",
+    "Don't hide AI errors (acknowledge and explain)",
+    "Set realistic expectations (don't oversell AI)",
+    "Escalate to humans when AI is stuck",
+    "Test with diverse users and data",
+    "Show progress for long AI tasks",
+    "Remember context in AI conversations"
+  ],
+  "anti_patterns": [
+    "Black box AI (no explanation)",
+    "No way to correct AI mistakes",
+    "Forcing AI features on users",
+    "Hiding AI involvement",
+    "Overpromising AI capabilities",
+    "Ignoring bias in AI",
+    "No human escalation path",
+    "Trusting AI blindly (no validation)",
+    "Poor error messages ('AI failed')",
+    "No confidence indicators",
+    "Collecting unnecessary data for AI",
+    "No feedback mechanisms",
+    "Annoying AI suggestions (smart replies after every message)",
+    "Filter bubbles without escape",
+    "Automation without transparency"
+  ],
+  "examples": {
+    "good": {
+      "spotify_discover_weekly": "Personalized playlist with 'Why this song?' explanations",
+      "gmail_smart_compose": "Non-intrusive suggestions, easy to ignore, learns from rejections",
+      "netflix_recommendations": "Shows reason ('Because you watched X'), allows feedback"
+    },
+    "bad": {
+      "amazon_alexa_random_laughs": "AI bug caused random laughing (creepy, no explanation)",
+      "microsoft_tay": "Chatbot learned offensive language from users (no moderation)",
+      "apple_card_credit_limits": "Alleged gender bias in credit limits (black box AI, no explanation)"
+    }
+  },
+  "resources": [
+    "People + AI Guidebook (Google)",
+    "Human-Centered AI (Stanford HAI)",
+    "AI Ethics Guidelines (EU)",
+    "Designing Human-Centric AI Experiences (Microsoft)",
+    "Machine Learning Fairness (Google)"
+  ]
+}

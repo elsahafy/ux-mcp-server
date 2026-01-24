@@ -1,0 +1,561 @@
+{
+  "name": "UX Testing & Validation",
+  "description": "Comprehensive guide to user experience testing methodologies, validation techniques, and research methods",
+  "testing_types": {
+    "usability_testing": {
+      "description": "Observing users attempting tasks to identify usability issues",
+      "when": "Throughout design process (early = wireframes, later = high-fidelity)",
+      "moderated": {
+        "description": "Researcher facilitates session in real-time",
+        "pros": ["Can probe deeper", "Clarify confusion", "Observe body language", "Ask follow-up questions"],
+        "cons": ["Time-intensive", "Expensive", "Moderator bias", "Limited sample size"],
+        "process": {
+          "1_prepare": {
+            "tasks": "Create 3-5 realistic tasks users would perform",
+            "scenario": "Provide context ('You want to...')",
+            "script": "Write facilitator script (intro, tasks, questions)"
+          },
+          "2_recruit": {
+            "participants": "5-8 users per user group (Nielsen: 5 users find 85% of issues)",
+            "screening": "Recruit target users (not just anyone)",
+            "incentive": "$50-150 depending on audience and length"
+          },
+          "3_conduct": {
+            "duration": "30-60 minutes per session",
+            "think_aloud": "Ask users to verbalize thoughts",
+            "no_leading": "Don't guide or explain (observe struggles)",
+            "observe": ["Where they click", "Confusion points", "Workarounds", "Errors", "Completion time"],
+            "record": "Screen + audio recording (with consent)"
+          },
+          "4_analyze": {
+            "rainbow_spreadsheet": "Track issues per participant in color-coded grid",
+            "severity": "1=cosmetic, 2=minor, 3=major, 4=critical (unusable)",
+            "frequency": "How many users encountered issue",
+            "prioritize": "High severity + high frequency first"
+          },
+          "5_report": {
+            "format": ["Executive summary", "Key findings (with video clips)", "Issue list (prioritized)", "Recommendations"],
+            "deliverable": "Findings presentation + detailed issue log"
+          }
+        },
+        "tasks_best_practices": [
+          "Use realistic scenarios (not 'Find the About page')",
+          "Don't use exact UI labels in task description",
+          "Start with easy tasks, progress to harder",
+          "Mix exploratory and directed tasks",
+          "Include success criteria (measurable)"
+        ]
+      },
+      "unmoderated": {
+        "description": "Users complete tasks remotely without facilitator",
+        "pros": ["Scalable (100+ users)", "Faster", "Less expensive", "Users in natural environment"],
+        "cons": ["Can't probe", "Higher dropout", "No body language", "Tech issues"],
+        "tools": ["UserTesting.com", "Lookback", "Maze", "UsabilityHub", "Loop11"],
+        "best_for": "Quantitative data, benchmarking, A/B testing validation",
+        "metrics": ["Task success rate", "Time on task", "Clicks to complete", "Misclicks"]
+      },
+      "guerrilla_testing": {
+        "description": "Quick, informal testing in public places",
+        "when": "Early concepts, rapid feedback, low budget",
+        "process": ["Bring prototype (paper or device)", "Find people (coffee shop, park)", "Brief task (< 5 min)", "Observe and note"],
+        "pros": ["Fast", "Free", "Authentic reactions"],
+        "cons": ["Not representative sample", "Limited depth", "Environmental distractions"]
+      }
+    },
+    "a_b_testing": {
+      "description": "Comparing two versions to determine which performs better",
+      "when": "After launch, to optimize conversion/engagement",
+      "process": {
+        "1_hypothesis": {
+          "format": "If we [change], then [metric] will [increase/decrease] because [reason]",
+          "example": "If we change CTA from 'Submit' to 'Get Started', then click-through rate will increase because it's more actionable"
+        },
+        "2_design": {
+          "control": "Current version (A)",
+          "variant": "New version (B)",
+          "one_change": "Change ONE variable at a time (not multiple)",
+          "sample_size": "Use A/B test calculator to determine required traffic"
+        },
+        "3_run": {
+          "split": "50/50 traffic split (random assignment)",
+          "duration": "1-2 weeks minimum (account for weekly cycles)",
+          "significance": "95% confidence level, p < 0.05"
+        },
+        "4_analyze": {
+          "primary_metric": "The metric you're optimizing (CTR, conversion, revenue)",
+          "secondary_metrics": "Other impacts (bounce rate, time on page)",
+          "segments": "Analyze by device, traffic source, user type",
+          "statistical_significance": "Use t-test or chi-square test"
+        },
+        "5_implement": {
+          "winner": "Ship winning variant to 100%",
+          "document": "Record results, learnings, next tests"
+        }
+      },
+      "what_to_test": {
+        "high_impact": [
+          "Call-to-action (text, color, size, placement)",
+          "Headlines and value propositions",
+          "Form fields (number, labels, layout)",
+          "Images (lifestyle vs product shot)",
+          "Pricing display (monthly vs annual, visual hierarchy)",
+          "Navigation structure",
+          "Page layout and visual hierarchy"
+        ],
+        "low_impact": ["Button border radius", "Exact shade of color", "Minor copy tweaks"]
+      },
+      "tools": ["Google Optimize (free)", "Optimizely", "VWO", "AB Tasty"],
+      "best_practices": [
+        "Test one variable at a time",
+        "Run tests long enough (at least 1 week, ideally 2-4)",
+        "Ensure sufficient sample size (use calculator)",
+        "Consider external factors (holidays, seasonality, marketing campaigns)",
+        "Don't stop test early (even if winning)",
+        "Validate with multiple tests (replication)",
+        "Document all tests and results"
+      ],
+      "common_mistakes": [
+        "Testing too many variables at once",
+        "Stopping test too early",
+        "Insufficient sample size",
+        "Not accounting for statistical significance",
+        "Ignoring external factors (Black Friday, email campaign)",
+        "Testing low-traffic pages (takes too long to reach significance)",
+        "Not having a clear hypothesis"
+      ]
+    },
+    "multivariate_testing": {
+      "description": "Testing multiple variables simultaneously to find best combination",
+      "vs_ab": "A/B tests one change; MVT tests multiple changes and interactions",
+      "when": "High-traffic sites, testing page redesigns",
+      "example": "Test 3 headlines × 3 CTAs × 2 images = 18 combinations",
+      "requirement": "Requires significantly more traffic than A/B testing",
+      "caution": "Complexity grows exponentially (2^n combinations)"
+    },
+    "first_click_testing": {
+      "description": "Test where users click first for a given task",
+      "finding": "If first click is correct, 87% chance user completes task successfully",
+      "tools": ["Chalkmark", "UsabilityHub", "Optimal Workshop"],
+      "process": ["Show screenshot or prototype", "Give task", "User clicks where they'd go", "Measure accuracy"],
+      "use_when": "Validate navigation, information architecture, layout"
+    },
+    "five_second_test": {
+      "description": "Show design for 5 seconds, then ask what they remember",
+      "purpose": "Test first impressions, visual hierarchy, key message",
+      "questions": ["What was this page about?", "What stood out?", "What would you do here?"],
+      "tools": ["UsabilityHub", "Lyssna"],
+      "use_when": "Landing pages, homepages, ads, early concepts"
+    },
+    "card_sorting": {
+      "description": "Users organize content cards into groups",
+      "purpose": "Understand mental models, inform information architecture",
+      "types": {
+        "open": {
+          "description": "Users create and name their own groups",
+          "use_when": "Discover how users categorize (early IA)",
+          "output": "Natural groupings and labels"
+        },
+        "closed": {
+          "description": "Users sort into predefined groups",
+          "use_when": "Validate proposed IA",
+          "output": "Fit of content to categories"
+        },
+        "hybrid": {
+          "description": "Predefined groups + option to create new",
+          "use_when": "Refine existing IA",
+          "output": "Validation + new insights"
+        }
+      },
+      "process": {
+        "1_prepare": "Create cards (one item per card, 30-60 cards)",
+        "2_recruit": "15-30 participants per user group",
+        "3_conduct": "Remote (online tool) or in-person",
+        "4_analyze": "Dendrogram (similarity matrix), agreement rates"
+      },
+      "tools": ["OptimalSort", "UserZoom", "Miro (in-person)"],
+      "best_practices": [
+        "Use realistic content (actual page names, not lorem ipsum)",
+        "30-60 cards (not too few, not overwhelming)",
+        "Card labels should be clear and specific",
+        "Provide context about the domain",
+        "Look for patterns (> 60% agreement is strong)"
+      ]
+    },
+    "tree_testing": {
+      "description": "Test findability in a text-based hierarchy (no visual design)",
+      "purpose": "Validate IA before investing in design",
+      "process": {
+        "1_create_tree": "Text-only site structure (no design distractions)",
+        "2_define_tasks": "Find-tasks ('Where would you find your order history?')",
+        "3_recruit": "20-50 users",
+        "4_test": "Users navigate tree by clicking categories",
+        "5_analyze": "Success rate, directness, time"
+      },
+      "metrics": {
+        "success_rate": { "target": "> 80%", "description": "Users found correct destination" },
+        "directness": { "target": "> 60%", "description": "First click was correct" },
+        "time_on_task": { "description": "Lower is better" }
+      },
+      "tools": ["Treejack (Optimal Workshop)", "UserZoom"],
+      "when": "After card sorting, before wireframing"
+    },
+    "surveys_questionnaires": {
+      "description": "Collect quantitative and qualitative data at scale",
+      "when": "Post-launch, to understand attitudes and satisfaction",
+      "types": {
+        "satisfaction": {
+          "sus": {
+            "name": "System Usability Scale",
+            "description": "10-question standardized usability survey",
+            "scoring": "0-100 scale (68+ is above average)",
+            "questions": [
+              "I think I would like to use this system frequently",
+              "I found the system unnecessarily complex",
+              "I thought the system was easy to use",
+              "I think I would need support to use this system",
+              "I found the various functions well integrated"
+            ],
+            "scale": "1 (Strongly Disagree) to 5 (Strongly Agree)",
+            "when": "Post-task or end of session"
+          },
+          "nps": {
+            "name": "Net Promoter Score",
+            "question": "How likely are you to recommend this to a friend? (0-10)",
+            "calculation": "% Promoters (9-10) - % Detractors (0-6)",
+            "score_range": "-100 to 100",
+            "benchmark": "> 50 is excellent, 0-30 is good",
+            "follow_up": "Why did you give that score?"
+          },
+          "umux_lite": {
+            "name": "UMUX-Lite",
+            "description": "2-question alternative to SUS",
+            "questions": [
+              "This system's capabilities meet my requirements",
+              "This system is easy to use"
+            ],
+            "scale": "1-7",
+            "when": "Need shorter survey than SUS"
+          }
+        },
+        "task_difficulty": {
+          "single_ease_question": {
+            "question": "Overall, how difficult or easy was the task to complete?",
+            "scale": "Very Difficult (1) to Very Easy (7)",
+            "when": "After each task in usability test"
+          }
+        },
+        "custom_surveys": {
+          "best_practices": [
+            "Keep short (< 10 questions)",
+            "One question per concept",
+            "Avoid leading questions",
+            "Use scales consistently (all 1-5 or all 1-7)",
+            "Include open-ended 'Why?' questions",
+            "Randomize order (avoid order bias)",
+            "Progress indicator for longer surveys"
+          ],
+          "question_types": {
+            "likert_scale": "Strongly Disagree to Strongly Agree (1-5 or 1-7)",
+            "rating_scale": "Poor to Excellent (1-5)",
+            "yes_no": "Binary choice",
+            "multiple_choice": "Select one or multiple",
+            "open_ended": "Free text (for qualitative insights)"
+          }
+        }
+      },
+      "tools": ["Typeform", "SurveyMonkey", "Google Forms", "Qualtrics", "Hotjar"],
+      "timing": {
+        "intercept": "Pop-up during session (annoying, use sparingly)",
+        "exit": "On page exit or session end",
+        "email": "Follow-up email (lower response rate)",
+        "in_app": "Triggered after specific action"
+      }
+    },
+    "analytics_analysis": {
+      "description": "Analyze user behavior data to identify UX issues",
+      "quantitative_analytics": {
+        "key_metrics": {
+          "engagement": {
+            "time_on_page": "How long users spend (longer = more engaged, unless stuck)",
+            "pages_per_session": "Depth of engagement",
+            "scroll_depth": "How far users scroll (Hotjar)",
+            "bounce_rate": "% who leave after one page (< 50% is good)"
+          },
+          "conversion": {
+            "conversion_rate": "% who complete goal",
+            "funnel_drop_off": "Where users abandon (cart, checkout step 2?)",
+            "click_through_rate": "% who click CTA"
+          },
+          "navigation": {
+            "top_pages": "Most visited pages",
+            "entry_pages": "Where users land",
+            "exit_pages": "Where users leave (identify dead ends)",
+            "navigation_flow": "User paths through site"
+          }
+        },
+        "tools": {
+          "google_analytics": "Page views, sessions, conversion funnels, user flow",
+          "mixpanel": "Event tracking, cohort analysis, funnels",
+          "amplitude": "Product analytics, behavioral cohorts",
+          "heap": "Auto-capture all events (retroactive analysis)"
+        }
+      },
+      "qualitative_analytics": {
+        "session_recordings": {
+          "description": "Watch real user sessions (anonymized)",
+          "tools": ["Hotjar", "FullStory", "Crazy Egg", "Microsoft Clarity (free)"],
+          "use_cases": ["Understand confusion", "See rage clicks", "Identify form errors", "Observe workarounds"],
+          "privacy": "Mask sensitive data (passwords, credit cards)"
+        },
+        "heatmaps": {
+          "types": {
+            "click_heatmap": "Where users click (find dead clicks, popular elements)",
+            "move_heatmap": "Mouse movement (attention, though not perfect on mobile)",
+            "scroll_heatmap": "How far users scroll (where to place CTAs)"
+          },
+          "tools": ["Hotjar", "Crazy Egg", "Microsoft Clarity"],
+          "insights": ["Dead clicks on non-clickable elements", "Ignored CTAs", "Content below fold not seen"]
+        },
+        "rage_clicks": {
+          "description": "Repeated rapid clicks (indicates frustration)",
+          "cause": "Element not loading, broken link, confusing interaction",
+          "tools": "Hotjar, FullStory"
+        }
+      }
+    },
+    "accessibility_testing": {
+      "description": "Ensure product is usable by people with disabilities",
+      "automated_testing": {
+        "tools": {
+          "axe_devtools": "Browser extension, tests WCAG violations",
+          "lighthouse": "Built into Chrome DevTools, accessibility audit",
+          "wave": "WebAIM's browser extension",
+          "pa11y": "Command-line tool for CI/CD"
+        },
+        "limitations": "Catches ~30-40% of accessibility issues (needs manual testing)"
+      },
+      "manual_testing": {
+        "keyboard_navigation": {
+          "test": ["Tab through all interactive elements", "Shift+Tab to go backward", "Enter/Space to activate", "Escape to close modals"],
+          "check": ["Visible focus indicator", "Logical tab order", "No keyboard traps", "Skip links present"]
+        },
+        "screen_reader": {
+          "tools": {
+            "nvda": "Free, Windows",
+            "jaws": "Popular, Windows (paid)",
+            "voiceover": "Built-in, macOS/iOS",
+            "talkback": "Built-in, Android"
+          },
+          "test": ["Navigate by headings", "Navigate by landmarks", "Fill out forms", "Understand image alt text", "Hear button labels"]
+        },
+        "color_contrast": {
+          "requirement": "WCAG AA: 4.5:1 for normal text, 3:1 for large text (18px+)",
+          "tools": ["Contrast Checker", "Color Oracle (color blindness simulator)"]
+        },
+        "zoom_resize": {
+          "test": "Zoom to 200% (Ctrl/Cmd +)",
+          "check": ["No horizontal scroll", "Content reflows", "Nothing cut off", "Still usable"]
+        }
+      },
+      "assistive_testing": {
+        "description": "Test with real users with disabilities",
+        "recruit": "Recruit users who use assistive tech daily",
+        "platforms": ["Fable", "AccessibilityOz"],
+        "when": "Critical products, high-risk areas (checkout, forms)"
+      }
+    },
+    "performance_testing": {
+      "description": "Test speed and technical performance (UX impact)",
+      "core_web_vitals": {
+        "lcp": { "metric": "Largest Contentful Paint", "target": "< 2.5s", "ux_impact": "Perceived load speed" },
+        "fid": { "metric": "First Input Delay", "target": "< 100ms", "ux_impact": "Interactivity responsiveness" },
+        "cls": { "metric": "Cumulative Layout Shift", "target": "< 0.1", "ux_impact": "Visual stability (no jumps)" }
+      },
+      "tools": {
+        "lighthouse": "Chrome DevTools, scores 0-100",
+        "webpagetest": "Detailed waterfall, multiple locations",
+        "pagespeed_insights": "Google's tool (Lighthouse + field data)",
+        "chrome_devtools": "Network tab, Performance tab"
+      },
+      "mobile_performance": {
+        "test_on": "Real devices (not just emulator)",
+        "throttle": "Simulate 3G connection (Chrome DevTools)",
+        "check": ["Time to interactive", "Smooth scrolling", "Responsive touch"]
+      }
+    }
+  },
+  "research_methods": {
+    "user_interviews": {
+      "description": "One-on-one conversations to understand needs, behaviors, pain points",
+      "when": "Discovery phase, understanding problems",
+      "duration": "30-60 minutes",
+      "participants": "5-10 per user segment",
+      "structure": {
+        "intro": "5 min (explain purpose, get consent)",
+        "warmup": "5 min (easy questions, build rapport)",
+        "main_questions": "30-40 min (open-ended, probing)",
+        "wrap_up": "5 min (anything to add, thank you)"
+      },
+      "question_techniques": {
+        "open_ended": "How do you currently...? (not yes/no)",
+        "five_whys": "Ask 'why' to get to root cause",
+        "tell_me_about": "'Tell me about the last time you...' (concrete stories)",
+        "avoid_leading": "Don't suggest answers ('Do you like X?' → 'How do you feel about X?')"
+      },
+      "best_practices": [
+        "Record (with permission) - audio or video",
+        "Take notes (even if recording)",
+        "Listen more than talk (80/20 rule)",
+        "Allow silence (don't fill pauses)",
+        "Probe on interesting points ('Tell me more')",
+        "Stay neutral (don't defend design)",
+        "Focus on behavior, not opinions"
+      ]
+    },
+    "contextual_inquiry": {
+      "description": "Observe users in their natural environment while they work",
+      "when": "Understanding workflows, tools, environment",
+      "structure": {
+        "master_apprentice": "User is expert, you are learning",
+        "observe": "Watch user work on real tasks",
+        "interrupt": "Ask questions when you see something interesting",
+        "interpret": "Confirm your understanding"
+      },
+      "duration": "2-4 hours",
+      "output": "Workflow diagrams, pain points, workarounds, environment factors"
+    },
+    "diary_studies": {
+      "description": "Users log activities over time (days to weeks)",
+      "when": "Understand behavior over time, in context",
+      "duration": "1 week to 1 month",
+      "method": ["Daily survey", "Photo diary", "Audio log", "App (dscout, Indeemo)"],
+      "use_cases": ["Long purchase cycles", "Habit tracking", "Day-in-the-life"],
+      "challenge": "High dropout (incentivize well)"
+    },
+    "personas": {
+      "description": "Fictional representations of user segments",
+      "when": "After user research, to communicate findings",
+      "elements": {
+        "name_photo": "Humanize (but not real person)",
+        "demographics": "Age, location, job title",
+        "goals": "What they want to achieve",
+        "frustrations": "Pain points and challenges",
+        "behaviors": "How they currently solve problems",
+        "quote": "Memorable statement capturing mindset"
+      },
+      "how_many": "3-5 personas (not too many)",
+      "use": "Decision-making ('Would Sarah use this?'), communication",
+      "anti_pattern": "Making up personas without research"
+    },
+    "journey_mapping": {
+      "description": "Visualize user's experience over time across touchpoints",
+      "when": "After research, to identify opportunities",
+      "structure": {
+        "stages": "Steps in the journey (Awareness → Consideration → Purchase → Use)",
+        "touchpoints": "Where user interacts (website, app, email, support)",
+        "actions": "What user does at each stage",
+        "thoughts": "What user is thinking",
+        "emotions": "Emotional state (up/down line)",
+        "pain_points": "Problems and frustrations",
+        "opportunities": "Where to improve"
+      },
+      "output": "Visual diagram (often horizontal timeline)",
+      "tools": ["Miro", "Figma", "Smaply", "UXPressia"]
+    }
+  },
+  "metrics_kpis": {
+    "heart_framework": {
+      "description": "Google's UX metrics framework",
+      "happiness": {
+        "description": "User attitudes",
+        "metrics": ["NPS", "CSAT (Customer Satisfaction)", "SUS (System Usability Scale)"],
+        "method": "Surveys"
+      },
+      "engagement": {
+        "description": "Level of user involvement",
+        "metrics": ["DAU/MAU ratio", "Session length", "Feature usage", "Frequency of use"],
+        "method": "Analytics"
+      },
+      "adoption": {
+        "description": "New users",
+        "metrics": ["New user sign-ups", "First-time feature use", "Onboarding completion"],
+        "method": "Analytics"
+      },
+      "retention": {
+        "description": "Continued use over time",
+        "metrics": ["Churn rate", "Day 1/7/30 retention", "Repeat purchase rate"],
+        "method": "Analytics"
+      },
+      "task_success": {
+        "description": "Efficiency and effectiveness",
+        "metrics": ["Task completion rate", "Time on task", "Error rate"],
+        "method": "Usability testing or analytics"
+      }
+    }
+  },
+  "best_practices": [
+    "Test early and often (not just at the end)",
+    "Test with real users (not coworkers or friends)",
+    "Recruit representative users (screen for target audience)",
+    "5 users find 85% of usability issues (Nielsen)",
+    "Use think-aloud protocol in usability tests",
+    "Don't lead or guide users (let them struggle)",
+    "Record sessions (with consent)",
+    "Combine quantitative (analytics, A/B tests) and qualitative (interviews, usability tests)",
+    "Prioritize findings (severity × frequency)",
+    "Share findings with team (video clips are powerful)",
+    "Test across devices (desktop, mobile, tablet)",
+    "Test accessibility (keyboard, screen reader, color contrast)",
+    "Run A/B tests long enough for statistical significance",
+    "Test one variable at a time in A/B tests",
+    "Use standardized surveys (SUS, NPS) for benchmarking",
+    "Combine multiple research methods (triangulation)",
+    "Create personas based on research (not assumptions)",
+    "Test information architecture before visual design (tree testing)",
+    "Validate assumptions with data",
+    "Iterate based on findings"
+  ],
+  "anti_patterns": [
+    "Testing with coworkers or friends (not representative)",
+    "Leading users ('Click here', 'Did you see...')",
+    "Stopping A/B test too early (before significance)",
+    "Testing too many variables at once",
+    "Skipping research phase (designing based on assumptions)",
+    "Not testing on mobile devices",
+    "Ignoring accessibility testing",
+    "Only doing quantitative OR qualitative (need both)",
+    "Creating personas without research",
+    "Not prioritizing findings (trying to fix everything)",
+    "Testing too late (after development complete)",
+    "Not recruiting representative users",
+    "Insufficient sample size (< 5 users per test)",
+    "Not testing across browsers",
+    "Confusing correlation with causation in analytics",
+    "Testing in unrealistic scenarios",
+    "Not validating findings with stakeholders",
+    "Focusing only on what users say (ignore what they do)",
+    "Not documenting research (insights lost)",
+    "Testing without clear goals or hypotheses"
+  ],
+  "tools_summary": {
+    "usability_testing": ["UserTesting.com", "Lookback", "Maze", "UsabilityHub", "Loop11"],
+    "tree_testing_card_sorting": ["Optimal Workshop (Treejack, OptimalSort)", "UserZoom"],
+    "surveys": ["Typeform", "SurveyMonkey", "Google Forms", "Qualtrics"],
+    "analytics": ["Google Analytics", "Mixpanel", "Amplitude", "Heap"],
+    "session_recording_heatmaps": ["Hotjar", "FullStory", "Crazy Egg", "Microsoft Clarity"],
+    "a_b_testing": ["Google Optimize", "Optimizely", "VWO", "AB Tasty"],
+    "accessibility": ["axe DevTools", "WAVE", "Lighthouse", "NVDA", "JAWS"],
+    "performance": ["Lighthouse", "WebPageTest", "PageSpeed Insights"],
+    "prototyping": ["Figma", "Adobe XD", "Sketch", "Framer"],
+    "research_ops": ["Dovetail", "EnjoyHQ", "Condens", "Airtable"]
+  },
+  "references": [
+    "Don't Make Me Think (Steve Krug) - Usability fundamentals",
+    "Rocket Surgery Made Easy (Steve Krug) - DIY usability testing",
+    "The User Experience Team of One (Leah Buley) - Practical methods",
+    "Nielsen Norman Group - Research articles and courses",
+    "Just Enough Research (Erika Hall) - Practical research guide",
+    "Quantifying the User Experience (Sauro & Lewis) - Metrics and statistics",
+    "Measuring the User Experience (Tullis & Albert) - UX metrics"
+  ]
+}

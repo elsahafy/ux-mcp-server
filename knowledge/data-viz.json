@@ -1,0 +1,527 @@
+{
+  "name": "Data Visualization Patterns",
+  "description": "Comprehensive guide to choosing, designing, and implementing accessible data visualizations",
+  "choosing_charts": {
+    "by_purpose": {
+      "comparison": {
+        "description": "Compare values across categories",
+        "chart_types": ["Bar chart", "Column chart", "Radar chart"],
+        "when": "Comparing sales by region, product performance",
+        "best": "Bar chart (horizontal) for many categories"
+      },
+      "composition": {
+        "description": "Show parts of a whole",
+        "chart_types": ["Pie chart", "Donut chart", "Stacked bar", "Treemap"],
+        "when": "Market share, budget breakdown",
+        "best": "Pie chart for < 6 segments, stacked bar for more"
+      },
+      "distribution": {
+        "description": "Show how data is distributed",
+        "chart_types": ["Histogram", "Box plot", "Violin plot"],
+        "when": "Age distribution, test scores",
+        "best": "Histogram for continuous data"
+      },
+      "relationship": {
+        "description": "Show correlation between variables",
+        "chart_types": ["Scatter plot", "Bubble chart", "Heatmap"],
+        "when": "Sales vs marketing spend, correlation analysis",
+        "best": "Scatter plot for two variables"
+      },
+      "trend_over_time": {
+        "description": "Show changes over time",
+        "chart_types": ["Line chart", "Area chart", "Sparkline"],
+        "when": "Stock prices, website traffic, sales trends",
+        "best": "Line chart (most common and clear)"
+      }
+    },
+    "chart_selection_guide": {
+      "one_variable": {
+        "categorical": "Bar chart, pie chart",
+        "numerical": "Histogram, box plot"
+      },
+      "two_variables": {
+        "both_numerical": "Scatter plot, line chart",
+        "one_categorical_one_numerical": "Bar chart, box plot",
+        "both_categorical": "Grouped bar chart, heatmap"
+      },
+      "three_variables": "Bubble chart, 3D scatter (use sparingly)",
+      "time_series": "Line chart, area chart",
+      "hierarchical": "Treemap, sunburst"
+    }
+  },
+  "chart_types": {
+    "bar_chart": {
+      "description": "Horizontal bars for comparing categories",
+      "use_when": ["Comparing discrete categories", "Many categories (long labels)", "Ranking data"],
+      "orientation": "Horizontal preferred (easier to read labels)",
+      "best_practices": [
+        "Start y-axis at zero",
+        "Sort bars by value (unless natural order exists)",
+        "Use consistent colors",
+        "Label bars directly when possible",
+        "Keep bars same width"
+      ],
+      "avoid": ["3D effects", "Too many categories (> 20)", "Truncated y-axis"],
+      "accessibility": "Provide data table alternative"
+    },
+    "column_chart": {
+      "description": "Vertical bars (same as bar chart, rotated)",
+      "use_when": ["Few categories (< 10)", "Time series data", "Short labels"],
+      "same_as": "Bar chart but vertical",
+      "prefer_bar_when": "Many categories or long labels"
+    },
+    "line_chart": {
+      "description": "Show trends over continuous data",
+      "use_when": ["Time series", "Continuous data", "Trends and patterns"],
+      "best_practices": [
+        "Use points at data markers",
+        "Limit to 5-7 lines maximum",
+        "Use distinct colors/patterns for each line",
+        "Label lines directly (not just in legend)",
+        "Start y-axis at zero (or make break obvious)",
+        "Show grid lines lightly"
+      ],
+      "multiple_lines": {
+        "max_recommended": 5,
+        "use_color_and_pattern": "For accessibility",
+        "interactive": "Allow toggling lines on/off"
+      },
+      "avoid": ["Too many lines (> 7)", "Inconsistent intervals", "3D effects"]
+    },
+    "pie_chart": {
+      "description": "Show parts of a whole (percentage)",
+      "use_when": ["Showing proportions", "< 6 segments", "Segments are meaningfully different"],
+      "best_practices": [
+        "Limit to 5-6 segments maximum",
+        "Start at 12 o'clock position",
+        "Order segments by size (largest first)",
+        "Label segments directly with percentages",
+        "Use distinct colors",
+        "Include legend if labels don't fit"
+      ],
+      "avoid": ["More than 6 segments (use bar chart instead)", "3D effects (distorts perception)", "Multiple pies for comparison", "Exploding segments (except one for emphasis)"],
+      "better_alternative": "Bar chart for most comparisons"
+    },
+    "donut_chart": {
+      "description": "Pie chart with center removed",
+      "use_when": "Same as pie chart + want center text/metric",
+      "advantages": ["Can show total in center", "Slightly better than pie for comparing segments"],
+      "same_limitations": "Still limited to few segments"
+    },
+    "scatter_plot": {
+      "description": "Show relationship between two variables",
+      "use_when": ["Correlation analysis", "Outlier detection", "Two continuous variables"],
+      "best_practices": [
+        "Label axes clearly with units",
+        "Use consistent point size (unless bubble chart)",
+        "Show trend line if correlation exists",
+        "Highlight outliers or clusters",
+        "Add tooltips for point details"
+      ],
+      "bubble_chart": "Scatter plot + size dimension (3 variables)",
+      "avoid": ["Too many points (> 500, consider heat map)", "Overlapping points without transparency"]
+    },
+    "area_chart": {
+      "description": "Line chart with filled area below",
+      "use_when": ["Show magnitude over time", "Cumulative totals"],
+      "types": {
+        "simple": "Single dataset",
+        "stacked": "Multiple datasets showing cumulative total",
+        "100_percent_stacked": "Show percentage composition over time"
+      },
+      "best_practices": [
+        "Use for showing volume/magnitude",
+        "Semi-transparent fills for multiple areas",
+        "Order stacks logically",
+        "Start y-axis at zero"
+      ],
+      "avoid": "Too many stacked areas (hard to read)"
+    },
+    "heatmap": {
+      "description": "Show data density or values in matrix using color",
+      "use_when": ["Large datasets", "Matrix data", "Correlation matrices", "Time + category"],
+      "best_practices": [
+        "Use sequential color scale (light to dark)",
+        "Include legend/color scale",
+        "Label axes clearly",
+        "Consider adding values in cells",
+        "Use diverging colors for positive/negative"
+      ],
+      "color_scales": {
+        "sequential": "Light to dark (0 to max)",
+        "diverging": "Two colors meeting at middle (negative to positive)",
+        "categorical": "Distinct colors (for categories)"
+      }
+    },
+    "histogram": {
+      "description": "Show distribution of continuous data",
+      "use_when": ["Understanding data distribution", "Frequency analysis"],
+      "bins": {
+        "too_few": "Loses detail",
+        "too_many": "Too noisy",
+        "rule_of_thumb": "√n bins (where n = data points) or Sturges' formula"
+      },
+      "best_practices": [
+        "No gaps between bars (continuous data)",
+        "Label x-axis with bin ranges",
+        "Show count or frequency on y-axis",
+        "Consider overlay of normal distribution curve"
+      ]
+    },
+    "box_plot": {
+      "description": "Show distribution summary (quartiles, median, outliers)",
+      "use_when": ["Comparing distributions", "Showing spread and outliers", "Statistical analysis"],
+      "components": {
+        "box": "25th to 75th percentile (IQR)",
+        "line_in_box": "Median",
+        "whiskers": "Min/max within 1.5×IQR",
+        "points": "Outliers beyond whiskers"
+      },
+      "best_practices": [
+        "Explain box plot to general audience",
+        "Use for statistical audiences",
+        "Compare multiple distributions side-by-side",
+        "Label quartiles"
+      ]
+    },
+    "treemap": {
+      "description": "Hierarchical data as nested rectangles",
+      "use_when": ["Hierarchical data", "Part-to-whole relationships", "Space-constrained dashboards"],
+      "best_practices": [
+        "Size rectangles by value",
+        "Use color for categories or secondary metric",
+        "Label largest rectangles only",
+        "Provide drill-down interaction",
+        "Sort by size within groups"
+      ],
+      "avoid": ["Too many levels (> 3)", "Too many items at once"]
+    },
+    "gauge_chart": {
+      "description": "Show single value against scale",
+      "use_when": ["KPIs", "Progress toward goal", "Performance metrics"],
+      "types": ["Radial gauge", "Bullet chart (better alternative)"],
+      "best_practices": [
+        "Show target/goal clearly",
+        "Use color zones (red/yellow/green)",
+        "Include actual number",
+        "Consider bullet chart instead (more space-efficient)"
+      ],
+      "avoid": "Using for data that doesn't have a goal"
+    },
+    "bullet_chart": {
+      "description": "Linear gauge (better than radial gauge)",
+      "use_when": "Same as gauge but more space-efficient",
+      "benefits": ["Takes less space", "Easier to compare multiple metrics", "Less decoration"],
+      "recommended_over": "Radial gauges"
+    }
+  },
+  "design_principles": {
+    "data_ink_ratio": {
+      "description": "Maximize data, minimize decoration",
+      "rule": "Data-ink ratio = Data ink / Total ink",
+      "maximize": "Remove chartjunk",
+      "chartjunk": ["Unnecessary gridlines", "3D effects", "Decorative fills", "Excessive labels"],
+      "keep": ["Axes", "Data points/lines", "Essential labels"]
+    },
+    "color_usage": {
+      "purposes": {
+        "categorical": "Distinguish categories (use distinct hues)",
+        "sequential": "Show order/magnitude (light to dark)",
+        "diverging": "Show positive/negative (two colors meeting at zero)"
+      },
+      "best_practices": [
+        "Limit to 5-7 colors for categories",
+        "Use colorblind-safe palettes",
+        "Don't rely on color alone (use patterns too)",
+        "Maintain sufficient contrast",
+        "Use consistent colors across dashboards",
+        "Label colors in legend"
+      ],
+      "colorblind_safe_palettes": {
+        "use": "Blue/orange, blue/yellow, purple/green",
+        "avoid": "Red/green (most common colorblindness)",
+        "tools": ["ColorBrewer", "Viz Palette", "Adobe Color"]
+      }
+    },
+    "typography": {
+      "axis_labels": "10-12px, medium weight",
+      "chart_title": "14-18px, bold",
+      "data_labels": "10-11px",
+      "legend": "10-12px",
+      "annotations": "10-12px, italic",
+      "hierarchy": "Title > axis labels > data labels",
+      "font": "Sans-serif for clarity"
+    },
+    "gridlines": {
+      "purpose": "Help read values",
+      "style": "Light gray, thin, subtle",
+      "horizontal": "Usually helpful (easier to read values)",
+      "vertical": "Often optional",
+      "avoid": "Dark, heavy gridlines that distract"
+    },
+    "whitespace": {
+      "importance": "Breathing room for comprehension",
+      "use": "Between charts, around titles, margins",
+      "avoid": "Cramming too much in small space"
+    }
+  },
+  "accessibility": {
+    "wcag_compliance": {
+      "text_contrast": "4.5:1 for text, 3:1 for large text",
+      "color_contrast": "3:1 for UI elements (bars, lines)",
+      "non_text_content": "Provide text alternatives (alt text, data tables)",
+      "keyboard_navigation": "All interactive elements accessible via keyboard"
+    },
+    "color_considerations": {
+      "dont_rely_on_color": "Use patterns, shapes, labels in addition",
+      "colorblind_safe": "Test with colorblind simulators",
+      "sufficient_contrast": "Especially for text on colored backgrounds"
+    },
+    "alternative_text": {
+      "charts": "Describe chart type, data, and key insights",
+      "example": "alt='Line chart showing website traffic increasing from 10K to 50K visitors over 6 months, with peak in December'",
+      "detail_level": "Match to content importance"
+    },
+    "data_tables": {
+      "requirement": "Provide data table alternative for complex charts",
+      "format": "Accessible HTML table with headers",
+      "toggle": "Allow users to switch between chart and table view",
+      "example": "<table>\n  <caption>Monthly Sales 2025</caption>\n  <thead><tr><th>Month</th><th>Sales</th></tr></thead>\n  <tbody><tr><td>Jan</td><td>$50K</td></tr></tbody>\n</table>"
+    },
+    "screen_reader_support": {
+      "aria_labels": "Descriptive labels for chart elements",
+      "live_regions": "Announce data updates",
+      "focus_management": "Logical tab order",
+      "sonification": "Consider audio representation (advanced)"
+    },
+    "keyboard_navigation": {
+      "interactive_elements": "All clickable elements keyboard accessible",
+      "tooltips": "Show on focus, not just hover",
+      "tab_order": "Logical order through chart elements",
+      "escape": "Close tooltips/modals with Escape key"
+    }
+  },
+  "interactive_features": {
+    "tooltips": {
+      "description": "Show details on hover/click",
+      "content": ["Data value", "Category/label", "Additional context"],
+      "timing": "Show immediately on hover, delay on hide (300ms)",
+      "position": "Near cursor but not covering data",
+      "mobile": "Show on tap, dismiss on tap outside or second tap"
+    },
+    "filtering": {
+      "description": "Allow users to filter displayed data",
+      "methods": ["Checkboxes", "Dropdowns", "Sliders for ranges"],
+      "feedback": "Show what's filtered, allow clear all",
+      "preserve": "Remember filters when navigating away"
+    },
+    "drill_down": {
+      "description": "Click to see more detail",
+      "use_when": "Hierarchical data, time series zoom",
+      "indicate": "Show cursor changes to pointer on hover",
+      "breadcrumbs": "Show current drill-down path",
+      "back": "Easy way to go back up hierarchy"
+    },
+    "zooming_panning": {
+      "description": "Zoom into detail, pan to explore",
+      "methods": ["Scroll to zoom", "Click-drag to select region", "Pan by dragging"],
+      "reset": "Provide reset/home button",
+      "mobile": "Pinch to zoom, drag to pan"
+    },
+    "highlighting": {
+      "description": "Emphasize related data",
+      "on_hover": "Dim other elements, brighten hovered",
+      "on_click": "Toggle selection, show details",
+      "linked_highlighting": "Highlight across multiple charts"
+    },
+    "animation": {
+      "use_when": ["Data transitions", "Showing change over time", "First render"],
+      "duration": "300-500ms for transitions",
+      "easing": "Ease-out for natural feel",
+      "avoid": ["Autoplay loops", "Excessive animation", "Ignoring prefers-reduced-motion"],
+      "accessibility": "Respect prefers-reduced-motion"
+    }
+  },
+  "dashboard_design": {
+    "layout": {
+      "f_pattern": "Most important chart top-left (where eyes go first)",
+      "z_pattern": "Secondary pattern for scanning",
+      "grid": "Use grid system for alignment",
+      "hierarchy": "Largest/most important charts prominent",
+      "whitespace": "Don't cram - leave breathing room"
+    },
+    "kpis": {
+      "placement": "Top of dashboard",
+      "format": "Large number + change indicator + sparkline",
+      "context": "Show trend, not just current value",
+      "comparison": "vs previous period, vs goal"
+    },
+    "chart_selection": {
+      "limit_types": "Use 2-3 chart types max per dashboard",
+      "consistency": "Same metrics use same chart type",
+      "right_chart": "Choose chart type appropriate for data"
+    },
+    "interactivity": {
+      "filtering": "Global filters affect all charts",
+      "drill_down": "Click charts to see details",
+      "linked_selection": "Select in one chart, highlight in others",
+      "export": "Allow exporting data/images"
+    },
+    "mobile": {
+      "responsive": "Stack charts vertically on small screens",
+      "simplify": "Show fewer charts, prioritize key metrics",
+      "touch_friendly": "Large touch targets for filters",
+      "scrolling": "Vertical scroll, avoid horizontal"
+    }
+  },
+  "performance": {
+    "large_datasets": {
+      "threshold": "> 1000 data points",
+      "strategies": {
+        "aggregation": "Group data (daily → weekly → monthly)",
+        "sampling": "Show representative sample",
+        "progressive_loading": "Load overview first, details on demand",
+        "virtualization": "Render only visible data points",
+        "server_side": "Aggregate on server, send summary"
+      }
+    },
+    "rendering": {
+      "svg": {
+        "pros": "Crisp at any size, accessible, manipulable",
+        "cons": "Slow with many elements (> 1000)",
+        "use_for": "< 1000 elements, interactivity needed"
+      },
+      "canvas": {
+        "pros": "Fast rendering, handle many elements",
+        "cons": "Not accessible, fixed resolution",
+        "use_for": "> 1000 elements, animation-heavy"
+      },
+      "webgl": {
+        "pros": "Extremely fast, hardware accelerated",
+        "cons": "Complex, accessibility challenges",
+        "use_for": "Very large datasets (> 100K points), 3D"
+      }
+    },
+    "optimization": [
+      "Debounce window resize events",
+      "Throttle real-time updates",
+      "Use requestAnimationFrame for animations",
+      "Lazy load charts below fold",
+      "Cache rendered charts",
+      "Simplify on mobile"
+    ]
+  },
+  "libraries": {
+    "javascript": {
+      "d3js": {
+        "description": "Low-level, maximum flexibility",
+        "pros": ["Complete control", "Powerful", "Large community"],
+        "cons": ["Steep learning curve", "Verbose"],
+        "use_when": "Custom, complex visualizations"
+      },
+      "chartjs": {
+        "description": "Simple, clean charts",
+        "pros": ["Easy to use", "Good defaults", "Lightweight"],
+        "cons": ["Limited customization", "Canvas-based"],
+        "use_when": "Standard charts, quick implementation"
+      },
+      "plotly": {
+        "description": "Interactive, scientific charts",
+        "pros": ["Many chart types", "3D support", "Interactive"],
+        "cons": ["Large bundle size"],
+        "use_when": "Scientific/statistical visualization"
+      },
+      "echarts": {
+        "description": "Feature-rich, performant",
+        "pros": ["Many chart types", "Good performance", "Free"],
+        "cons": ["Documentation can be unclear"],
+        "use_when": "Complex dashboards, large datasets"
+      },
+      "highcharts": {
+        "description": "Commercial, polished",
+        "pros": ["Beautiful defaults", "Great docs", "Reliable"],
+        "cons": ["Commercial license", "Large size"],
+        "use_when": "Enterprise dashboards, non-commercial use"
+      },
+      "recharts": {
+        "description": "React components for charts",
+        "pros": ["React-friendly", "Declarative", "Customizable"],
+        "cons": ["React only"],
+        "use_when": "React applications"
+      },
+      "victory": {
+        "description": "React charts with React Native support",
+        "pros": ["React + React Native", "Modular"],
+        "cons": ["Can be verbose"],
+        "use_when": "React/React Native apps"
+      },
+      "visx": {
+        "description": "Low-level React + D3 components",
+        "pros": ["Flexibility of D3 + React", "Modular"],
+        "cons": ["More work than high-level libraries"],
+        "use_when": "Custom React visualizations"
+      }
+    }
+  },
+  "best_practices": [
+    "Choose appropriate chart type for your data",
+    "Start y-axis at zero for bar/column charts",
+    "Use color purposefully, not decoratively",
+    "Limit colors to 5-7 for categories",
+    "Provide alt text for all charts",
+    "Use colorblind-safe palettes",
+    "Label axes clearly with units",
+    "Keep it simple - remove chartjunk",
+    "Provide data table alternative",
+    "Make interactive elements keyboard accessible",
+    "Show data directly when possible (not just in tooltips)",
+    "Sort data logically (by value or naturally)",
+    "Use consistent colors across dashboard",
+    "Provide context (show trends, comparisons, goals)",
+    "Test with real data (not just examples)",
+    "Optimize for performance with large datasets",
+    "Design for mobile (responsive, touch-friendly)",
+    "Respect prefers-reduced-motion",
+    "Use meaningful titles and annotations",
+    "Show uncertainty when present (error bars, confidence intervals)"
+  ],
+  "anti_patterns": [
+    "Using pie charts for many categories (> 6)",
+    "3D charts (distort perception)",
+    "Dual y-axes (confusing)",
+    "Truncated y-axis without clear indication",
+    "Red/green color scheme only (colorblindness)",
+    "Too many colors (> 10)",
+    "Relying on color alone",
+    "Missing axis labels or units",
+    "Chartjunk (unnecessary decoration)",
+    "Poor contrast",
+    "No alt text or table alternative",
+    "Not responsive on mobile",
+    "Autoplay animations that can't be stopped",
+    "Tiny text (< 10px)",
+    "Too many chart types in one dashboard",
+    "Cherry-picking data scales to exaggerate",
+    "Missing context (no benchmarks, comparisons)",
+    "Overcomplicating simple data",
+    "Using fancy chart types unnecessarily",
+    "Not testing with real data"
+  ],
+  "storytelling": {
+    "principles": [
+      "Have a clear message/insight",
+      "Guide viewer's attention",
+      "Provide context (what does this number mean?)",
+      "Use annotations to highlight key points",
+      "Progressive disclosure (overview → details)",
+      "Compare to meaningful benchmarks"
+    ],
+    "narrative_flow": {
+      "title": "Clear, descriptive title",
+      "subtitle": "Additional context if needed",
+      "chart": "Appropriate visualization",
+      "annotations": "Highlight key insights",
+      "caption": "Summarize takeaway"
+    }
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "name": "Healthcare UX Patterns",
+  "description": "User experience design for healthcare applications, prioritizing safety, privacy, and usability",
+  "regulations": {
+    "hipaa": {
+      "name": "Health Insurance Portability and Accountability Act (US)",
+      "key_requirements": {
+        "privacy": "Protect patient health information (PHI)",
+        "security": "Encrypt data in transit and at rest",
+        "access_control": "Role-based access, audit logs",
+        "patient_rights": "Patients can access and correct their data"
+      },
+      "ux_implications": ["Strong authentication", "Session timeouts", "Audit trails visible to patients", "Secure messaging"]
+    },
+    "gdpr": {
+      "applies": "EU patients",
+      "requirements": ["Consent for data processing", "Right to access and delete", "Data portability"]
+    },
+    "fda": {
+      "scope": "Medical device software (apps that diagnose, treat, prevent disease)",
+      "requirements": "Usability testing, risk analysis, validation",
+      "ux_impact": "Rigorous testing and documentation required"
+    }
+  },
+  "core_principles": {
+    "safety": {
+      "description": "Errors can have life-or-death consequences",
+      "practices": [
+        "Clear error messages with recovery steps",
+        "Confirmation for critical actions (medication orders)",
+        "Alerts for dangerous drug interactions",
+        "Minimize cognitive load (simplify complex workflows)"
+      ]
+    },
+    "privacy": {
+      "description": "Health data is extremely sensitive",
+      "practices": [
+        "Minimal data collection",
+        "Clear privacy policy (plain language)",
+        "Granular privacy controls",
+        "Secure authentication (2FA recommended)",
+        "Auto-logout after inactivity",
+        "Encrypted messaging"
+      ]
+    },
+    "accessibility": {
+      "importance": "Many patients have disabilities",
+      "requirements": ["WCAG AA minimum", "Screen reader support", "High contrast mode", "Large text options", "Keyboard navigation"]
+    },
+    "trust": {
+      "description": "Users must trust the app with health decisions",
+      "practices": [
+        "Transparent about data usage",
+        "Cite medical sources",
+        "Show credentials (doctors, certifications)",
+        "Don't replace doctors (make this clear)",
+        "Explain AI/algorithm decisions"
+      ]
+    }
+  },
+  "common_healthcare_apps": {
+    "telemedicine": {
+      "examples": ["Doctor video consultations", "Remote monitoring"],
+      "ux_patterns": {
+        "waiting_room": "Show wait time, queue position",
+        "video_quality": "Check internet connection before call",
+        "privacy": "Blur background option, waiting room (no auto-join)",
+        "documentation": "Auto-save notes, easy prescription sending"
+      }
+    },
+    "patient_portals": {
+      "features": ["View test results", "Message doctor", "Schedule appointments", "View medical history"],
+      "ux_patterns": {
+        "results": "Explain results in plain language, not just raw numbers",
+        "messaging": "Secure, HIPAA-compliant, set response time expectations",
+        "appointments": "Show available slots, send reminders"
+      }
+    },
+    "medication_management": {
+      "features": ["Medication list", "Reminders", "Refill requests"],
+      "ux_patterns": {
+        "reminders": "Customizable (time, frequency), snooze option",
+        "tracking": "Log when taken, show adherence",
+        "interactions": "Alert for drug interactions",
+        "refills": "Auto-request when running low"
+      }
+    },
+    "symptom_checkers": {
+      "examples": ["WebMD", "Ada Health"],
+      "ux_patterns": {
+        "triage": "Guide to appropriate care level (ER, urgent care, wait)",
+        "disclaimer": "Not a substitute for professional medical advice (prominent)",
+        "questions": "Conversational, branching logic",
+        "results": "Possible conditions with probabilities, encourage doctor visit"
+      }
+    },
+    "wearables_health_trackers": {
+      "examples": ["Apple Health", "Fitbit", "Oura Ring"],
+      "ux_patterns": {
+        "dashboards": "Visualize trends over time",
+        "goals": "Set health goals, show progress",
+        "insights": "Actionable insights ('You slept 20% better this week')",
+        "alerts": "Notify of anomalies (high heart rate)"
+      }
+    }
+  },
+  "critical_ux_patterns": {
+    "error_prevention": {
+      "medication_errors": [
+        "Drug interaction warnings",
+        "Dose range validation (too high/low?)",
+        "Allergy checks",
+        "Look-alike/sound-alike drug warnings",
+        "Confirmation for high-risk meds"
+      ],
+      "data_entry": [
+        "Structured input (dropdowns, not free text)",
+        "Validation (blood pressure 200/150 - confirm?)",
+        "Auto-complete for common values"
+      ]
+    },
+    "consent_forms": {
+      "requirements": "Informed consent for treatments, data sharing",
+      "ux": [
+        "Plain language (not legalese)",
+        "Explain risks and benefits clearly",
+        "Allow downloading/printing",
+        "Require explicit consent (checkboxes)",
+        "Timestamp and store consent"
+      ]
+    },
+    "emergency_access": {
+      "feature": "Critical info accessible even when locked (allergies, emergency contacts, medical conditions)",
+      "examples": ["iOS Medical ID", "Android Emergency Info"],
+      "ux": "Accessible from lock screen, no authentication needed"
+    },
+    "data_export": {
+      "requirement": "Patients own their data (HIPAA, GDPR)",
+      "format": "Machine-readable (JSON, CSV) and human-readable (PDF)",
+      "ux": "Easy to find ('Download my data'), quick processing"
+    }
+  },
+  "special_populations": {
+    "elderly": {
+      "considerations": ["Larger text (18px+)", "Simple navigation", "Phone support available", "Patience with errors"],
+      "avoid": ["Tiny touch targets", "Complex gestures", "Time-sensitive actions"]
+    },
+    "chronic_conditions": {
+      "considerations": ["Easy medication tracking", "Symptom logging", "Integration with devices (glucometer, blood pressure monitor)"],
+      "motivational_design": "Positive reinforcement, progress tracking, avoid guilt"
+    },
+    "mental_health": {
+      "considerations": ["Crisis resources prominent (suicide hotline)", "Non-judgmental tone", "Privacy (extra sensitive)", "Anonymity options"],
+      "avoid": "Triggering content, stigmatizing language"
+    }
+  },
+  "testing": {
+    "clinical_validation": {
+      "requirement": "FDA requires usability testing for medical device software",
+      "process": ["Formative testing (early feedback)", "Summative testing (validation)", "Document findings"],
+      "participants": "Representative users (patients, clinicians)"
+    },
+    "safety_testing": {
+      "scenarios": "Test error scenarios (wrong dose, wrong patient)",
+      "heuristics": "Focus on safety heuristics (visibility of errors, error prevention)"
+    }
+  },
+  "best_practices": [
+    "HIPAA compliance (encryption, access control, audit logs)",
+    "WCAG AA accessibility minimum",
+    "Plain language (avoid medical jargon)",
+    "Cite credible sources",
+    "Don't replace doctors (clear disclaimers)",
+    "Error prevention (confirmations, validations)",
+    "Privacy by default (minimal data, granular controls)",
+    "Emergency info accessible without login",
+    "Secure messaging (HIPAA-compliant)",
+    "Session timeouts (auto-logout)",
+    "Data export (patients own their data)",
+    "Large touch targets (accessibility)",
+    "Test with real patients and clinicians",
+    "Explain medical terms",
+    "Show progress in long forms"
+  ],
+  "anti_patterns": [
+    "Storing unencrypted health data",
+    "No session timeout (privacy risk)",
+    "Medical jargon without explanation",
+    "No error prevention (easy to enter wrong dose)",
+    "Claiming to diagnose/treat without FDA approval",
+    "No way to export data",
+    "Inaccessible to screen readers",
+    "Tiny text (hard to read)",
+    "No emergency access feature",
+    "Unclear privacy policy",
+    "No drug interaction checks",
+    "Auto-play video with sound (privacy in waiting room)",
+    "Requiring unnecessary personal data",
+    "No citation of medical sources",
+    "Ignoring elderly and disabled users"
+  ],
+  "resources": [
+    "FDA: Applying Human Factors in Medical Devices",
+    "HIPAA Compliance Guide",
+    "Healthcare UX Design (Dexcom, Epic, Cerner case studies)",
+    "Plain Language Medical Writing",
+    "WCAG 2.1 AA Guidelines"
+  ]
+}

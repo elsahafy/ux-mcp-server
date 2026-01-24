@@ -1,0 +1,641 @@
+{
+  "name": "Form Design Patterns",
+  "description": "Comprehensive guide to designing accessible, user-friendly forms with validation patterns and best practices",
+  "layout_patterns": {
+    "single_column": {
+      "description": "One field per row - most accessible and mobile-friendly",
+      "use_when": "Most forms, especially mobile-first designs",
+      "benefits": [
+        "Easier to scan vertically",
+        "Better for mobile devices",
+        "Clearer completion flow",
+        "Improved accessibility",
+        "Higher completion rates"
+      ],
+      "example": "<form>\n  <label for='email'>Email</label>\n  <input type='email' id='email'>\n  \n  <label for='password'>Password</label>\n  <input type='password' id='password'>\n  \n  <button>Sign In</button>\n</form>",
+      "avoid": "Multi-column layouts unless fields are naturally grouped (city, state, zip)"
+    },
+    "multi_column": {
+      "description": "Multiple fields per row",
+      "use_when": "Related fields (city/state/zip), desktop with ample space",
+      "guidelines": [
+        "Group related fields logically",
+        "Use for short fields (city, state, zip code)",
+        "Ensure fields align visually",
+        "Collapse to single column on mobile"
+      ],
+      "example": "<div class='form-row'>\n  <div class='col'>\n    <label for='city'>City</label>\n    <input id='city'>\n  </div>\n  <div class='col'>\n    <label for='state'>State</label>\n    <select id='state'>...</select>\n  </div>\n  <div class='col'>\n    <label for='zip'>ZIP</label>\n    <input id='zip'>\n  </div>\n</div>",
+      "max_columns": 3,
+      "accessibility_concern": "Can be harder for screen readers, ensure logical tab order"
+    },
+    "multi_step_wizard": {
+      "description": "Break long forms into multiple steps",
+      "use_when": "Forms with 10+ fields or complex logic",
+      "benefits": [
+        "Reduces cognitive load",
+        "Shows progress",
+        "Allows saving partial progress",
+        "Better mobile experience",
+        "Higher completion rates for long forms"
+      ],
+      "essential_components": {
+        "progress_indicator": {
+          "types": ["Step counter (1 of 4)", "Progress bar", "Breadcrumb trail"],
+          "best_practice": "Show step labels and current position",
+          "example": "<div class='wizard-progress'>\n  <div class='step completed'>Personal Info</div>\n  <div class='step active'>Address</div>\n  <div class='step'>Payment</div>\n  <div class='step'>Review</div>\n</div>"
+        },
+        "navigation": {
+          "required": ["Next/Continue button", "Back button (except step 1)"],
+          "optional": ["Save for later", "Skip (if applicable)"],
+          "validation": "Validate current step before proceeding",
+          "keyboard": "Support Enter to advance, Escape to cancel"
+        },
+        "data_persistence": {
+          "save_progress": "Save on each step completion",
+          "recovery": "Allow users to return to incomplete forms",
+          "session_timeout": "Warn before timing out"
+        }
+      },
+      "step_design": [
+        "Each step should be logical and complete",
+        "Group related fields in same step",
+        "Keep steps balanced in length",
+        "Show validation errors within step",
+        "Allow editing previous steps"
+      ],
+      "anti_patterns": [
+        "Too many steps (> 7)",
+        "Unbalanced step lengths",
+        "No progress indication",
+        "Can't go back to edit",
+        "Lose data if session expires"
+      ]
+    },
+    "inline_editing": {
+      "description": "Edit fields directly in place",
+      "use_when": "Settings pages, profile editing, admin panels",
+      "pattern": "Click to edit, save/cancel buttons appear",
+      "example": "<div class='editable-field'>\n  <span class='value'>john@example.com</span>\n  <button class='edit-btn'>Edit</button>\n  <!-- On click: -->\n  <input value='john@example.com'>\n  <button class='save-btn'>Save</button>\n  <button class='cancel-btn'>Cancel</button>\n</div>",
+      "keyboard": "Enter to save, Escape to cancel",
+      "accessibility": "Announce state changes to screen readers"
+    }
+  },
+  "field_types": {
+    "text_input": {
+      "basic": {
+        "html": "<label for='name'>Full Name</label>\n<input type='text' id='name' autocomplete='name'>",
+        "attributes": {
+          "type": "text, email, tel, url, search",
+          "autocomplete": "Use HTML autocomplete attributes",
+          "inputmode": "text, numeric, tel, email, url for mobile keyboards",
+          "placeholder": "Optional - don't replace labels",
+          "maxlength": "Limit input length if needed"
+        }
+      },
+      "best_practices": [
+        "Always use <label> elements",
+        "Enable autocomplete where appropriate",
+        "Use correct input type for mobile keyboards",
+        "Don't use placeholder as label",
+        "Set appropriate width (visual cue for expected length)",
+        "Disable autocorrect for usernames/codes"
+      ]
+    },
+    "textarea": {
+      "use": "Multi-line text input",
+      "example": "<label for='message'>Message</label>\n<textarea id='message' rows='4'></textarea>",
+      "features": {
+        "auto_resize": "Grow height as user types",
+        "character_count": "Show remaining characters if limited",
+        "rich_text": "Consider rich text editor for formatting"
+      },
+      "accessibility": "Set rows attribute for default height"
+    },
+    "select_dropdown": {
+      "use": "Choose one from many options (> 5 options)",
+      "example": "<label for='country'>Country</label>\n<select id='country'>\n  <option value=''>Select a country</option>\n  <option value='us'>United States</option>\n  <option value='ca'>Canada</option>\n</select>",
+      "best_practices": [
+        "Include default 'Select...' option",
+        "Sort alphabetically for long lists",
+        "Group related options with <optgroup>",
+        "Consider autocomplete for very long lists (countries)",
+        "Use single-select for mutually exclusive choices"
+      ],
+      "alternatives": {
+        "radio_buttons": "For 2-5 options (better visibility)",
+        "autocomplete": "For very long lists (100+ options)",
+        "button_group": "For 2-3 options with icons"
+      }
+    },
+    "radio_buttons": {
+      "use": "Choose one from few options (2-5)",
+      "example": "<fieldset>\n  <legend>Shipping Method</legend>\n  <label>\n    <input type='radio' name='shipping' value='standard'>\n    Standard (5-7 days)\n  </label>\n  <label>\n    <input type='radio' name='shipping' value='express'>\n    Express (2-3 days)\n  </label>\n</fieldset>",
+      "best_practices": [
+        "Use <fieldset> and <legend>",
+        "Show all options (don't hide in dropdown)",
+        "One option should be pre-selected if there's a default",
+        "Use same 'name' attribute for grouping",
+        "Clicking label should select radio"
+      ],
+      "layout": "Vertical stack preferred for accessibility"
+    },
+    "checkboxes": {
+      "use": "Multiple selections, on/off toggles",
+      "single": {
+        "example": "<label>\n  <input type='checkbox' name='terms'>\n  I agree to the terms and conditions\n</label>",
+        "use": "Agreement, opt-in/out"
+      },
+      "multiple": {
+        "example": "<fieldset>\n  <legend>Interests</legend>\n  <label><input type='checkbox' name='interests' value='tech'>Technology</label>\n  <label><input type='checkbox' name='interests' value='design'>Design</label>\n  <label><input type='checkbox' name='interests' value='business'>Business</label>\n</fieldset>",
+        "use": "Select multiple from list"
+      },
+      "best_practices": [
+        "Use for independent options (not mutually exclusive)",
+        "Show 'Select All' for long lists",
+        "Use <fieldset> for groups",
+        "Make entire label clickable"
+      ]
+    },
+    "toggle_switch": {
+      "use": "On/off settings that take effect immediately",
+      "implementation": "Checkbox styled as toggle",
+      "example": "<label class='toggle'>\n  <input type='checkbox' role='switch'>\n  <span class='slider'></span>\n  Enable notifications\n</label>",
+      "when_to_use": "Settings that take effect immediately (not form submission)",
+      "accessibility": "role='switch', aria-checked state"
+    },
+    "date_picker": {
+      "types": {
+        "native": {
+          "html": "<input type='date' id='dob'>",
+          "pros": ["Built-in", "Mobile-friendly", "Accessible"],
+          "cons": ["Limited styling", "Browser inconsistency"]
+        },
+        "custom": {
+          "libraries": ["Flatpickr", "react-datepicker", "Air Datepicker"],
+          "must_haves": ["Keyboard navigation", "Today button", "Clear button", "Format display"]
+        }
+      },
+      "best_practices": [
+        "Show date format hint (MM/DD/YYYY)",
+        "Allow manual text entry",
+        "Disable past dates if not applicable",
+        "Use appropriate locale format",
+        "Provide calendar icon button"
+      ],
+      "date_range": {
+        "pattern": "Two date pickers (start/end)",
+        "validation": "End date must be after start date",
+        "ux": "Clicking end date should show start date as minimum"
+      }
+    },
+    "file_upload": {
+      "basic": {
+        "html": "<label for='file'>Upload Resume</label>\n<input type='file' id='file' accept='.pdf,.doc,.docx'>",
+        "attributes": {
+          "accept": "Limit file types (.pdf, image/*)",
+          "multiple": "Allow multiple files"
+        }
+      },
+      "enhanced": {
+        "features": [
+          "Drag and drop zone",
+          "File preview (images)",
+          "Upload progress bar",
+          "File size validation",
+          "Remove uploaded file option"
+        ],
+        "example": "<div class='upload-zone'>\n  <input type='file' id='upload' hidden>\n  <label for='upload' class='drop-zone'>\n    <span>Drag files here or click to browse</span>\n    <span class='hint'>PDF, DOC up to 10MB</span>\n  </label>\n</div>"
+      },
+      "validation": [
+        "Check file size before upload",
+        "Validate file type",
+        "Show clear error messages",
+        "Scan for viruses on server"
+      ],
+      "ux": [
+        "Show file name after selection",
+        "Show upload progress",
+        "Allow removing files before submit",
+        "Support drag and drop"
+      ]
+    },
+    "search_autocomplete": {
+      "use": "Search with suggestions, select from large list",
+      "pattern": "Combo box (text input + dropdown)",
+      "example": "<label for='city'>City</label>\n<input type='text' id='city' role='combobox' aria-autocomplete='list' aria-controls='city-list'>\n<ul id='city-list' role='listbox' hidden>\n  <!-- Suggestions populate here -->\n</ul>",
+      "behavior": [
+        "Show suggestions after 2-3 characters",
+        "Debounce requests (300ms)",
+        "Highlight matching text",
+        "Keyboard navigation (up/down arrows)",
+        "Escape to close",
+        "Enter to select"
+      ],
+      "accessibility": [
+        "role='combobox' on input",
+        "aria-autocomplete='list'",
+        "Announce number of results",
+        "aria-activedescendant for highlighted item"
+      ]
+    },
+    "password": {
+      "basic": {
+        "html": "<label for='password'>Password</label>\n<input type='password' id='password' autocomplete='new-password'>",
+        "show_hide_toggle": "<button type='button' aria-label='Show password'>👁️</button>"
+      },
+      "strength_indicator": {
+        "display": "Visual bar showing weak/medium/strong",
+        "criteria": "Length, uppercase, numbers, symbols",
+        "real_time": "Update as user types",
+        "example": "<div class='password-strength'>\n  <div class='strength-bar weak'></div>\n  <span>Weak - Add numbers and symbols</span>\n</div>"
+      },
+      "best_practices": [
+        "Allow paste (don't disable)",
+        "Show password toggle",
+        "Real-time strength feedback",
+        "Don't require complex rules without reason",
+        "Use autocomplete='new-password' for registration",
+        "Use autocomplete='current-password' for login"
+      ],
+      "requirements_display": {
+        "show_upfront": "Display requirements before user types",
+        "check_as_typed": "Show ✓ for met requirements",
+        "example": "<ul class='password-requirements'>\n  <li class='met'>✓ At least 8 characters</li>\n  <li class='unmet'>One uppercase letter</li>\n  <li class='unmet'>One number</li>\n</ul>"
+      }
+    },
+    "number_input": {
+      "types": {
+        "stepper": {
+          "html": "<input type='number' min='1' max='10' step='1'>",
+          "use": "Quantities, small range",
+          "ux": "Provide +/- buttons"
+        },
+        "slider": {
+          "html": "<input type='range' min='0' max='100' value='50'>",
+          "use": "Range selection, volume, zoom",
+          "accessibility": "Show current value"
+        }
+      },
+      "best_practices": [
+        "Use inputmode='numeric' for mobile",
+        "Set min/max/step appropriately",
+        "Show units (%, $, kg)",
+        "Allow keyboard input",
+        "Consider slider for ranges"
+      ]
+    }
+  },
+  "validation": {
+    "timing": {
+      "on_submit": {
+        "description": "Validate when form is submitted",
+        "use": "Default approach, least intrusive",
+        "scroll_to_error": "Scroll to first error and focus"
+      },
+      "on_blur": {
+        "description": "Validate when field loses focus",
+        "use": "After user completes field",
+        "avoid": "Don't show errors while user is still typing",
+        "example": "input.addEventListener('blur', validateField);"
+      },
+      "real_time": {
+        "description": "Validate as user types",
+        "use": "Password strength, username availability, character count",
+        "debounce": "Wait 300-500ms after typing stops",
+        "avoid": "Showing errors immediately (wait for blur or submission)"
+      },
+      "hybrid_approach": {
+        "recommended": "Inline validation on blur + submit validation",
+        "pattern": "Show errors on blur, revalidate on change after error shown",
+        "ux": "Best of both - timely feedback without annoyance"
+      }
+    },
+    "error_messages": {
+      "placement": {
+        "inline": "Below the field (preferred)",
+        "summary": "Top of form listing all errors",
+        "both": "Inline + summary for long forms"
+      },
+      "content": {
+        "specific": "Explain exactly what's wrong",
+        "good": "Password must be at least 8 characters",
+        "bad": "Invalid password",
+        "actionable": "Tell user how to fix it",
+        "polite": "Avoid blame (You entered... → This field...)"
+      },
+      "styling": {
+        "color": "Red with icon (don't rely on color alone)",
+        "icon": "⚠️ or ❌ for errors",
+        "aria": "aria-invalid='true' + aria-describedby"
+      },
+      "example": "<label for='email'>Email</label>\n<input type='email' id='email' aria-invalid='true' aria-describedby='email-error'>\n<span id='email-error' class='error' role='alert'>\n  Please enter a valid email address (e.g., name@example.com)\n</span>"
+    },
+    "validation_rules": {
+      "required_fields": {
+        "indicator": "Asterisk (*) or '(required)' label",
+        "error": "'Email is required'",
+        "html": "<input required aria-required='true'>"
+      },
+      "format_validation": {
+        "email": "Use type='email' + pattern if needed",
+        "phone": "Be flexible with formats",
+        "zip_code": "Country-specific patterns",
+        "example": "<input type='tel' pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}' placeholder='555-123-4567'>"
+      },
+      "length_validation": {
+        "minlength": "Minimum characters",
+        "maxlength": "Maximum characters",
+        "show_count": "Display character count for long fields"
+      },
+      "custom_validation": {
+        "password_match": "Confirm password must match",
+        "unique_username": "Check availability (debounced)",
+        "age_verification": "Calculate from date of birth"
+      }
+    },
+    "success_feedback": {
+      "show": "Optional but helpful",
+      "inline": "Green checkmark ✓ next to validated fields",
+      "example": "<span class='success'>✓ Available</span>",
+      "use_cases": ["Username availability", "Valid coupon code", "Email format correct"]
+    },
+    "progressive_disclosure": {
+      "description": "Show validation hints progressively",
+      "pattern": "Show requirements → Validate → Show success/error",
+      "example": "Password field shows requirements on focus, validates on blur"
+    }
+  },
+  "labels_and_help": {
+    "labels": {
+      "always_required": "Every input must have a label",
+      "visible": "Visible labels are better than aria-label",
+      "placement": "Above field (preferred) or to the left",
+      "example": "<label for='email'>Email Address</label>\n<input type='email' id='email'>",
+      "for_attribute": "Must match input id",
+      "clickable": "Clicking label should focus input"
+    },
+    "placeholders": {
+      "purpose": "Example or format hint",
+      "not_a_label": "Never replace label with placeholder",
+      "disappears": "Placeholder disappears when typing",
+      "example": "<label for='phone'>Phone Number</label>\n<input id='phone' placeholder='555-123-4567'>",
+      "accessibility": "Low contrast, not read by all screen readers",
+      "when_to_use": "Supplement labels, show format examples"
+    },
+    "help_text": {
+      "purpose": "Additional guidance or context",
+      "placement": "Below label or field",
+      "example": "<label for='username'>Username</label>\n<span id='username-help' class='help-text'>3-20 characters, letters and numbers only</span>\n<input id='username' aria-describedby='username-help'>",
+      "accessibility": "Use aria-describedby to associate with input",
+      "when_to_use": ["Complex requirements", "Format specifications", "Security info", "Character limits"]
+    },
+    "tooltips": {
+      "use": "Additional information, not critical instructions",
+      "trigger": "? icon or info icon",
+      "example": "<label>SSN <button type='button' class='tooltip-trigger'>?</button></label>",
+      "accessibility": "Must be keyboard accessible",
+      "avoid": "Don't hide critical info in tooltips"
+    },
+    "required_indicators": {
+      "methods": {
+        "asterisk": "Most common (*)",
+        "text": "(required) or (optional)",
+        "both": "* (required)"
+      },
+      "legend": "Explain meaning at top of form: '* indicates required field'",
+      "optional_approach": "Mark optional fields if most are required",
+      "accessibility": "aria-required='true' or required attribute"
+    }
+  },
+  "submission": {
+    "button_states": {
+      "default": "<button type='submit'>Submit</button>",
+      "loading": {
+        "disabled": "Disable button during submission",
+        "visual": "Show spinner or loading text",
+        "example": "<button type='submit' disabled>\n  <span class='spinner'></span> Submitting...\n</button>",
+        "prevent_double_submit": "Disable on first click"
+      },
+      "success": {
+        "feedback": "Show success message",
+        "redirect": "Redirect after confirmation message",
+        "example": "Form submitted! Redirecting..."
+      },
+      "error": {
+        "show_errors": "Display validation errors",
+        "re_enable": "Re-enable submit button",
+        "scroll_to_error": "Scroll to first error"
+      }
+    },
+    "button_text": {
+      "specific": "Describe the action",
+      "good": ["Create Account", "Save Changes", "Continue to Payment"],
+      "bad": ["Submit", "OK", "Send"],
+      "loading_state": ["Saving...", "Processing...", "Creating Account..."]
+    },
+    "success_messages": {
+      "placement": "Top of form or full-page confirmation",
+      "content": "Confirm action and next steps",
+      "example": "✓ Your account has been created! Check your email to verify.",
+      "auto_dismiss": "Optional for non-critical messages",
+      "accessibility": "Announce with role='status' or role='alert'"
+    },
+    "error_summary": {
+      "show_at_top": "List all errors at form top",
+      "focus_on_submit": "Focus error summary on failed submission",
+      "example": "<div class='error-summary' role='alert'>\n  <h2>Please fix the following errors:</h2>\n  <ul>\n    <li><a href='#email'>Email is required</a></li>\n    <li><a href='#password'>Password is too short</a></li>\n  </ul>\n</div>",
+      "links": "Link to each error field"
+    }
+  },
+  "accessibility": {
+    "keyboard_navigation": {
+      "tab_order": "Logical tab order through fields",
+      "required_keys": {
+        "tab": "Move to next field",
+        "shift_tab": "Move to previous field",
+        "enter": "Submit form",
+        "space": "Toggle checkbox/radio"
+      },
+      "skip_link": "Provide skip to content link",
+      "focus_visible": "Clear focus indicator on all fields"
+    },
+    "screen_reader": {
+      "labels": "All inputs must have labels",
+      "aria_attributes": {
+        "aria_required": "Mark required fields",
+        "aria_invalid": "Mark fields with errors",
+        "aria_describedby": "Associate help text and errors",
+        "aria_labelledby": "For complex label associations"
+      },
+      "error_announcement": "Use role='alert' for dynamic errors",
+      "fieldset_legend": "Use for radio/checkbox groups"
+    },
+    "wcag_compliance": {
+      "labels": "1.3.1 Info and Relationships (Level A)",
+      "error_identification": "3.3.1 Error Identification (Level A)",
+      "error_suggestion": "3.3.3 Error Suggestion (Level AA)",
+      "error_prevention": "3.3.4 Error Prevention (Level AA)",
+      "contrast": "Text and error messages must meet 4.5:1 contrast"
+    }
+  },
+  "mobile_optimization": {
+    "input_types": {
+      "email": "Shows @ on keyboard",
+      "tel": "Shows number pad",
+      "url": "Shows .com on keyboard",
+      "number": "Shows number pad",
+      "date": "Shows date picker"
+    },
+    "inputmode": {
+      "numeric": "Number pad without +/-",
+      "decimal": "Number pad with decimal",
+      "tel": "Phone pad",
+      "example": "<input type='text' inputmode='numeric'>"
+    },
+    "touch_targets": {
+      "minimum_size": "44x44px (iOS), 48x48px (Android)",
+      "spacing": "8px minimum between touch targets",
+      "applies_to": "Inputs, buttons, checkboxes, radio buttons"
+    },
+    "autofill": {
+      "autocomplete": "Use HTML autocomplete attributes",
+      "values": {
+        "name": "Full name",
+        "email": "Email address",
+        "tel": "Phone number",
+        "address_line1": "Street address",
+        "postal_code": "ZIP/postal code",
+        "cc_number": "Credit card number"
+      },
+      "example": "<input type='email' autocomplete='email'>"
+    },
+    "virtual_keyboard": {
+      "avoid_covering": "Scroll field into view when focused",
+      "fixed_submit": "Keep submit button accessible",
+      "resize_handling": "Handle viewport resize when keyboard appears"
+    }
+  },
+  "best_practices": [
+    "Use single-column layout for most forms",
+    "Always use visible labels (not just placeholders)",
+    "Mark required fields clearly with * or (required)",
+    "Validate on blur for best UX (after user leaves field)",
+    "Show specific, helpful error messages",
+    "Disable submit button during processing",
+    "Use appropriate input types for mobile keyboards",
+    "Enable autocomplete where appropriate",
+    "Provide clear focus indicators",
+    "Use fieldset and legend for radio/checkbox groups",
+    "Show progress for multi-step forms",
+    "Allow users to review before final submission",
+    "Provide clear success confirmation",
+    "Never lose user data on errors",
+    "Make buttons descriptive (not just 'Submit')",
+    "Support keyboard navigation throughout",
+    "Test with screen readers",
+    "Use HTTPS for all forms",
+    "Implement CSRF protection",
+    "Sanitize and validate on server"
+  ],
+  "anti_patterns": [
+    "Using placeholder as label",
+    "No validation until submit",
+    "Generic error messages ('Invalid input')",
+    "Disabling paste in password fields",
+    "Clearing form on errors",
+    "Too many required fields",
+    "No visual feedback during submission",
+    "Confusing CAPTCHA implementations",
+    "Auto-advancing focus between fields",
+    "Hiding password requirements",
+    "Using dropdowns for few options (use radio buttons)",
+    "Not indicating required fields",
+    "Poor mobile keyboard support",
+    "No autofill/autocomplete",
+    "Asking for unnecessary information"
+  ],
+  "form_types": {
+    "login_form": {
+      "fields": ["Email/username", "Password", "Remember me (optional)"],
+      "features": ["Show/hide password", "Forgot password link", "Social login options"],
+      "best_practices": [
+        "Simple and minimal",
+        "Show password toggle",
+        "Clear error messages",
+        "Forgot password prominent",
+        "Support autofill"
+      ]
+    },
+    "registration_form": {
+      "fields": ["Email", "Password", "Confirm password", "Name"],
+      "features": ["Password strength indicator", "Terms acceptance", "Email verification"],
+      "best_practices": [
+        "Keep minimal (only essential fields)",
+        "Use progressive disclosure for optional info",
+        "Show password requirements upfront",
+        "Validate email format",
+        "Check username availability inline"
+      ]
+    },
+    "checkout_form": {
+      "sections": ["Contact info", "Shipping address", "Payment method", "Review"],
+      "features": ["Address autocomplete", "Save info for later", "Order summary"],
+      "best_practices": [
+        "Show progress (multi-step)",
+        "Allow guest checkout",
+        "Save progress automatically",
+        "Show order summary throughout",
+        "Use address autocomplete",
+        "Support payment autofill",
+        "Clear error recovery"
+      ]
+    },
+    "search_form": {
+      "simple": "<input type='search' placeholder='Search...'>",
+      "advanced": ["Filters", "Autocomplete", "Recent searches"],
+      "best_practices": [
+        "Prominent placement",
+        "Show search icon",
+        "Support Enter to submit",
+        "Show loading state",
+        "Display search suggestions",
+        "Handle no results gracefully"
+      ]
+    },
+    "contact_form": {
+      "fields": ["Name", "Email", "Subject", "Message"],
+      "features": ["File attachment", "CAPTCHA", "Success confirmation"],
+      "best_practices": [
+        "Keep simple",
+        "Use textarea for message",
+        "Show character count",
+        "Email confirmation",
+        "Clear success message"
+      ]
+    }
+  },
+  "security": {
+    "client_side": [
+      "Use HTTPS for all forms",
+      "Validate input format",
+      "Use autocomplete='off' for sensitive data",
+      "Implement rate limiting on submit",
+      "Clear sensitive data from memory"
+    ],
+    "server_side": [
+      "Always validate on server (never trust client)",
+      "Sanitize all inputs",
+      "Use parameterized queries (prevent SQL injection)",
+      "Implement CSRF tokens",
+      "Hash passwords (bcrypt, Argon2)",
+      "Rate limit submissions",
+      "Log failed attempts"
+    ],
+    "captcha": {
+      "when": "Login, registration, contact forms",
+      "types": ["reCAPTCHA", "hCaptcha", "Invisible CAPTCHA"],
+      "accessibility": "Provide audio alternative",
+      "ux": "Only after suspicious activity (not on first try)"
+    }
+  }
+}

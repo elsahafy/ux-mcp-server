@@ -1,0 +1,537 @@
+{
+  "name": "Mobile-Specific UX Patterns",
+  "description": "Comprehensive guide to mobile-first design, touch interactions, navigation patterns, and mobile-specific considerations",
+  "mobile_first_principles": {
+    "definition": "Design for mobile first, then scale up to larger screens",
+    "benefits": [
+      "Forces prioritization of content",
+      "Better performance (start lean)",
+      "Easier to scale up than down",
+      "Majority of traffic is mobile",
+      "Progressive enhancement mindset"
+    ],
+    "approach": {
+      "start": "Design mobile layout first (320-375px)",
+      "enhance": "Add features for tablet (768px+)",
+      "expand": "Full desktop experience (1024px+)"
+    },
+    "css_strategy": "Mobile styles first, use @media (min-width) for larger screens"
+  },
+  "touch_interactions": {
+    "touch_targets": {
+      "minimum_size": {
+        "apple": "44x44 pixels (44pt)",
+        "android": "48x48 pixels (48dp)",
+        "recommended": "48x48 pixels minimum",
+        "comfortable": "56x56 pixels or larger"
+      },
+      "spacing": {
+        "minimum": "8px between touch targets",
+        "comfortable": "16px between targets",
+        "avoid": "Adjacent buttons without spacing"
+      },
+      "applies_to": [
+        "Buttons",
+        "Links",
+        "Form inputs",
+        "Checkboxes/radio buttons",
+        "Toggle switches",
+        "Navigation items",
+        "Icons"
+      ],
+      "implementation": "Use padding to increase clickable area without increasing visual size"
+    },
+    "gestures": {
+      "tap": {
+        "description": "Single finger touch",
+        "use": "Primary interaction (buttons, links)",
+        "feedback": "Provide visual feedback (highlight, ripple)",
+        "delay": "250-350ms delay on tap (mobile browsers)",
+        "solution": "Use touch events or touch-action: manipulation"
+      },
+      "double_tap": {
+        "description": "Two quick taps",
+        "use": "Zoom in (browsers), like (social apps)",
+        "avoid": "Conflicts with single tap, causes 300ms delay",
+        "note": "Less common in modern apps"
+      },
+      "long_press": {
+        "description": "Touch and hold",
+        "use": "Context menus, additional options, reordering",
+        "duration": "500-800ms typical",
+        "feedback": "Haptic + visual",
+        "examples": "Show context menu, enter edit mode"
+      },
+      "swipe": {
+        "description": "Quick slide gesture",
+        "directions": "Left, right, up, down",
+        "uses": {
+          "horizontal": "Navigate between pages, dismiss items",
+          "vertical": "Scroll, pull-to-refresh, swipe up for more"
+        },
+        "examples": [
+          "Swipe left to delete (iOS)",
+          "Swipe right to go back",
+          "Swipe between tabs/screens"
+        ]
+      },
+      "drag": {
+        "description": "Press and move",
+        "use": "Reorder lists, move items, sliders",
+        "feedback": "Visual indication item is dragging",
+        "drop_zones": "Clear indication where item can be dropped"
+      },
+      "pinch": {
+        "description": "Two fingers moving together/apart",
+        "use": "Zoom in/out on images, maps",
+        "default": "Disabled on most web content",
+        "enable": "For images, maps, media viewers"
+      },
+      "rotate": {
+        "description": "Two fingers rotating",
+        "use": "Rotate images, maps, specialized apps",
+        "rare": "Not common in standard UIs"
+      },
+      "edge_swipe": {
+        "description": "Swipe from screen edge",
+        "ios": "Back gesture (left edge)",
+        "android": "Open navigation drawer (left edge)",
+        "note": "System gestures - avoid conflicting"
+      }
+    },
+    "haptic_feedback": {
+      "description": "Vibration feedback for interactions",
+      "when_to_use": [
+        "Confirmations",
+        "Errors/warnings",
+        "Toggle switches",
+        "Button presses (optional)",
+        "Drag and drop events"
+      ],
+      "patterns": {
+        "light": "Subtle feedback (toggle, selection)",
+        "medium": "Standard feedback (button press)",
+        "heavy": "Strong feedback (error, warning)",
+        "success": "Completion pattern",
+        "error": "Failure pattern"
+      },
+      "avoid": "Overuse - can be annoying",
+      "accessibility": "Don't rely on haptics alone"
+    }
+  },
+  "navigation_patterns": {
+    "bottom_navigation": {
+      "description": "Tab bar at bottom of screen",
+      "use_when": "3-5 top-level destinations",
+      "benefits": ["Easy thumb reach", "Always visible", "Clear structure"],
+      "limitations": "Maximum 5 items",
+      "items": {
+        "count": "3-5 destinations",
+        "labels": "Short, 1-2 words",
+        "icons": "Clear, recognizable",
+        "active_state": "Color + icon filled"
+      },
+      "avoid": [
+        "More than 5 items",
+        "Nested navigation",
+        "Long labels",
+        "Scrolling bottom nav"
+      ],
+      "examples": "Instagram, Twitter, Apple Music"
+    },
+    "tab_bar": {
+      "description": "Horizontal tabs for category switching",
+      "placement": "Below header, scrollable if many",
+      "use_when": "Same-level content categories",
+      "interaction": "Swipe to switch + tap tabs",
+      "indicator": "Line or background showing active tab",
+      "scroll": "Allow horizontal scroll if > 4 tabs"
+    },
+    "hamburger_menu": {
+      "description": "Three-line icon revealing navigation",
+      "placement": "Top left or top right",
+      "pros": ["Saves space", "Can hold many items"],
+      "cons": ["Hidden navigation", "Extra tap required", "Lower discoverability"],
+      "use_when": "Many navigation items, secondary nav, settings",
+      "avoid": "Primary navigation on mobile (use bottom nav instead)",
+      "drawer_style": "Slide in from left or right"
+    },
+    "top_navigation": {
+      "description": "Header with logo and key actions",
+      "typical_items": ["Back button", "Title", "Search", "Actions (2-3 max)"],
+      "avoid": "Too many actions (use overflow menu)",
+      "scroll_behavior": {
+        "fixed": "Always visible",
+        "hide_on_scroll": "Hide when scrolling down, show when scrolling up",
+        "collapse": "Shrink on scroll"
+      }
+    },
+    "floating_action_button": {
+      "description": "Circular button for primary action",
+      "placement": "Bottom right corner",
+      "use_when": "One clear primary action (create, add, compose)",
+      "size": "56x56dp (Android), 44x44pt minimum (iOS)",
+      "avoid": "Multiple FABs, unclear actions",
+      "examples": "New email, create post, add item"
+    },
+    "breadcrumbs": {
+      "mobile": "Generally avoid or simplify to just back button",
+      "alternative": "Use clear page titles + back button",
+      "exception": "E-commerce category navigation"
+    },
+    "hierarchical_navigation": {
+      "pattern": "Drill down into subcategories",
+      "back_button": "Always provide clear way to go back",
+      "header_title": "Show current location",
+      "breadcrumb": "Optional: Home > Category > Current"
+    }
+  },
+  "thumb_zones": {
+    "description": "Areas of screen easily reachable by thumb",
+    "zones": {
+      "easy": {
+        "location": "Bottom third, center",
+        "reachability": "One-handed, comfortable",
+        "use_for": "Primary actions, navigation, frequent interactions"
+      },
+      "stretch": {
+        "location": "Top corners, far edges",
+        "reachability": "Requires stretching or shifting grip",
+        "use_for": "Secondary actions, less frequent interactions"
+      },
+      "hard": {
+        "location": "Top center, opposite top corner",
+        "reachability": "Requires two hands or grip shift",
+        "use_for": "Infrequent actions, settings"
+      }
+    },
+    "one_handed_use": {
+      "right_handed": "Bottom right most reachable",
+      "left_handed": "Bottom left most reachable",
+      "design_for": "Both - important actions in bottom center"
+    },
+    "large_phones": {
+      "issue": "Top of screen hard to reach",
+      "solution": ["Reachability mode", "Bottom navigation", "Floating elements"]
+    }
+  },
+  "screen_sizes": {
+    "breakpoints": {
+      "small_phone": "320px - 375px (iPhone SE, older phones)",
+      "standard_phone": "375px - 414px (Most phones)",
+      "large_phone": "414px - 428px (Plus models, Max)",
+      "tablet": "768px - 1024px",
+      "desktop": "1024px+"
+    },
+    "design_for": {
+      "minimum": "320px (smallest still in use)",
+      "optimal": "375px (most common)",
+      "test_at": "320px, 375px, 414px, 768px"
+    },
+    "responsive_images": {
+      "srcset": "Provide multiple image sizes",
+      "picture": "Art direction for different layouts",
+      "lazy_loading": "Load images as needed"
+    }
+  },
+  "mobile_forms": {
+    "input_types": {
+      "tel": "Shows number pad with symbols",
+      "email": "Shows @ and .com",
+      "url": "Shows .com and /",
+      "number": "Shows number pad",
+      "date": "Shows date picker",
+      "search": "Shows search-optimized keyboard"
+    },
+    "inputmode": {
+      "numeric": "Number pad without +/- symbols",
+      "decimal": "Number pad with decimal",
+      "tel": "Phone number pad",
+      "email": "Email keyboard",
+      "url": "URL keyboard"
+    },
+    "autocomplete": {
+      "enable": "Use HTML autocomplete attributes",
+      "benefits": "Faster input, fewer errors",
+      "attributes": "name, email, tel, address-line1, postal-code, cc-number"
+    },
+    "virtual_keyboard": {
+      "issue": "Covers bottom of screen",
+      "solutions": [
+        "Scroll field into view when focused",
+        "Fix submit button above keyboard",
+        "Adjust viewport on keyboard open",
+        "Provide 'Done' button to dismiss keyboard"
+      ]
+    },
+    "field_focus": {
+      "zoom": "iOS zooms if input < 16px",
+      "prevent": "Use 16px minimum font size for inputs",
+      "alternative": "Use viewport meta tag (not recommended)"
+    },
+    "layout": {
+      "single_column": "Always use single column on mobile",
+      "full_width": "Inputs should be full width (with padding)",
+      "spacing": "Ample touch target spacing (8-16px)",
+      "floating_labels": "Save vertical space"
+    }
+  },
+  "mobile_performance": {
+    "page_weight": {
+      "target": "< 1MB for initial load",
+      "images": "Optimize and compress",
+      "javascript": "Minimize and defer",
+      "css": "Inline critical CSS"
+    },
+    "loading_speed": {
+      "3g_network": "Test on slow connections",
+      "target": "< 3 seconds for main content",
+      "indicators": "Show loading states",
+      "progressive": "Load critical content first"
+    },
+    "battery_usage": {
+      "animations": "Use CSS animations (GPU accelerated)",
+      "polling": "Minimize background requests",
+      "location": "Request only when needed",
+      "video": "Don't autoplay"
+    },
+    "data_usage": {
+      "images": "Use WebP, lazy load",
+      "videos": "Offer quality options",
+      "fonts": "Limit web fonts",
+      "caching": "Cache aggressively"
+    }
+  },
+  "mobile_content": {
+    "readability": {
+      "font_size": "16px minimum (mobile)",
+      "line_height": "1.5-1.6 for body text",
+      "line_length": "35-50 characters on small screens",
+      "contrast": "Even more critical on mobile (glare, brightness)"
+    },
+    "hierarchy": {
+      "inverted_pyramid": "Most important content first",
+      "scannable": "Headings, bullets, short paragraphs",
+      "progressive_disclosure": "Show details on demand"
+    },
+    "images": {
+      "responsive": "Scale to screen size",
+      "touch_to_zoom": "Enable for detail viewing",
+      "captions": "Especially important on small screens",
+      "alt_text": "Critical for accessibility"
+    },
+    "videos": {
+      "controls": "Large, touch-friendly controls",
+      "captions": "Provide captions (often viewed muted)",
+      "fullscreen": "Support fullscreen mode",
+      "autoplay": "Avoid (data usage, battery, UX)"
+    }
+  },
+  "mobile_interactions": {
+    "pull_to_refresh": {
+      "description": "Pull down to reload content",
+      "use": "Feeds, inboxes, dynamic content",
+      "indicator": "Spinner or icon appears during pull",
+      "threshold": "~60-80px pull distance",
+      "avoid": "Conflicting with scroll"
+    },
+    "infinite_scroll": {
+      "description": "Load more content as user scrolls",
+      "use": "Feeds, search results, galleries",
+      "indicator": "Show loading at bottom",
+      "pagination_alternative": "Better for SEO, bookmarking",
+      "hybrid": "Load more + 'Show more' button"
+    },
+    "swipe_actions": {
+      "description": "Swipe to reveal actions",
+      "common": "Swipe left to delete, swipe right for more options",
+      "visual": "Show icons during swipe",
+      "confirmation": "Require for destructive actions",
+      "examples": "Email apps, to-do lists"
+    },
+    "modal_sheets": {
+      "description": "Bottom sheet that slides up",
+      "use": "Contextual actions, forms, filters",
+      "dismiss": "Swipe down or tap outside",
+      "sizes": "Half-screen, full-screen",
+      "better_than": "Full-screen modals (less disruptive)"
+    }
+  },
+  "mobile_specific_features": {
+    "offline_support": {
+      "service_workers": "Cache assets for offline use",
+      "offline_page": "Show helpful offline page",
+      "sync": "Sync when connection restored",
+      "indicator": "Show online/offline status"
+    },
+    "home_screen_install": {
+      "pwa": "Progressive Web App capabilities",
+      "manifest": "Web app manifest file",
+      "prompt": "Offer 'Add to Home Screen'",
+      "icon": "App icon for home screen",
+      "splash": "Loading screen"
+    },
+    "device_features": {
+      "camera": "Access for photos/scanning",
+      "location": "GPS for maps/location services",
+      "microphone": "Voice input",
+      "accelerometer": "Motion/tilt",
+      "permissions": "Request only when needed, explain why"
+    },
+    "notifications": {
+      "push": "Timely, relevant updates",
+      "opt_in": "Always require permission",
+      "frequency": "Don't spam",
+      "value": "Must provide value to user"
+    }
+  },
+  "common_mobile_patterns": {
+    "cards": {
+      "description": "Contained content units",
+      "benefits": "Touch-friendly, scannable, flexible",
+      "spacing": "8-16px between cards",
+      "content": "Keep concise on mobile",
+      "action": "Entire card often tappable"
+    },
+    "lists": {
+      "simple_list": "Single line items",
+      "detailed_list": "Multi-line with icon/image",
+      "action_items": "Swipe actions or long-press",
+      "dividers": "Light dividers between items"
+    },
+    "search": {
+      "placement": "Top of screen, prominent",
+      "auto_focus": "Optional - consider context",
+      "suggestions": "Show as user types",
+      "filters": "Accessible but not intrusive",
+      "clear_button": "X to clear search"
+    },
+    "filters_sorting": {
+      "trigger": "Filter icon or button",
+      "presentation": "Bottom sheet or modal",
+      "apply": "Show results count, apply button",
+      "clear": "Easy way to clear all filters"
+    },
+    "empty_states": {
+      "critical_on_mobile": "Limited space makes these stand out",
+      "illustration": "Simple, meaningful icon/image",
+      "message": "Concise, actionable",
+      "cta": "Clear next step"
+    },
+    "loading_states": {
+      "skeleton": "Show content structure while loading",
+      "spinner": "For unknown duration",
+      "progress": "For known duration",
+      "inline": "For partial updates"
+    }
+  },
+  "mobile_accessibility": {
+    "screen_readers": {
+      "voiceover": "iOS screen reader",
+      "talkback": "Android screen reader",
+      "testing": "Test with both",
+      "labels": "Descriptive aria-labels for icons"
+    },
+    "touch_targets": {
+      "minimum": "44x44px (see touch_targets above)",
+      "spacing": "8px minimum between",
+      "feedback": "Clear visual and haptic feedback"
+    },
+    "contrast": {
+      "even_more_critical": "Outdoor viewing, glare",
+      "minimum": "4.5:1 for text",
+      "test": "Test in bright sunlight if possible"
+    },
+    "motion": {
+      "reduce_motion": "Respect prefers-reduced-motion",
+      "parallax": "Avoid or make optional",
+      "autoplay": "Don't autoplay animations"
+    }
+  },
+  "testing": {
+    "devices": {
+      "must_test": [
+        "Small phone (iPhone SE, 320px)",
+        "Standard phone (iPhone 14, 375px)",
+        "Large phone (iPhone 14 Pro Max, 428px)",
+        "Android phone (various sizes)",
+        "Tablet (iPad, 768px+)"
+      ]
+    },
+    "browsers": {
+      "safari": "iOS default",
+      "chrome": "Android default, iOS option",
+      "firefox": "Alternative",
+      "samsung_internet": "Popular on Android"
+    },
+    "conditions": {
+      "slow_network": "Test on 3G/slow 4G",
+      "offline": "Test offline functionality",
+      "low_battery": "Check battery usage",
+      "interruptions": "Phone calls, notifications"
+    },
+    "real_devices": "Always test on real devices, not just emulators"
+  },
+  "best_practices": [
+    "Design mobile-first, then scale up",
+    "Touch targets minimum 44x44px with 8px spacing",
+    "Place important actions in thumb-reachable zones",
+    "Use appropriate input types and inputmode",
+    "Keep forms simple, single column",
+    "Provide clear visual feedback for all interactions",
+    "Use bottom navigation for 3-5 primary destinations",
+    "Optimize images and assets for mobile",
+    "Test on real devices with slow networks",
+    "Respect prefers-reduced-motion",
+    "Don't rely on hover states",
+    "Make tap targets obvious (don't hide in text)",
+    "Support landscape orientation",
+    "Handle virtual keyboard gracefully",
+    "Provide offline support where possible",
+    "Use system fonts when possible (performance)",
+    "Minimize page weight (< 1MB)",
+    "Load critical content first",
+    "Use native patterns users expect",
+    "Test with screen readers (VoiceOver, TalkBack)"
+  ],
+  "anti_patterns": [
+    "Touch targets smaller than 44x44px",
+    "Relying on hover states",
+    "Horizontal scrolling (except carousels)",
+    "Tiny text (< 16px)",
+    "Pop-ups and interstitials that block content",
+    "Auto-playing videos with sound",
+    "Fixed elements that cover content",
+    "Infinite scroll without pagination alternative",
+    "Hiding critical nav in hamburger only",
+    "Not handling virtual keyboard",
+    "Disabling zoom",
+    "Click/tap delays",
+    "Not testing on real devices",
+    "Overuse of modals",
+    "Conflicting gesture interactions",
+    "Poor contrast on mobile",
+    "Complex multi-column layouts",
+    "Long unbreakable text strings",
+    "Not providing loading states",
+    "Ignoring offline scenarios"
+  ],
+  "mobile_vs_desktop": {
+    "different_contexts": {
+      "mobile": "On-the-go, interrupted, one-handed, touch",
+      "desktop": "Focused, multi-tasking, mouse/keyboard"
+    },
+    "different_capabilities": {
+      "mobile": "Camera, GPS, motion, smaller screen",
+      "desktop": "Larger screen, faster processing, mouse precision"
+    },
+    "design_implications": [
+      "Mobile needs larger touch targets",
+      "Mobile needs simpler navigation",
+      "Mobile needs progressive disclosure",
+      "Desktop can show more at once",
+      "Desktop can use hover states",
+      "Desktop can have complex multi-column layouts"
+    ]
+  }
+}

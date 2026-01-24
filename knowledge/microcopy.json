@@ -1,0 +1,743 @@
+{
+  "name": "Microcopy & UX Writing",
+  "description": "Comprehensive guide to writing clear, concise, user-friendly interface copy including buttons, labels, messages, and help text",
+  "principles": {
+    "clarity": {
+      "description": "Be crystal clear - users shouldn't have to guess meaning",
+      "guidelines": [
+        "Use simple, everyday words",
+        "Avoid jargon and technical terms",
+        "Be specific, not vague",
+        "One idea per sentence"
+      ],
+      "examples": {
+        "good": "Save changes",
+        "bad": "Persist modifications"
+      }
+    },
+    "conciseness": {
+      "description": "Say more with fewer words",
+      "guidelines": [
+        "Remove unnecessary words",
+        "Use active voice",
+        "Get to the point quickly",
+        "Respect user's time"
+      ],
+      "examples": {
+        "good": "Delete account",
+        "bad": "Click here to permanently delete your account from our system"
+      }
+    },
+    "consistency": {
+      "description": "Use same terms for same concepts throughout",
+      "guidelines": [
+        "Create a word list for your product",
+        "Same action = same word (Save, not Save/Store/Keep)",
+        "Consistent capitalization",
+        "Consistent tone"
+      ],
+      "examples": {
+        "good": "Sign in / Sign out (consistent)",
+        "bad": "Log in / Sign out (inconsistent)"
+      }
+    },
+    "user_centered": {
+      "description": "Write for users, not the system",
+      "guidelines": [
+        "Use 'you' and 'your'",
+        "Focus on user benefits",
+        "Address user's perspective",
+        "Show empathy"
+      ],
+      "examples": {
+        "good": "Your password was updated",
+        "bad": "Password update successful"
+      }
+    },
+    "actionable": {
+      "description": "Tell users what to do next",
+      "guidelines": [
+        "Start with verbs",
+        "Make actions obvious",
+        "Remove ambiguity",
+        "Guide users forward"
+      ],
+      "examples": {
+        "good": "Continue to payment",
+        "bad": "Next"
+      }
+    }
+  },
+  "voice_and_tone": {
+    "voice": {
+      "description": "Your brand personality - consistent across all writing",
+      "dimensions": [
+        "Formal vs Casual",
+        "Professional vs Playful",
+        "Serious vs Humorous",
+        "Authoritative vs Friendly"
+      ],
+      "example_voices": {
+        "mailchimp": "Friendly, casual, encouraging, sometimes quirky",
+        "stripe": "Professional, clear, confident, technical when needed",
+        "slack": "Friendly, conversational, supportive, slightly playful",
+        "gov_website": "Formal, authoritative, clear, accessible"
+      }
+    },
+    "tone": {
+      "description": "Emotional inflection - varies by context",
+      "situations": {
+        "success": {
+          "tone": "Positive, encouraging, celebratory",
+          "example": "Great! Your account is all set up."
+        },
+        "error": {
+          "tone": "Helpful, apologetic, solution-oriented",
+          "example": "We couldn't process your payment. Please check your card details."
+        },
+        "warning": {
+          "tone": "Cautious, clear, not alarming",
+          "example": "This action can't be undone. Are you sure you want to delete?"
+        },
+        "progress": {
+          "tone": "Encouraging, informative",
+          "example": "Almost there! Just one more step."
+        },
+        "empty_state": {
+          "tone": "Helpful, motivating, guiding",
+          "example": "No messages yet. Start a conversation to get things going!"
+        }
+      }
+    },
+    "tone_guidelines": [
+      "Match tone to user's emotional state",
+      "Be more formal in serious situations (security, legal)",
+      "Be encouraging when users accomplish something",
+      "Be apologetic and helpful when things go wrong",
+      "Never blame the user"
+    ]
+  },
+  "button_labels": {
+    "call_to_action": {
+      "primary": {
+        "description": "Main action on page",
+        "guidelines": [
+          "Start with action verb",
+          "Be specific about what happens",
+          "Create urgency when appropriate",
+          "Keep 1-3 words"
+        ],
+        "good_examples": [
+          "Create account",
+          "Start free trial",
+          "Download now",
+          "Continue to payment",
+          "Save changes",
+          "Send message"
+        ],
+        "bad_examples": [
+          "Submit",
+          "Click here",
+          "OK",
+          "Continue",
+          "Next"
+        ]
+      },
+      "secondary": {
+        "description": "Alternative or cancel action",
+        "examples": [
+          "Cancel",
+          "Go back",
+          "Skip for now",
+          "Learn more",
+          "Maybe later"
+        ]
+      }
+    },
+    "patterns": {
+      "save_actions": {
+        "save": "General save",
+        "save_changes": "Modified data",
+        "save_and_continue": "Multi-step process",
+        "save_draft": "Incomplete work",
+        "apply": "Apply settings"
+      },
+      "delete_actions": {
+        "delete": "General deletion",
+        "remove": "Remove from list/collection",
+        "clear": "Clear all data",
+        "discard": "Discard unsaved changes"
+      },
+      "navigation": {
+        "continue": "Multi-step flows",
+        "next": "Pagination, wizards",
+        "back": "Previous step/page",
+        "done": "Complete task",
+        "finish": "End of process"
+      },
+      "authentication": {
+        "sign_in": "Preferred (vs Log in)",
+        "sign_out": "Match sign in",
+        "sign_up": "Create account",
+        "create_account": "Alternative to sign up",
+        "register": "Less common, formal"
+      }
+    },
+    "destructive_actions": {
+      "pattern": "Clear about consequences",
+      "examples": {
+        "good": [
+          "Delete account permanently",
+          "Remove credit card",
+          "Cancel subscription"
+        ],
+        "bad": [
+          "Delete",
+          "Remove",
+          "Cancel"
+        ]
+      },
+      "confirmation": "Require second confirmation for irreversible actions"
+    },
+    "loading_states": {
+      "pattern": "Action verb + '...'",
+      "examples": [
+        "Saving...",
+        "Loading...",
+        "Processing payment...",
+        "Creating account...",
+        "Sending..."
+      ]
+    }
+  },
+  "labels": {
+    "form_labels": {
+      "guidelines": [
+        "Use sentence case (not Title Case)",
+        "End with colon only if necessary",
+        "Keep short (1-3 words)",
+        "Be specific"
+      ],
+      "examples": {
+        "good": ["Email address", "Phone number", "Full name", "Date of birth"],
+        "bad": ["Email:", "Enter Your Phone Number:", "Name"]
+      }
+    },
+    "field_hints": {
+      "purpose": "Clarify expected format or provide examples",
+      "placement": "Below label, above or below field",
+      "examples": {
+        "password": "At least 8 characters with one number",
+        "username": "3-20 characters, letters and numbers only",
+        "phone": "We'll use this to verify your account",
+        "promo_code": "Optional - Enter if you have one"
+      }
+    },
+    "required_optional": {
+      "approaches": {
+        "mark_required": "* indicates required field (most common)",
+        "mark_optional": "(optional) if most fields are required",
+        "both": "Clear indication either way"
+      },
+      "examples": {
+        "required": "Email address *",
+        "optional": "Middle name (optional)"
+      }
+    }
+  },
+  "placeholders": {
+    "purpose": "Show format example or hint",
+    "rules": [
+      "Never replace labels with placeholders",
+      "Show format examples",
+      "Don't repeat the label",
+      "Keep short and simple"
+    ],
+    "good_examples": {
+      "email": "name@example.com",
+      "phone": "555-123-4567",
+      "search": "Search products...",
+      "url": "https://example.com",
+      "date": "MM/DD/YYYY",
+      "credit_card": "1234 5678 9012 3456"
+    },
+    "bad_examples": {
+      "email": "Enter your email address",
+      "password": "Password",
+      "name": "What is your name?"
+    }
+  },
+  "error_messages": {
+    "structure": {
+      "identify": "What went wrong",
+      "explain": "Why it's wrong",
+      "instruct": "How to fix it"
+    },
+    "guidelines": [
+      "Be specific about the problem",
+      "Suggest how to fix it",
+      "Use plain language",
+      "Don't blame the user",
+      "Avoid technical jargon",
+      "Be polite and helpful"
+    ],
+    "examples": {
+      "required_field": {
+        "good": "Email address is required",
+        "bad": "This field is required"
+      },
+      "invalid_email": {
+        "good": "Please enter a valid email address (e.g., name@example.com)",
+        "bad": "Invalid email"
+      },
+      "password_too_short": {
+        "good": "Password must be at least 8 characters",
+        "bad": "Password too short"
+      },
+      "passwords_dont_match": {
+        "good": "Passwords don't match. Please re-enter.",
+        "bad": "Error: password mismatch"
+      },
+      "username_taken": {
+        "good": "This username is already taken. Try adding numbers or your name.",
+        "bad": "Username exists"
+      },
+      "network_error": {
+        "good": "Couldn't connect to server. Please check your internet connection and try again.",
+        "bad": "Error 500: Internal server error"
+      },
+      "payment_declined": {
+        "good": "Your card was declined. Please check your card details or use a different payment method.",
+        "bad": "Payment failed"
+      }
+    },
+    "tone": "Helpful and apologetic, never accusatory"
+  },
+  "success_messages": {
+    "guidelines": [
+      "Confirm what happened",
+      "Be specific",
+      "Tell user what to do next (if applicable)",
+      "Use positive, encouraging tone"
+    ],
+    "examples": {
+      "account_created": "Welcome! Your account has been created. Check your email to verify.",
+      "settings_saved": "Your settings have been saved.",
+      "message_sent": "Message sent successfully!",
+      "file_uploaded": "Photo uploaded. It will appear in your profile shortly.",
+      "subscription_cancelled": "Your subscription has been cancelled. You'll have access until March 1, 2026.",
+      "payment_complete": "Payment successful! You'll receive a confirmation email shortly."
+    },
+    "patterns": {
+      "checkmark_prefix": "✓ Changes saved",
+      "action_confirmation": "[Action] successful!",
+      "with_next_step": "[Confirmation] + [What's next]"
+    }
+  },
+  "help_text": {
+    "tooltips": {
+      "use_for": "Additional context, not critical information",
+      "keep_brief": "1-2 sentences maximum",
+      "examples": {
+        "cvv": "3-digit code on back of card",
+        "username": "You can't change this later",
+        "public_profile": "Anyone can view your public profile"
+      }
+    },
+    "inline_help": {
+      "use_for": "Important instructions or context",
+      "placement": "Below field label or input",
+      "examples": {
+        "password": "Must be at least 8 characters with one number and one special character",
+        "email_privacy": "We'll never share your email address",
+        "promo_code": "Enter your promo code if you have one"
+      }
+    },
+    "contextual_help": {
+      "description": "Help that appears based on user action",
+      "examples": {
+        "password_strength": "Shows strength as user types",
+        "character_count": "Shows remaining characters",
+        "validation_feedback": "Real-time format validation"
+      }
+    }
+  },
+  "empty_states": {
+    "structure": {
+      "headline": "Short, clear description of state",
+      "explanation": "Why it's empty (optional)",
+      "call_to_action": "How to get started"
+    },
+    "examples": {
+      "no_messages": {
+        "headline": "No messages yet",
+        "body": "Start a conversation to get things going!",
+        "cta": "Send your first message"
+      },
+      "no_search_results": {
+        "headline": "No results found",
+        "body": "Try adjusting your search or filters",
+        "suggestions": ["Check spelling", "Use fewer keywords", "Clear filters"]
+      },
+      "no_items_in_cart": {
+        "headline": "Your cart is empty",
+        "body": "Add items to your cart to continue shopping",
+        "cta": "Start shopping"
+      },
+      "no_notifications": {
+        "headline": "You're all caught up!",
+        "body": "No new notifications"
+      },
+      "no_files": {
+        "headline": "No files uploaded yet",
+        "body": "Drag and drop files here or click to browse",
+        "cta": "Upload your first file"
+      }
+    },
+    "tone": "Helpful and encouraging, not negative"
+  },
+  "loading_messages": {
+    "short_waits": {
+      "duration": "< 2 seconds",
+      "message": "Loading...",
+      "alternatives": ["Spinner only", "Progress bar"]
+    },
+    "medium_waits": {
+      "duration": "2-10 seconds",
+      "messages": [
+        "Loading your data...",
+        "Processing payment...",
+        "Creating your account...",
+        "Uploading file..."
+      ],
+      "add_progress": "Show progress bar or percentage"
+    },
+    "long_waits": {
+      "duration": "> 10 seconds",
+      "approach": "Show progress with encouraging messages",
+      "examples": [
+        "Uploading file... 45% complete",
+        "Processing large file... This may take a minute",
+        "Generating report... Almost there!"
+      ],
+      "keep_user_informed": "Update message as progress continues"
+    },
+    "indeterminate": {
+      "when": "Unknown duration",
+      "examples": [
+        "Please wait...",
+        "This may take a few moments",
+        "Processing your request..."
+      ]
+    }
+  },
+  "confirmation_dialogs": {
+    "destructive_actions": {
+      "title": "State action clearly",
+      "body": "Explain consequences",
+      "buttons": "Specific action + Cancel",
+      "example": {
+        "title": "Delete account?",
+        "body": "This will permanently delete your account and all your data. This action cannot be undone.",
+        "primary_button": "Delete account permanently",
+        "secondary_button": "Cancel"
+      }
+    },
+    "navigation_warnings": {
+      "use_when": "User has unsaved changes",
+      "example": {
+        "title": "Unsaved changes",
+        "body": "You have unsaved changes. Are you sure you want to leave?",
+        "primary_button": "Leave without saving",
+        "secondary_button": "Stay and save"
+      }
+    }
+  },
+  "notifications_toasts": {
+    "success": {
+      "examples": [
+        "✓ Saved",
+        "✓ Message sent",
+        "✓ File uploaded successfully"
+      ],
+      "duration": "3-5 seconds",
+      "dismissible": "Optional"
+    },
+    "error": {
+      "examples": [
+        "❌ Couldn't save changes. Please try again.",
+        "❌ Upload failed. File is too large.",
+        "❌ Connection lost. Check your internet."
+      ],
+      "duration": "Persist until dismissed",
+      "dismissible": "Yes"
+    },
+    "info": {
+      "examples": [
+        "ℹ️ Your session will expire in 5 minutes",
+        "ℹ️ New version available. Refresh to update.",
+        "ℹ️ Your report is being generated"
+      ],
+      "duration": "5-10 seconds or until dismissed"
+    },
+    "warning": {
+      "examples": [
+        "⚠️ Storage almost full (90%)",
+        "⚠️ Your trial ends in 3 days",
+        "⚠️ Unsaved changes"
+      ],
+      "duration": "Persist until user acts"
+    }
+  },
+  "onboarding": {
+    "welcome_messages": {
+      "guidelines": [
+        "Warm greeting",
+        "Brief value proposition",
+        "Clear next step"
+      ],
+      "examples": {
+        "new_user": "Welcome to [Product]! Let's get you set up in just a few steps.",
+        "returning": "Welcome back, [Name]! Here's what's new since your last visit.",
+        "trial": "Welcome! Your 14-day trial starts now. Let's create your first project."
+      }
+    },
+    "tooltips": {
+      "progressive_disclosure": "Show one tip at a time",
+      "dismissible": "Always allow skip/dismiss",
+      "examples": [
+        "Click here to create your first project",
+        "This is your dashboard where you'll see all your work",
+        "Use the sidebar to navigate between sections"
+      ]
+    },
+    "progress_indicators": {
+      "show_completion": "Profile 60% complete",
+      "encourage_action": "Add a profile photo to complete your profile",
+      "celebrate_milestones": "Great! You've completed all setup steps."
+    }
+  },
+  "settings_preferences": {
+    "section_headers": {
+      "examples": [
+        "Account settings",
+        "Privacy & security",
+        "Notifications",
+        "Billing & subscription"
+      ]
+    },
+    "setting_labels": {
+      "clear_and_specific": true,
+      "examples": {
+        "good": [
+          "Email me when someone comments on my post",
+          "Automatically save drafts every 5 minutes",
+          "Show profile to public"
+        ],
+        "bad": [
+          "Enable notifications",
+          "Auto-save",
+          "Public profile"
+        ]
+      }
+    },
+    "setting_descriptions": {
+      "when_to_use": "When setting needs clarification",
+      "examples": {
+        "two_factor": "Add an extra layer of security to your account",
+        "email_digest": "Get a weekly summary instead of individual emails",
+        "data_collection": "Help us improve by sharing anonymous usage data"
+      }
+    }
+  },
+  "navigation": {
+    "menu_items": {
+      "guidelines": [
+        "Use clear, familiar terms",
+        "Start with capital letter",
+        "Keep to 1-2 words",
+        "Be consistent"
+      ],
+      "good_examples": [
+        "Dashboard",
+        "Projects",
+        "Settings",
+        "Help",
+        "Profile"
+      ],
+      "bad_examples": [
+        "Portal",
+        "My stuff",
+        "Control panel",
+        "Info"
+      ]
+    },
+    "breadcrumbs": {
+      "format": "Home > Category > Subcategory > Current Page",
+      "use_separators": "> or / or ›",
+      "link_all_but_current": "Current page shouldn't be a link"
+    }
+  },
+  "search": {
+    "search_placeholder": {
+      "examples": [
+        "Search...",
+        "Search products",
+        "Search for people, files, or messages",
+        "What are you looking for?"
+      ],
+      "be_specific": "Tell users what they can search for"
+    },
+    "no_results": {
+      "structure": {
+        "headline": "No results for \"[query]\"",
+        "suggestions": "Try these tips:",
+        "tips": [
+          "Check your spelling",
+          "Use fewer keywords",
+          "Try more general terms"
+        ]
+      }
+    },
+    "search_suggestions": {
+      "show_popular": "Popular searches",
+      "show_recent": "Recent searches",
+      "autocomplete": "As user types"
+    }
+  },
+  "dates_times": {
+    "relative_dates": {
+      "recent": [
+        "Just now",
+        "2 minutes ago",
+        "1 hour ago",
+        "Yesterday",
+        "3 days ago"
+      ],
+      "use_when": "Recent activity (< 7 days)",
+      "fallback": "Show full date for older items"
+    },
+    "absolute_dates": {
+      "formats": {
+        "short": "Jan 24",
+        "medium": "Jan 24, 2026",
+        "long": "January 24, 2026",
+        "with_time": "Jan 24, 2026 at 3:45 PM"
+      },
+      "localize": "Use user's locale format"
+    },
+    "future_dates": {
+      "examples": [
+        "In 5 minutes",
+        "Tomorrow at 3:00 PM",
+        "Next Monday",
+        "In 3 days"
+      ]
+    }
+  },
+  "numbers_quantities": {
+    "large_numbers": {
+      "abbreviate": {
+        "1000": "1K",
+        "1000000": "1M",
+        "1000000000": "1B"
+      },
+      "use_when": "Space is limited (social media counts)",
+      "show_full": "On hover or in expanded view"
+    },
+    "counts": {
+      "examples": {
+        "items": "1 item / 5 items",
+        "users": "1 user / 23 users",
+        "messages": "1 message / 100 messages"
+      },
+      "handle_plurals": "Programmatically (1 item, not 1 items)"
+    },
+    "ranges": {
+      "examples": [
+        "1-10 of 100",
+        "$50-$100",
+        "5-10 minutes"
+      ]
+    }
+  },
+  "accessibility_writing": {
+    "alt_text": {
+      "images": "Describe content and function",
+      "decorative": "Use empty alt='' for decorative images",
+      "examples": {
+        "good": "alt='Woman using laptop at coffee shop'",
+        "bad": "alt='Image123.jpg'"
+      }
+    },
+    "aria_labels": {
+      "when_to_use": "When visual label isn't sufficient",
+      "examples": {
+        "icon_button": "aria-label='Close dialog'",
+        "search": "aria-label='Search products'",
+        "nav": "aria-label='Main navigation'"
+      }
+    },
+    "link_text": {
+      "descriptive": "Link text should make sense out of context",
+      "good": "Read our privacy policy",
+      "bad": "Click here",
+      "avoid": "Learn more (too vague)"
+    }
+  },
+  "international": {
+    "avoid_idioms": [
+      "Don't use culture-specific phrases",
+      "Avoid humor that doesn't translate",
+      "Use clear, simple language",
+      "Avoid sports/cultural references"
+    ],
+    "date_time_formats": "Use locale-appropriate formats",
+    "currency": "Show currency symbol and code when ambiguous",
+    "units": "Use metric or imperial based on locale"
+  },
+  "best_practices": [
+    "Write in active voice",
+    "Use present tense",
+    "Be conversational but professional",
+    "Avoid ALL CAPS (except acronyms)",
+    "Use contractions for friendly tone (you're, we'll)",
+    "Write for humans, not search engines",
+    "Test copy with real users",
+    "Read aloud to check flow",
+    "Keep sentences short",
+    "Use parallel structure in lists",
+    "Be consistent with terminology",
+    "Create a style guide",
+    "Localize, don't just translate",
+    "Consider cultural context",
+    "Use positive language",
+    "Show don't tell when possible",
+    "Remove filler words",
+    "Front-load important information"
+  ],
+  "content_style_guide": {
+    "capitalization": {
+      "sentence_case": "Preferred for most UI text",
+      "title_case": "Page titles, headlines",
+      "all_caps": "Avoid except acronyms (API, URL)",
+      "examples": {
+        "sentence": "Save your changes",
+        "title": "Getting Started Guide",
+        "avoid": "SAVE YOUR CHANGES"
+      }
+    },
+    "punctuation": {
+      "periods": "Use in full sentences, not button labels",
+      "exclamation_points": "Use sparingly for excitement",
+      "question_marks": "Use in questions, confirmations",
+      "colons": "Generally avoid in form labels",
+      "ellipsis": "For loading states or truncation"
+    },
+    "numbers": {
+      "spell_out": "One through nine",
+      "use_numerals": "10 and above",
+      "exceptions": "Dates, times, percentages, money always use numerals"
+    }
+  }
+}

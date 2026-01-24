@@ -1,0 +1,613 @@
+{
+  "name": "SaaS Product UX Patterns",
+  "description": "User experience patterns specific to Software-as-a-Service products, including onboarding, pricing, freemium, and retention strategies",
+  "saas_ux_principles": {
+    "time_to_value": {
+      "description": "How quickly users experience value from the product",
+      "importance": "Critical for activation and retention",
+      "goal": "Minimize time to first 'aha moment'",
+      "strategies": [
+        "Pre-populate with sample data",
+        "Guided onboarding",
+        "Progressive disclosure (don't overwhelm)",
+        "Quick wins (easy early tasks)",
+        "Clear next steps"
+      ]
+    },
+    "product_led_growth": {
+      "description": "Product itself drives acquisition, activation, and retention",
+      "characteristics": [
+        "Freemium or free trial",
+        "Self-service onboarding",
+        "In-app upsells",
+        "Viral features (sharing, collaboration)",
+        "Data-driven optimization"
+      ],
+      "examples": ["Slack", "Dropbox", "Notion", "Figma"]
+    },
+    "progressive_disclosure": {
+      "description": "Reveal features gradually, not all at once",
+      "when": "User is learning the product",
+      "techniques": [
+        "Wizards for multi-step tasks",
+        "Tooltips on first use",
+        "Feature discovery (highlight new features)",
+        "Graduated complexity (simple mode → advanced mode)"
+      ]
+    }
+  },
+  "onboarding_patterns": {
+    "welcome_experience": {
+      "goals": ["Set expectations", "Build excitement", "Collect necessary info", "Guide to first value"],
+      "steps": {
+        "1_welcome_message": {
+          "purpose": "Set tone, show value proposition",
+          "example": "Welcome to Acme! Let's get you set up in 2 minutes.",
+          "best_practices": ["Short (1-2 sentences)", "Friendly tone", "Set time expectation"]
+        },
+        "2_account_setup": {
+          "collect": ["Name", "Role (for personalization)", "Team size (for relevant features)", "Use case"],
+          "best_practices": [
+            "Ask only what's necessary",
+            "Explain why you're asking",
+            "Allow skip (collect later if needed)",
+            "Pre-fill if possible (OAuth)"
+          ]
+        },
+        "3_product_tour": {
+          "types": {
+            "tooltip_tour": {
+              "description": "Sequential tooltips highlighting features",
+              "pros": ["Simple", "Non-blocking"],
+              "cons": ["Easy to skip", "Out of context"],
+              "use_when": "Simple products, 3-5 key features"
+            },
+            "interactive_walkthrough": {
+              "description": "User performs tasks, app guides them",
+              "pros": ["Learning by doing", "Memorable"],
+              "cons": ["More complex to build"],
+              "use_when": "Complex products, critical workflows",
+              "tools": ["Appcues", "Pendo", "Chameleon", "Intro.js"]
+            },
+            "video_tutorial": {
+              "description": "Short video showing key features",
+              "pros": ["Engaging", "Visual learning"],
+              "cons": ["Passive", "Longer time investment"],
+              "use_when": "Visual products, complex workflows",
+              "best_practices": ["< 2 minutes", "Skippable", "Auto-play muted"]
+            },
+            "empty_state_guidance": {
+              "description": "Show what to do when there's no data",
+              "example": "No projects yet. Create your first project to get started.",
+              "pros": ["Contextual", "Non-intrusive"],
+              "cons": ["Easy to miss"],
+              "use_when": "Data-driven products",
+              "best_practices": ["Clear CTA", "Show example/preview", "Link to docs/help"]
+            }
+          },
+          "recommended": "Combination: Empty state guidance + optional interactive tour"
+        },
+        "4_aha_moment": {
+          "description": "Moment user realizes product value",
+          "examples": {
+            "slack": "First message sent and received",
+            "dropbox": "First file synced across devices",
+            "calendly": "First meeting booked",
+            "notion": "First page created and shared"
+          },
+          "design_for_it": [
+            "Identify your product's 'aha moment'",
+            "Design onboarding to reach it quickly",
+            "Celebrate it (confetti, success message)",
+            "Track time to aha moment (metric)"
+          ]
+        }
+      },
+      "personalization": {
+        "role_based": "Show different features based on role (Designer vs Developer)",
+        "use_case_based": "Tailor onboarding to stated use case",
+        "progress_based": "Adapt based on how far they've progressed"
+      }
+    },
+    "empty_states": {
+      "description": "What user sees when there's no data yet",
+      "importance": "Common for new users, critical for activation",
+      "elements": {
+        "illustration": { "use": "Visual interest", "style": "Friendly, on-brand" },
+        "headline": { "format": "Clear, specific (not just 'No items')", "example": "Your dashboard is empty" },
+        "description": { "content": "What to do next", "example": "Create your first project to see analytics here" },
+        "cta": { "text": "Action-oriented", "example": "Create Project (not just 'Get Started')" },
+        "help_link": { "text": "Link to docs or video", "example": "Learn more about projects" }
+      },
+      "examples": {
+        "good": {
+          "headline": "No projects yet",
+          "description": "Projects help you organize your work. Create one to get started.",
+          "cta": "Create Your First Project",
+          "help": "Learn about projects"
+        },
+        "bad": {
+          "headline": "Empty",
+          "description": "(no description)",
+          "cta": "Add",
+          "help": "(no help)"
+        }
+      }
+    },
+    "progress_indicators": {
+      "description": "Show users how far they've come in onboarding",
+      "types": {
+        "checklist": {
+          "example": "✓ Create account\n✓ Set up profile\n○ Invite team\n○ Create first project",
+          "pros": ["Clear steps", "Satisfying to complete"],
+          "placement": "Dashboard widget or sidebar"
+        },
+        "progress_bar": {
+          "example": "Profile 60% complete",
+          "pros": ["Visual progress", "Motivating"],
+          "placement": "Profile settings"
+        },
+        "step_indicator": {
+          "example": "Step 2 of 4",
+          "pros": ["Sets expectations"],
+          "placement": "Multi-step wizards"
+        }
+      },
+      "psychology": "Zeigarnik effect (people remember incomplete tasks, motivated to complete)"
+    },
+    "activation_metrics": {
+      "description": "Measure onboarding success",
+      "key_metrics": {
+        "activation_rate": {
+          "definition": "% of users who reach 'aha moment'",
+          "formula": "Users who completed key action / Total sign-ups",
+          "benchmark": "> 40% is good, > 60% is great"
+        },
+        "time_to_value": {
+          "definition": "Time from sign-up to first value",
+          "goal": "As short as possible (minutes, not hours)",
+          "measure": "Track time to key activation event"
+        },
+        "completion_rate": {
+          "definition": "% of users who complete onboarding",
+          "goal": "> 70%",
+          "note": "If low, identify drop-off points"
+        }
+      }
+    }
+  },
+  "pricing_ux": {
+    "pricing_page": {
+      "layout": {
+        "structure": "3-4 pricing tiers in cards",
+        "order": "Left to right: Cheapest → Most expensive (or highlight middle)",
+        "highlight": "Most popular tier (border, badge, 'Recommended')"
+      },
+      "tier_card_elements": {
+        "tier_name": { "example": "Starter, Pro, Enterprise", "style": "Clear, not clever" },
+        "price": {
+          "format": "$49/month",
+          "prominent": "Large font, bold",
+          "annual_discount": "Show monthly price for annual plan: $49/mo (billed annually $588)"
+        },
+        "description": { "content": "Who it's for", "example": "For individuals and small teams" },
+        "features_list": {
+          "format": "Bullet list with checkmarks",
+          "order": "Most important first",
+          "length": "5-10 key features (not exhaustive)",
+          "differentiators": "Highlight what's different from lower tier"
+        },
+        "cta": {
+          "text": "Start Free Trial or Sign Up",
+          "style": "Primary button, prominent",
+          "variation": "Can vary by tier (e.g., 'Contact Sales' for Enterprise)"
+        }
+      },
+      "comparison_table": {
+        "purpose": "Detailed feature comparison for all tiers",
+        "placement": "Below pricing cards (expandable or linked)",
+        "structure": "Rows: features, Columns: tiers",
+        "best_practices": [
+          "Group features by category",
+          "Use checkmarks/X (not text)",
+          "Sticky header (tiers visible on scroll)",
+          "Highlight differences (not just list all features)"
+        ]
+      },
+      "faq": {
+        "common_questions": [
+          "Can I change plans later?",
+          "What payment methods do you accept?",
+          "Is there a free trial?",
+          "Can I cancel anytime?",
+          "What happens when I reach my limit?"
+        ],
+        "placement": "Below pricing cards"
+      }
+    },
+    "pricing_models": {
+      "freemium": {
+        "description": "Free tier + paid upgrade",
+        "free_tier_strategies": {
+          "feature_limited": "Basic features free, advanced paid (Slack, Notion)",
+          "usage_limited": "Limited uses/month, pay for more (Grammarly)",
+          "seat_limited": "Free for 1 user, pay for team (Figma)",
+          "time_limited": "Full features, limited time (Canva)",
+          "hybrid": "Combination (e.g., limited features AND limited users)"
+        },
+        "upgrade_triggers": {
+          "paywall": "Hit limit, prompt to upgrade",
+          "feature_discovery": "Try to use premium feature, show upgrade prompt",
+          "periodic_reminder": "Occasional upsell (not nagging)",
+          "value_demonstration": "Show premium value in free tier (e.g., 'Unlock advanced analytics')"
+        },
+        "pros": ["Low barrier to entry", "Viral growth", "Try before buy"],
+        "cons": ["Many free users (support cost)", "Hard to balance free vs paid"],
+        "conversion_target": "2-5% freemium → paid (industry benchmark)"
+      },
+      "free_trial": {
+        "description": "Full access for limited time",
+        "types": {
+          "time_limited": {
+            "duration": "7, 14, or 30 days",
+            "best_practice": "Match trial length to time-to-value (short for quick value, long for complex products)"
+          },
+          "feature_limited_trial": "Limited features for unlimited time (similar to freemium)",
+          "credit_card_required": {
+            "pros": ["Higher intent users", "Lower churn after trial"],
+            "cons": ["Lower sign-up rate", "Risk of unexpected charges"],
+            "best_practice": "If requiring card, be VERY clear about trial end and auto-charge"
+          },
+          "no_credit_card": {
+            "pros": ["Higher sign-up rate", "Lower friction"],
+            "cons": ["Lower conversion (less commitment)"],
+            "best_practice": "Send email before trial ends, easy upgrade"
+          }
+        },
+        "trial_ux": {
+          "countdown": "Show days remaining (e.g., '5 days left in trial')",
+          "value_demonstration": "Highlight premium features they're using",
+          "conversion_prompt": "Email before trial ends: 'Your trial ends in 3 days. Upgrade to keep your data.'",
+          "grace_period": "Don't immediately lock out (offer 3-7 day grace to upgrade)"
+        }
+      },
+      "usage_based": {
+        "description": "Pay for what you use (API calls, seats, storage)",
+        "examples": ["AWS", "Twilio", "Stripe"],
+        "ux_challenges": {
+          "unpredictable_cost": "User doesn't know final cost",
+          "solution": "Usage dashboard, alerts when nearing limits, cost calculator"
+        },
+        "best_practices": [
+          "Show current usage prominently",
+          "Warn before hitting limits/overages",
+          "Provide cost estimator",
+          "Offer plans with included usage (hybrid)"
+        ]
+      },
+      "per_seat": {
+        "description": "Per user/month (most common B2B)",
+        "example": "$10/user/month",
+        "ux_considerations": {
+          "seat_management": "Easy to add/remove users",
+          "proration": "Clear explanation of mid-month changes",
+          "inactive_seats": "Archive inactive users to save cost"
+        }
+      }
+    },
+    "upgrade_prompts": {
+      "placement": {
+        "paywall": "When user hits limit (most direct)",
+        "feature_discovery": "When trying to use premium feature",
+        "dashboard": "Subtle upsell banner (not intrusive)",
+        "settings": "Billing/Plan page (always accessible)",
+        "email": "Periodic emails (not spam)"
+      },
+      "messaging": {
+        "value_focused": "Unlock advanced analytics (not just 'Upgrade to Pro')",
+        "urgency_optional": "Limited-time discount (if genuine)",
+        "clear_benefit": "Show what they get, not what they're missing"
+      },
+      "design": {
+        "modal": "For paywall (requires action)",
+        "banner": "For gentle upsell (dismissible)",
+        "inline": "Within feature ('Upgrade to unlock')",
+        "empty_state": "When no data due to limit ('Upgrade to add more projects')"
+      },
+      "best_practices": [
+        "Explain benefit clearly",
+        "One CTA (don't overload with options)",
+        "Allow dismiss (not modal trap)",
+        "Don't nag (respect 'no')",
+        "Time appropriately (after they see value, not day 1)"
+      ]
+    }
+  },
+  "user_retention": {
+    "engagement_loops": {
+      "habit_formation": {
+        "description": "Nir Eyal's Hook Model",
+        "phases": {
+          "trigger": { "external": "Email, notification", "internal": "User need (boredom → social media)" },
+          "action": { "description": "Easy action user takes", "example": "Open app, scroll feed" },
+          "variable_reward": { "description": "Unpredictable reward", "example": "Interesting content, likes, messages" },
+          "investment": { "description": "User puts in effort", "example": "Post content, follow people", "result": "Increases likelihood of return" }
+        },
+        "ethical_consideration": "Use to build helpful habits, not addiction"
+      },
+      "notification_strategy": {
+        "types": {
+          "transactional": {
+            "description": "Action required (password reset, invoice)",
+            "frequency": "As needed",
+            "opt_out": "Should not be opt-outable"
+          },
+          "engagement": {
+            "description": "Encourage return (new features, updates)",
+            "frequency": "Weekly or less",
+            "opt_out": "Must be opt-outable"
+          },
+          "social": {
+            "description": "Social activity (mentions, likes, comments)",
+            "frequency": "Real-time or digest",
+            "opt_out": "Granular control (per type)"
+          }
+        },
+        "best_practices": [
+          "Respect notification preferences",
+          "Batch notifications (digest)",
+          "Timely and relevant (not spam)",
+          "Clear unsubscribe",
+          "Personalized (not generic)"
+        ],
+        "anti_patterns": ["Daily emails to inactive users", "Re-enabling notifications user disabled", "No unsubscribe link"]
+      }
+    },
+    "feature_adoption": {
+      "discovery": {
+        "tooltips": "Highlight new features (dismissible)",
+        "whats_new": "Changelog or What's New section",
+        "in_app_announcements": "Modal or banner for major features",
+        "empty_states": "Suggest features when relevant ('Try our new reporting feature')"
+      },
+      "education": {
+        "help_docs": "Searchable, comprehensive",
+        "video_tutorials": "For complex features",
+        "webinars": "Live training (B2B SaaS)",
+        "in_app_help": "Contextual help (? icon, tooltips)"
+      }
+    },
+    "churn_prevention": {
+      "identify_churn_risk": {
+        "signals": ["Decreasing usage", "Support tickets", "Approaching renewal without activity", "Failed payment"],
+        "actions": ["Proactive outreach (email, in-app)", "Offer help/training", "Win-back discount (last resort)"]
+      },
+      "cancellation_flow": {
+        "survey": {
+          "ask_why": "Why are you canceling? (multiple choice + open-ended)",
+          "reasons": ["Too expensive", "Not using it", "Missing features", "Found alternative", "Other"],
+          "use": "Identify product issues, inform roadmap"
+        },
+        "save_attempts": {
+          "pause_subscription": "Pause instead of cancel (for temporary non-use)",
+          "downgrade": "Offer cheaper plan",
+          "discount": "Retention discount (use sparingly, can devalue product)",
+          "help": "Offer support call ('Before you go, can we help?')"
+        },
+        "exit_experience": {
+          "data_export": "Provide easy data export",
+          "confirmation": "Clear confirmation ('Your subscription will end on [date]')",
+          "reactivation": "Easy to reactivate ('Come back anytime')"
+        },
+        "ethics": "Make cancellation easy (don't use dark patterns like hard-to-cancel)"
+      }
+    }
+  },
+  "collaboration_features": {
+    "team_management": {
+      "invite_flow": {
+        "invite_method": ["Email invite", "Shareable link", "CSV upload (bulk)"],
+        "permissions": "Set role during invite (Admin, Editor, Viewer)",
+        "onboarding": "Send welcome email to invitees"
+      },
+      "roles_permissions": {
+        "common_roles": {
+          "admin": "Full access (billing, settings, users)",
+          "member": "Use product, invite others",
+          "guest": "Limited access (view-only or specific projects)"
+        },
+        "ux": "Clear roles table, easy to understand permissions"
+      },
+      "seat_management": {
+        "add_users": "Easy to add (in-app)",
+        "remove_users": "Easy to remove/deactivate",
+        "cost_preview": "Show cost impact ('Adding 5 users will increase bill by $50/mo')"
+      }
+    },
+    "real_time_collaboration": {
+      "presence": {
+        "avatars": "Show who's online/viewing document",
+        "cursors": "Show collaborator cursors (Figma, Google Docs)",
+        "typing_indicators": "Show who's typing"
+      },
+      "conflict_resolution": {
+        "operational_transform": "Tech for conflict-free collaborative editing",
+        "last_write_wins": "Simpler, but can lose edits",
+        "ux": "Show when someone else is editing, prevent overwrites"
+      }
+    },
+    "sharing": {
+      "share_button": {
+        "prominent": "Always visible",
+        "modal": "Share dialog with options"
+      },
+      "sharing_options": {
+        "link_sharing": {
+          "public_link": "Anyone with link can view",
+          "permissions": "View-only or Edit",
+          "expiration": "Optional link expiration",
+          "password": "Optional password protection"
+        },
+        "email_sharing": "Invite by email (with role)",
+        "org_sharing": "Share within organization"
+      },
+      "visibility_indicator": {
+        "show": "Who has access (list of people/teams)",
+        "icon": "Lock icon (private) or Globe icon (public)"
+      }
+    },
+    "viral_loops": {
+      "description": "Features that encourage users to invite others",
+      "examples": {
+        "collaboration_required": "Google Docs (invite to edit)",
+        "network_effects": "Slack (more valuable with more team members)",
+        "referral_incentives": "Dropbox (invite = free storage)"
+      },
+      "ethical_consideration": "Provide value, don't spam contacts"
+    }
+  },
+  "settings_preferences": {
+    "settings_organization": {
+      "categories": {
+        "account": "Profile, password, email",
+        "notifications": "Email, push, in-app preferences",
+        "billing": "Plan, payment method, invoices",
+        "team": "Team members, roles (if applicable)",
+        "integrations": "Connected apps, API keys",
+        "preferences": "Language, timezone, theme",
+        "security": "2FA, sessions, activity log",
+        "data": "Export, delete account"
+      },
+      "navigation": "Sidebar or tabs (clear categories)"
+    },
+    "notification_preferences": {
+      "granularity": "Per notification type (mentions, updates, marketing)",
+      "channels": "Email, push, in-app (separate toggles)",
+      "frequency": "Real-time, daily digest, weekly digest",
+      "ux": "Easy to find, clear labels, save state immediately"
+    },
+    "data_portability": {
+      "export_data": {
+        "format": "JSON, CSV, or platform-specific (e.g., .sketch)",
+        "scope": "All data or specific projects",
+        "delivery": "Download link or email",
+        "processing": "Background job for large exports ('We'll email you when ready')"
+      },
+      "delete_account": {
+        "confirm": "Require confirmation (serious action)",
+        "grace_period": "Optional: 30-day grace to undo",
+        "data_deletion": "Clear about what's deleted and what's retained (legal requirements)",
+        "export_first": "Offer data export before deletion"
+      }
+    }
+  },
+  "best_practices": [
+    "Minimize time to value (first 'aha moment' ASAP)",
+    "Use empty states to guide new users",
+    "Provide interactive onboarding (learning by doing)",
+    "Personalize onboarding based on role/use case",
+    "Show progress indicators (checklists, progress bars)",
+    "Design pricing page for clarity (3-4 tiers, highlight popular)",
+    "Be transparent about pricing (no hidden costs)",
+    "Make upgrade prompts value-focused (not just 'Upgrade!')",
+    "Easy cancellation (don't use dark patterns)",
+    "Offer data export (GDPR, user trust)",
+    "Track activation metrics (activation rate, time to value)",
+    "Use notifications strategically (not spam)",
+    "Provide granular notification preferences",
+    "Make collaboration features prominent (team value)",
+    "Show real-time presence (who's online)",
+    "Easy team management (invite, remove, roles)",
+    "Churn prevention (identify risk, proactive outreach)",
+    "Ask why users cancel (exit survey)",
+    "Celebrate milestones (first project, 100 users, etc.)",
+    "Product-led growth (product drives acquisition)"
+  ],
+  "anti_patterns": [
+    "Overwhelming onboarding (too many steps)",
+    "Forcing features on new users (let them explore)",
+    "No empty state guidance (users stuck)",
+    "Hidden costs (reveal price at checkout)",
+    "Hard to cancel subscriptions (dark pattern)",
+    "Nagging for upgrades (respect 'no')",
+    "Spamming notifications (no opt-out)",
+    "Complicated pricing (confusing tiers)",
+    "No free trial or freemium (high barrier)",
+    "Forcing credit card for free trial (higher friction)",
+    "No data export (lock-in)",
+    "No cancellation survey (miss insights)",
+    "Ignoring churn signals (reactive instead of proactive)",
+    "Poor team management UX (hard to invite/remove)",
+    "No notification preferences (one-size-fits-all)",
+    "Auto-enrolling in marketing emails (opt-in, not opt-out)",
+    "No progress indicators (users lost)",
+    "Fake urgency in pricing ('Sale ends soon!' but always on sale)",
+    "Unclear billing (surprise charges)",
+    "No grace period after trial (immediate lockout)"
+  ],
+  "metrics": {
+    "activation": {
+      "activation_rate": "% of sign-ups who reach 'aha moment'",
+      "time_to_value": "Time from sign-up to first value",
+      "onboarding_completion": "% who complete onboarding"
+    },
+    "engagement": {
+      "dau_mau": "Daily Active Users / Monthly Active Users (stickiness)",
+      "feature_adoption": "% of users using specific features",
+      "session_duration": "Time spent per session"
+    },
+    "retention": {
+      "retention_rate": "% of users who return after X days (Day 1, 7, 30)",
+      "churn_rate": "% of users who cancel/stop using",
+      "expansion_mrr": "Revenue from upsells/expansions"
+    },
+    "revenue": {
+      "mrr": "Monthly Recurring Revenue",
+      "arr": "Annual Recurring Revenue",
+      "arpu": "Average Revenue Per User",
+      "ltv": "Lifetime Value (average revenue per customer over lifetime)",
+      "cac": "Customer Acquisition Cost",
+      "ltv_cac_ratio": "LTV / CAC (should be > 3)"
+    },
+    "conversion": {
+      "trial_to_paid": "% of trial users who convert to paid",
+      "freemium_to_paid": "% of free users who upgrade (2-5% typical)",
+      "upgrade_rate": "% of users who upgrade to higher tier"
+    }
+  },
+  "case_studies": {
+    "slack": {
+      "growth_strategy": "Freemium + product-led growth",
+      "activation": "2,000 team messages = strong activation",
+      "viral_loop": "Team invites (collaboration required)",
+      "result": "Fastest-growing SaaS ever (at time)"
+    },
+    "dropbox": {
+      "growth_strategy": "Freemium + referral program",
+      "incentive": "Invite friend = free storage for both",
+      "result": "3900% growth in 15 months (viral growth)"
+    },
+    "notion": {
+      "growth_strategy": "Freemium + templates + community",
+      "activation": "Create first page",
+      "viral_loop": "Share pages/templates publicly",
+      "result": "10M+ users, product-led growth"
+    },
+    "calendly": {
+      "growth_strategy": "Freemium + inherent virality",
+      "viral_loop": "Every booking exposes invitee to Calendly",
+      "result": "Viral growth without paid marketing"
+    }
+  },
+  "resources": [
+    "Product-Led Growth (Wes Bush) - Book",
+    "Hooked (Nir Eyal) - Habit-forming products",
+    "The Lean Startup (Eric Ries) - Build-measure-learn",
+    "SaaS Metrics 2.0 (David Skok) - Key SaaS metrics",
+    "Reforge - Product-led growth course",
+    "OpenView Partners - SaaS resources",
+    "SaaStr - SaaS community and resources",
+    "Intercom on Onboarding - Onboarding best practices",
+    "ProfitWell - Pricing and retention insights"
+  ]
+}

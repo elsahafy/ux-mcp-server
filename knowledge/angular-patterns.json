@@ -1,0 +1,347 @@
+{
+  "name": "Angular Patterns & Best Practices",
+  "description": "Comprehensive guide to Angular component patterns, services, RxJS, state management, and performance optimization",
+  "version_note": "Patterns focus on modern Angular (14+) with standalone components",
+  "architecture": {
+    "modules_vs_standalone": {
+      "ngmodules": {
+        "description": "Traditional Angular modules",
+        "use_when": "Legacy applications",
+        "example": "@NgModule({\n  declarations": [AppComponent],\n  imports: [BrowserModule],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }"
+      },
+      "standalone": {
+        "description": "Modern approach (Angular 14+)",
+        "recommended": true,
+        "example": "@Component({\n  selector: 'app-root',\n  standalone: true,\n  imports: [CommonModule, RouterModule],\n  template: `<h1>Hello</h1>`\n})\nexport class AppComponent { }",
+        "benefits": ["Simpler mental model", "Better tree-shaking", "Easier testing", "Less boilerplate"]
+      }
+    },
+    "feature_structure": {
+      "description": "Organize by feature, not by type",
+      "recommended_structure": "src/\n  app/\n    features/\n      users/\n        components/\n        services/\n        models/\n        users.routes.ts\n      products/\n        components/\n        services/\n        models/\n        products.routes.ts\n    shared/\n      components/\n      directives/\n      pipes/\n    core/\n      services/\n      guards/\n      interceptors/",
+      "benefits": ["Easier to navigate", "Clear boundaries", "Better modularity"]
+    }
+  },
+  "components": {
+    "component_types": {
+      "smart_container": {
+        "description": "Manages state and business logic",
+        "responsibilities": ["Fetch data", "Manage state", "Pass data to presentational components"],
+        "example": "@Component({\n  selector: 'app-user-list',\n  template: `\n    <app-user-card\n      *ngFor='let user of users$ | async'\n      [user]='user'\n      (delete)='onDelete($event)'\n    />\n  `\n})\nexport class UserListComponent {\n  users$ = this.userService.getUsers()\n  \n  constructor(private userService: UserService) {}\n  \n  onDelete(id: number) {\n    this.userService.deleteUser(id).subscribe()\n  }\n}"
+      },
+      "presentational_dumb": {
+        "description": "Pure display components",
+        "responsibilities": ["Display data", "Emit events"],
+        "example": "@Component({\n  selector: 'app-user-card',\n  template: `\n    <div class='card'>\n      <h3>{{ user.name }}</h3>\n      <button (click)='delete.emit(user.id)'>Delete</button>\n    </div>\n  `\n})\nexport class UserCardComponent {\n  @Input() user!: User\n  @Output() delete = new EventEmitter<number>()\n}",
+        "benefits": ["Reusable", "Testable", "No dependencies"]
+      }
+    },
+    "lifecycle_hooks": {
+      "ngOnInit": {
+        "when": "After first ngOnChanges",
+        "use": "Component initialization, fetch data",
+        "example": "ngOnInit() {\n  this.loadData()\n}"
+      },
+      "ngOnChanges": {
+        "when": "When @Input() properties change",
+        "use": "React to input changes",
+        "example": "ngOnChanges(changes: SimpleChanges) {\n  if (changes['userId']) {\n    this.loadUser()\n  }\n}"
+      },
+      "ngOnDestroy": {
+        "when": "Before component is destroyed",
+        "use": "Cleanup, unsubscribe",
+        "example": "ngOnDestroy() {\n  this.subscription.unsubscribe()\n}"
+      },
+      "ngAfterViewInit": {
+        "when": "After view initialization",
+        "use": "Access ViewChild elements",
+        "example": "ngAfterViewInit() {\n  this.chart.nativeElement.render()\n}"
+      }
+    },
+    "inputs_outputs": {
+      "input": {
+        "description": "Pass data from parent to child",
+        "example": "@Input() user!: User\n@Input() count = 0 // with default",
+        "required": "@Input({ required: true }) userId!: number",
+        "alias": "@Input('userName') name!: string",
+        "transform": "@Input({ transform: booleanAttribute }) disabled = false"
+      },
+      "output": {
+        "description": "Emit events to parent",
+        "example": "@Output() delete = new EventEmitter<number>()\n\nonDelete() {\n  this.delete.emit(this.user.id)\n}",
+        "naming": "Use present tense: 'delete', not 'deleted' or 'onDelete'"
+      },
+      "two_way_binding": {
+        "pattern": "[(ngModel)] syntax",
+        "example": "// Child component:\n@Input() value!: string\n@Output() valueChange = new EventEmitter<string>()\n\nonInput(newValue: string) {\n  this.value = newValue\n  this.valueChange.emit(newValue)\n}\n\n// Parent:\n<app-input [(value)]='text' />"
+      }
+    },
+    "content_projection": {
+      "single_slot": {
+        "example": "// Component:\n<div class='card'>\n  <ng-content /></div>\n</div>\n\n// Usage:\n<app-card>\n  <p>Content goes here</p>\n</app-card>"
+      },
+      "multiple_slots": {
+        "example": "// Component:\n<div class='card'>\n  <header>\n    <ng-content select='[header]' />\n  </header>\n  <main>\n    <ng-content />\n  </main>\n  <footer>\n    <ng-content select='[footer]' />\n  </footer>\n</div>\n\n// Usage:\n<app-card>\n  <h2 header>Title</h2>\n  <p>Content</p>\n  <button footer>Action</button>\n</app-card>"
+      },
+      "ng_template": {
+        "example": "// Component:\n@Input() itemTemplate!: TemplateRef<any>\n\n<ng-container *ngFor='let item of items'>\n  <ng-container *ngTemplateOutlet='itemTemplate; context: { $implicit: item }' />\n</ng-container>\n\n// Usage:\n<app-list [itemTemplate]='itemTpl'>\n  <ng-template #itemTpl let-item>\n    <div>{{ item.name }}</div>\n  </ng-template>\n</app-list>"
+      }
+    },
+    "change_detection": {
+      "default": {
+        "description": "Checks entire component tree on every event",
+        "performance": "Can be slow for large apps"
+      },
+      "onpush": {
+        "description": "Only checks when inputs change or events occur",
+        "recommended": true,
+        "example": "@Component({\n  changeDetection: ChangeDetectionStrategy.OnPush\n})",
+        "triggers": ["@Input() reference changes", "Events from template", "Async pipe emits"],
+        "benefits": ["Better performance", "Predictable updates"]
+      },
+      "manual": {
+        "description": "Manually trigger change detection",
+        "example": "constructor(private cdr: ChangeDetectorRef) {}\n\nupdate() {\n  // Manual update\n  this.cdr.markForCheck()\n}",
+        "when": "OnPush + manual updates needed"
+      }
+    }
+  },
+  "services_di": {
+    "services": {
+      "description": "Business logic, data fetching, state management",
+      "example": "@Injectable({ providedIn: 'root' })\nexport class UserService {\n  private http = inject(HttpClient)\n  \n  getUsers() {\n    return this.http.get<User[]>('/api/users')\n  }\n}",
+      "provided_in": {
+        "root": "Singleton across app (recommended for most services)",
+        "any": "Lazy loaded with feature module",
+        "platform": "Shared across apps in multi-app setup",
+        "component": "New instance per component instance"
+      }
+    },
+    "dependency_injection": {
+      "constructor_injection": {
+        "legacy": "constructor(private service: MyService) {}",
+        "modern": "private service = inject(MyService)",
+        "recommended": "Use inject() function"
+      },
+      "injection_tokens": {
+        "description": "Provide non-class dependencies",
+        "example": "export const API_URL = new InjectionToken<string>('api.url')\n\n// Provide:\nproviders: [{ provide: API_URL, useValue: 'https://api.example.com' }]\n\n// Inject:\nprivate apiUrl = inject(API_URL)"
+      },
+      "multi_providers": {
+        "description": "Provide multiple values for same token",
+        "example": "export const INTERCEPTORS = new InjectionToken<HttpInterceptor[]>('http.interceptors')\n\nproviders: [\n  { provide: INTERCEPTORS, useClass: AuthInterceptor, multi: true },\n  { provide: INTERCEPTORS, useClass: LoggingInterceptor, multi: true }\n]"
+      }
+    }
+  },
+  "rxjs_patterns": {
+    "observables": {
+      "description": "Asynchronous data streams",
+      "creation": "const numbers$ = of(1, 2, 3)\nconst timer$ = interval(1000)",
+      "subscription": "numbers$.subscribe({\n  next: (value) => console.log(value),\n  error: (err) => console.error(err),\n  complete: () => console.log('Done')\n})"
+    },
+    "operators": {
+      "map": {
+        "use": "Transform emitted values",
+        "example": "users$.pipe(\n  map(users => users.filter(u => u.active))\n)"
+      },
+      "switchMap": {
+        "use": "Cancel previous inner observable",
+        "example": "searchTerm$.pipe(\n  switchMap(term => this.http.get(`/search?q=${term}`))\n)",
+        "when": "HTTP requests, don't want to wait for previous"
+      },
+      "mergeMap": {
+        "use": "Don't cancel previous (parallel)",
+        "example": "ids$.pipe(\n  mergeMap(id => this.http.get(`/users/${id}`))\n)",
+        "when": "Independent requests that should run in parallel"
+      },
+      "concatMap": {
+        "use": "Wait for previous to complete (sequential)",
+        "example": "requests$.pipe(\n  concatMap(req => this.http.post('/api', req))\n)",
+        "when": "Order matters, wait for each to finish"
+      },
+      "debounceTime": {
+        "use": "Wait for pause in emissions",
+        "example": "searchInput$.pipe(\n  debounceTime(300),\n  switchMap(term => this.search(term))\n)",
+        "when": "Search input, frequent events"
+      },
+      "distinctUntilChanged": {
+        "use": "Emit only when value changes",
+        "example": "value$.pipe(\n  distinctUntilChanged()\n)"
+      },
+      "catchError": {
+        "use": "Handle errors",
+        "example": "this.http.get('/api').pipe(\n  catchError(error => of({ error: true }))\n)"
+      },
+      "shareReplay": {
+        "use": "Share and replay last N values",
+        "example": "users$ = this.http.get<User[]>('/users').pipe(\n  shareReplay(1)\n)",
+        "when": "Cache HTTP results, multiple subscribers"
+      }
+    },
+    "subjects": {
+      "subject": "Basic subject (no initial value)",
+      "behaviorSubject": "Has current value, emits last value to new subscribers",
+      "replaySubject": "Replays N last values to new subscribers",
+      "example": "private userSubject = new BehaviorSubject<User | null>(null)\nuser$ = this.userSubject.asObservable()\n\nsetUser(user: User) {\n  this.userSubject.next(user)\n}"
+    },
+    "async_pipe": {
+      "description": "Subscribe in template, auto-unsubscribe",
+      "example": "<div *ngIf='user$ | async as user'>\n  {{ user.name }}\n</div>",
+      "benefits": ["Auto-unsubscribe", "Works with OnPush", "Less boilerplate"],
+      "recommended": "Use instead of manual subscribe in components"
+    },
+    "takeUntil_pattern": {
+      "description": "Unsubscribe on component destroy",
+      "example": "private destroy$ = new Subject<void>()\n\nngOnInit() {\n  this.data$.pipe(\n    takeUntil(this.destroy$)\n  ).subscribe(data => this.data = data)\n}\n\nngOnDestroy() {\n  this.destroy$.next()\n  this.destroy$.complete()\n}",
+      "better": "Use async pipe instead to avoid manual unsubscribe"
+    }
+  },
+  "forms": {
+    "reactive_forms": {
+      "description": "Model-driven forms (recommended)",
+      "example": "form = new FormGroup({\n  name: new FormControl('', [Validators.required]),\n  email: new FormControl('', [Validators.required, Validators.email])\n})\n\n<form [formGroup]='form' (ngSubmit)='onSubmit()'>\n  <input formControlName='name'>\n  <input formControlName='email'>\n  <button type='submit' [disabled]='form.invalid'>Submit</button>\n</form>",
+      "benefits": ["Type-safe", "Testable", "Programmatic control"],
+      "validation": "form.get('email')?.hasError('required')"
+    },
+    "template_driven": {
+      "description": "Template-based forms",
+      "example": "<form #f='ngForm' (ngSubmit)='onSubmit(f)'>\n  <input name='name' ngModel required>\n  <button [disabled]='f.invalid'>Submit</button>\n</form>",
+      "use_when": "Simple forms only",
+      "avoid": "Complex forms (use reactive instead)"
+    },
+    "formbuilder": {
+      "description": "Helper for creating reactive forms",
+      "example": "private fb = inject(FormBuilder)\n\nform = this.fb.group({\n  name: ['', Validators.required],\n  email: ['', [Validators.required, Validators.email]],\n  address: this.fb.group({\n    street: [''],\n    city: ['']\n  })\n})",
+      "benefits": "Less verbose than new FormGroup/FormControl"
+    },
+    "custom_validators": {
+      "example": "function emailDomain(domain: string): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const email = control.value\n    if (email && !email.endsWith(`@${domain}`)) {\n      return { emailDomain: { requiredDomain: domain } }\n    }\n    return null\n  }\n}\n\nform = this.fb.group({\n  email: ['', [Validators.email, emailDomain('company.com')]]\n})"
+    }
+  },
+  "routing": {
+    "setup": {
+      "legacy": "RouterModule.forRoot(routes)",
+      "standalone": "provideRouter(routes)",
+      "example": "const routes: Routes = [\n  { path: '', component: HomeComponent },\n  { path: 'users/:id', component: UserComponent },\n  { path: '**', component: NotFoundComponent }\n]"
+    },
+    "lazy_loading": {
+      "description": "Load routes on demand",
+      "example": "{\n  path: 'admin',\n  loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent)\n}",
+      "benefits": ["Smaller initial bundle", "Faster startup"]
+    },
+    "route_params": {
+      "example": "private route = inject(ActivatedRoute)\n\nuserId$ = this.route.paramMap.pipe(\n  map(params => params.get('id'))\n)"
+    },
+    "route_guards": {
+      "canActivate": {
+        "description": "Protect routes",
+        "example": "export const authGuard: CanActivateFn = () => {\n  const authService = inject(AuthService)\n  const router = inject(Router)\n  \n  if (authService.isAuthenticated()) {\n    return true\n  }\n  return router.createUrlTree(['/login'])\n}\n\n// In routes:\n{ path: 'admin', component: AdminComponent, canActivate: [authGuard] }"
+      },
+      "canDeactivate": "Prevent navigation away (unsaved changes)",
+      "resolve": "Pre-fetch data before route activation"
+    }
+  },
+  "state_management": {
+    "local_state": {
+      "description": "Component-level state",
+      "signals": "user = signal<User | null>(null)\n\nsetUser(user: User) {\n  this.user.set(user)\n}\n\n// In template:\n{{ user()?.name }}"
+    },
+    "signals": {
+      "description": "Modern reactive primitive (Angular 16+)",
+      "writable": "count = signal(0)\ncount.set(5)\ncount.update(n => n + 1)",
+      "computed": "doubled = computed(() => this.count() * 2)",
+      "effect": "effect(() => {\n  console.log('Count:', this.count())\n})",
+      "benefits": ["Simpler than RxJS for simple state", "Better change detection integration"]
+    },
+    "ngrx": {
+      "description": "Redux-style state management",
+      "when": "Complex state, time-travel debugging needed",
+      "store": "State container",
+      "actions": "Events that describe state changes",
+      "reducers": "Pure functions that update state",
+      "effects": "Side effects (HTTP, etc.)",
+      "example": "// Action\nexport const loadUsers = createAction('[User] Load Users')\n\n// Reducer\nconst userReducer = createReducer(\n  initialState,\n  on(loadUsers, state => ({ ...state, loading: true }))\n)\n\n// Component\nusers$ = this.store.select(selectAllUsers)\n\nloadUsers() {\n  this.store.dispatch(loadUsers())\n}"
+    },
+    "component_store": {
+      "description": "Local state management with RxJS",
+      "use_when": "Component-level complex state",
+      "simpler_than": "NgRx for local state"
+    },
+    "services_with_signals": {
+      "description": "Lightweight state management",
+      "example": "@Injectable({ providedIn: 'root' })\nexport class UserStore {\n  private _users = signal<User[]>([])\n  users = this._users.asReadonly()\n  \n  addUser(user: User) {\n    this._users.update(users => [...users, user])\n  }\n}",
+      "recommended": "Start here before adding NgRx"
+    }
+  },
+  "performance": {
+    "trackBy": {
+      "description": "Improve ngFor performance",
+      "example": "<div *ngFor='let item of items; trackBy: trackById'>\n  {{ item.name }}\n</div>\n\ntrackById(index: number, item: Item) {\n  return item.id\n}",
+      "when": "Large lists, frequent updates"
+    },
+    "lazy_loading": "Split app into lazy-loaded modules/components",
+    "virtual_scrolling": {
+      "description": "Render only visible items",
+      "example": "<cdk-virtual-scroll-viewport itemSize='50' class='viewport'>\n  <div *cdkVirtualFor='let item of items'>\n    {{ item }}\n  </div>\n</cdk-virtual-scroll-viewport>",
+      "when": "Long lists (100+ items)"
+    },
+    "pure_pipes": {
+      "description": "Cache pipe results",
+      "example": "@Pipe({ name: 'expensive', pure: true })\nexport class ExpensivePipe implements PipeTransform {\n  transform(value: any): any {\n    // Expensive computation\n  }\n}",
+      "default": "Pipes are pure by default"
+    }
+  },
+  "testing": {
+    "unit_tests": {
+      "example": "describe('UserComponent', () => {\n  let component: UserComponent\n  let fixture: ComponentFixture<UserComponent>\n  \n  beforeEach(() => {\n    TestBed.configureTestingModule({\n      imports: [UserComponent]\n    })\n    fixture = TestBed.createComponent(UserComponent)\n    component = fixture.componentInstance\n  })\n  \n  it('should display user name', () => {\n    component.user = { id: 1, name: 'John' }\n    fixture.detectChanges()\n    const compiled = fixture.nativeElement\n    expect(compiled.querySelector('h1').textContent).toContain('John')\n  })\n})"
+    },
+    "service_testing": {
+      "example": "describe('UserService', () => {\n  let service: UserService\n  let httpMock: HttpTestingController\n  \n  beforeEach(() => {\n    TestBed.configureTestingModule({\n      imports: [HttpClientTestingModule],\n      providers: [UserService]\n    })\n    service = TestBed.inject(UserService)\n    httpMock = TestBed.inject(HttpTestingController)\n  })\n  \n  it('should fetch users', () => {\n    const mockUsers = [{ id: 1, name: 'John' }]\n    \n    service.getUsers().subscribe(users => {\n      expect(users).toEqual(mockUsers)\n    })\n    \n    const req = httpMock.expectOne('/api/users')\n    expect(req.request.method).toBe('GET')\n    req.flush(mockUsers)\n  })\n})"
+    }
+  },
+  "best_practices": [
+    "Use standalone components for new projects",
+    "Use OnPush change detection strategy",
+    "Prefer inject() over constructor injection",
+    "Use async pipe instead of manual subscribe",
+    "Use signals for simple reactive state (Angular 16+)",
+    "Use trackBy with ngFor for performance",
+    "Lazy load routes and features",
+    "Keep components small (< 300 lines)",
+    "Use reactive forms (not template-driven)",
+    "Use services for business logic",
+    "Follow single responsibility principle",
+    "Use TypeScript strict mode",
+    "Use pure pipes",
+    "Avoid DOM manipulation (use Renderer2 if needed)",
+    "Test components and services",
+    "Use virtual scrolling for long lists",
+    "Use FormBuilder for reactive forms",
+    "Unsubscribe from observables (or use async pipe)",
+    "Use providedIn: 'root' for services",
+    "Follow Angular style guide"
+  ],
+  "anti_patterns": [
+    "Subscribing in templates",
+    "Not unsubscribing from observables",
+    "Using default change detection for all components",
+    "Manipulating DOM directly (use Renderer2)",
+    "Large components (> 500 lines)",
+    "Business logic in components (use services)",
+    "Not using trackBy with ngFor",
+    "Template-driven forms for complex forms",
+    "Circular dependencies between modules",
+    "Not lazy loading features",
+    "Using any type everywhere",
+    "Not testing",
+    "Ignoring Angular CLI warnings",
+    "Nested subscriptions (use switchMap/mergeMap)",
+    "Not using strict mode"
+  ],
+  "ecosystem": {
+    "ui_libraries": ["Angular Material", "PrimeNG", "Ng-Bootstrap", "Ant Design Angular"],
+    "state_management": ["NgRx", "NgRx Component Store", "Akita", "Elf"],
+    "testing": ["Jasmine + Karma", "Jest", "Cypress", "Playwright"],
+    "build_tools": ["Angular CLI", "Nx (monorepos)"]
+  }
+}

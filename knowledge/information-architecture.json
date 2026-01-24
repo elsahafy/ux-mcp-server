@@ -1,0 +1,494 @@
+{
+  "name": "Information Architecture (IA)",
+  "description": "Comprehensive guide to organizing and structuring information for optimal findability and usability",
+  "definition": "Information Architecture is the practice of organizing, structuring, and labeling content in an effective and sustainable way to help users find information and complete tasks",
+  "core_principles": {
+    "findability": {
+      "description": "Users can quickly locate the information they need",
+      "techniques": ["Clear navigation", "Robust search", "Logical grouping", "Consistent labeling"]
+    },
+    "discoverability": {
+      "description": "Users can find information they didn't know existed",
+      "techniques": ["Related content links", "Recommendations", "Breadth in navigation", "Serendipitous discovery"]
+    },
+    "clarity": {
+      "description": "Structure and labels are unambiguous",
+      "techniques": ["User-centered language", "Avoid jargon", "Consistent terminology", "Clear hierarchy"]
+    },
+    "scalability": {
+      "description": "IA can grow without breaking",
+      "techniques": ["Flexible categories", "Metadata", "Clear governance", "Documented taxonomy"]
+    }
+  },
+  "ia_components": {
+    "organization_systems": {
+      "description": "How information is categorized and grouped",
+      "schemes": {
+        "exact": {
+          "alphabetical": {
+            "use_when": "Known-item seeking (dictionaries, directories)",
+            "example": "Contact directory sorted A-Z",
+            "pros": ["Predictable", "Universally understood"],
+            "cons": ["Requires knowing exact name", "Poor for browsing"]
+          },
+          "chronological": {
+            "use_when": "Time-sensitive content (news, events, history)",
+            "example": "Blog posts by date, event calendar",
+            "pros": ["Natural for temporal content", "Clear ordering"],
+            "cons": ["Doesn't support browsing by topic"]
+          },
+          "geographical": {
+            "use_when": "Location-based content (store locator, regional sites)",
+            "example": "Store locator by state/city",
+            "pros": ["Intuitive for local content"],
+            "cons": ["Limited to geographically relevant content"]
+          }
+        },
+        "ambiguous": {
+          "topical": {
+            "use_when": "Content with clear subject matter (most websites)",
+            "example": "News site (Politics, Sports, Technology)",
+            "pros": ["Natural browsing", "Supports exploration"],
+            "cons": ["Subjective groupings", "Overlapping categories"]
+          },
+          "task_oriented": {
+            "use_when": "Goal-driven users (tools, applications)",
+            "example": "Banking app (Transfer Money, Pay Bills, Check Balance)",
+            "pros": ["Matches user goals", "Reduces cognitive load"],
+            "cons": ["Requires understanding user tasks"]
+          },
+          "audience": {
+            "use_when": "Distinct user groups with different needs",
+            "example": "University site (Students, Faculty, Alumni, Parents)",
+            "pros": ["Personalized experience", "Targeted content"],
+            "cons": ["Users may fit multiple audiences", "Duplication of content"]
+          },
+          "metaphor": {
+            "use_when": "Unfamiliar domains (leverage familiar concepts)",
+            "example": "Desktop metaphor (folders, files, trash)",
+            "pros": ["Leverages existing mental models"],
+            "cons": ["Can be limiting", "May not scale well"]
+          }
+        },
+        "hybrid": {
+          "description": "Combining multiple schemes (most common in practice)",
+          "example": "E-commerce site: Products by Category (topical) + Shop by Brand (alphabetical) + New Arrivals (chronological)",
+          "best_practice": "Use different schemes for different contexts, not on the same level"
+        }
+      }
+    },
+    "labeling_systems": {
+      "description": "How information is represented through labels",
+      "types": {
+        "contextual_links": {
+          "description": "Links within content that lead to related information",
+          "example": "See also: [Related Article]",
+          "best_practices": ["Use descriptive anchor text", "Avoid 'click here'", "Link to relevant, specific pages"]
+        },
+        "headings": {
+          "description": "Titles that represent a section of content",
+          "hierarchy": "H1 (page title) → H2 (main sections) → H3 (subsections)",
+          "best_practices": ["One H1 per page", "Logical hierarchy", "Descriptive, not clever", "Include keywords"]
+        },
+        "navigation_labels": {
+          "description": "Menu items and links in navigation systems",
+          "best_practices": [
+            "Use user's language (not internal jargon)",
+            "Be specific ('Products' better than 'Offerings')",
+            "Avoid generic labels ('Information', 'Resources')",
+            "Keep short (1-2 words when possible)",
+            "Consistent capitalization (Title Case or Sentence case)"
+          ],
+          "examples": {
+            "good": ["Pricing", "Features", "Support", "Login"],
+            "bad": ["Solutions", "About Us", "More", "Stuff"]
+          }
+        },
+        "index_terms": {
+          "description": "Keywords and tags for search and filtering",
+          "controlled_vocabulary": {
+            "description": "Predefined, standardized set of terms",
+            "example": "Medical Subject Headings (MeSH) in PubMed",
+            "pros": ["Consistency", "Precision", "Easier search"],
+            "cons": ["Requires maintenance", "Can be restrictive"]
+          },
+          "free_tagging": {
+            "description": "User-generated, uncontrolled tags",
+            "example": "Blog post tags, social media hashtags",
+            "pros": ["Flexible", "Emergent categorization"],
+            "cons": ["Inconsistent", "Synonyms", "Typos"]
+          }
+        },
+        "iconic_labels": {
+          "description": "Visual representations (icons, images)",
+          "best_practices": [
+            "Use with text labels (don't rely on icons alone)",
+            "Use standard, recognizable icons",
+            "Test icon comprehension with users",
+            "Provide tooltips/alt text"
+          ],
+          "standard_icons": {
+            "hamburger": "Menu",
+            "magnifying_glass": "Search",
+            "shopping_cart": "Cart",
+            "house": "Home",
+            "gear": "Settings",
+            "question_mark": "Help"
+          }
+        }
+      }
+    },
+    "navigation_systems": {
+      "description": "Ways to browse and move through information",
+      "global_navigation": {
+        "description": "Persistent, site-wide navigation",
+        "placement": "Header (most common) or left sidebar",
+        "items": "5-7 top-level items (max 9 per Miller's Law)",
+        "best_practices": [
+          "Present on every page (consistent location)",
+          "Highlight current section",
+          "Make clickable/tappable areas large enough",
+          "Include search and account/login"
+        ]
+      },
+      "local_navigation": {
+        "description": "Navigation within a section or area",
+        "placement": "Sidebar or sub-menu",
+        "example": "Documentation sidebar showing page hierarchy",
+        "best_practices": ["Show current location", "Expand current section", "Limit depth to 3 levels"]
+      },
+      "utility_navigation": {
+        "description": "Supplementary navigation for secondary tasks",
+        "placement": "Top-right header or footer",
+        "typical_items": ["Login", "Account", "Cart", "Language selector", "Contact"],
+        "best_practices": ["Smaller than global nav", "Consistent location", "Icons OK (with labels)"]
+      },
+      "breadcrumb_navigation": {
+        "description": "Shows user's location in hierarchy",
+        "format": "Home > Category > Subcategory > Current Page",
+        "placement": "Above page title or below header",
+        "best_practices": [
+          "Use on deep sites (3+ levels)",
+          "Make all levels clickable (except current)",
+          "Use separator (> or /)",
+          "Don't use on flat sites"
+        ],
+        "types": {
+          "location_based": "Shows hierarchical position (most common)",
+          "path_based": "Shows user's journey (rarely recommended)",
+          "attribute_based": "Shows filter selections (e-commerce)"
+        }
+      },
+      "footer_navigation": {
+        "description": "Comprehensive navigation at page bottom",
+        "structure": "Multiple columns of links",
+        "typical_sections": ["About", "Products/Services", "Support", "Legal", "Social media"],
+        "best_practices": ["Organize by topic", "Include sitemap link", "4-5 columns max (desktop)", "Stack on mobile"]
+      },
+      "contextual_navigation": {
+        "description": "Links within content to related information",
+        "types": {
+          "related_items": "See also, Related articles",
+          "next_previous": "Sequential navigation (multi-page articles)",
+          "inline_links": "Hyperlinks within body text"
+        }
+      }
+    },
+    "search_systems": {
+      "description": "How users query and retrieve information",
+      "search_types": {
+        "basic_search": {
+          "description": "Simple keyword search",
+          "placement": "Header (visible on all pages)",
+          "best_practices": ["Persistent", "Large enough target (250-300px wide)", "Autofocus on activation", "Placeholder text (e.g., 'Search...')"]
+        },
+        "advanced_search": {
+          "description": "Multi-field search with operators",
+          "use_when": "Large content repositories, power users",
+          "fields": ["Keyword", "Date range", "Author", "Category", "File type"],
+          "best_practices": ["Link from basic search", "Don't replace basic search", "Provide search tips"]
+        },
+        "faceted_search": {
+          "description": "Search + filters (most common in e-commerce)",
+          "components": ["Search query", "Filters (facets)", "Results", "Applied filters"],
+          "best_practices": [
+            "Show result count per filter",
+            "Allow multi-select within facets",
+            "Sticky filters (don't disappear on scroll)",
+            "Clear all filters option",
+            "Show applied filters prominently"
+          ]
+        }
+      },
+      "search_features": {
+        "autocomplete": {
+          "description": "Suggests queries as user types",
+          "show": ["Popular searches", "Recent searches", "Predicted completions", "Direct results"],
+          "best_practices": ["Limit to 5-8 suggestions", "Highlight matching text", "Allow keyboard navigation", "< 200ms response time"]
+        },
+        "autosuggest": {
+          "description": "Shows results while typing (instant search)",
+          "use_when": "Small result sets (< 1000 items)",
+          "best_practices": ["Categorize suggestions (Products, Pages, Help)", "Show thumbnails if visual", "Debounce input (300ms)"]
+        },
+        "search_results": {
+          "display": {
+            "title": "Clickable, descriptive (H2 or H3)",
+            "snippet": "Excerpt showing query in context (150-200 chars)",
+            "url": "Breadcrumb-style URL",
+            "metadata": "Date, author, category (if relevant)"
+          },
+          "pagination": "10-20 results per page",
+          "no_results": {
+            "message": "No results found for '[query]'",
+            "suggestions": ["Check spelling", "Try different keywords", "Browse categories", "Contact support"],
+            "alternatives": "Show popular pages or search tips"
+          }
+        },
+        "search_analytics": {
+          "track": ["Top queries", "Zero-result queries", "Query refinements", "Click-through rate"],
+          "use": "Identify content gaps, improve search, optimize IA"
+        }
+      }
+    },
+    "metadata": {
+      "description": "Data about data - descriptive information that aids organization and retrieval",
+      "types": {
+        "descriptive": {
+          "purpose": "Identify and describe content",
+          "examples": ["Title", "Author", "Subject", "Keywords", "Description"]
+        },
+        "structural": {
+          "purpose": "How content is organized",
+          "examples": ["Chapter", "Section", "Page number", "Table of contents"]
+        },
+        "administrative": {
+          "purpose": "Manage content",
+          "examples": ["Created date", "Modified date", "Creator", "Access rights", "Version"]
+        }
+      },
+      "schema": {
+        "dublin_core": {
+          "description": "Standard metadata element set",
+          "elements": ["Title", "Creator", "Subject", "Description", "Publisher", "Date", "Type", "Format", "Identifier"],
+          "use_when": "Libraries, archives, digital collections"
+        },
+        "custom_schema": {
+          "description": "Domain-specific metadata",
+          "example": "E-commerce: SKU, Price, Brand, Color, Size, Material",
+          "best_practices": ["Document schema", "Enforce required fields", "Validate data", "Version schema"]
+        }
+      }
+    }
+  },
+  "ia_process": {
+    "research": {
+      "stakeholder_interviews": {
+        "purpose": "Understand business goals and constraints",
+        "questions": ["What are the business objectives?", "Who are the users?", "What content exists?", "What are technical constraints?"]
+      },
+      "user_research": {
+        "methods": {
+          "user_interviews": {
+            "purpose": "Understand user needs, tasks, mental models",
+            "questions": ["How do you currently find information?", "What do you expect to see?", "What terms do you use?"]
+          },
+          "card_sorting": {
+            "description": "Users organize content cards into groups",
+            "types": {
+              "open": "Users create and name groups (discover mental models)",
+              "closed": "Users sort into predefined groups (validate IA)",
+              "hybrid": "Combination of both"
+            },
+            "sample_size": "15-30 participants per user group",
+            "tools": ["OptimalSort", "UserZoom", "Miro (remote)"]
+          },
+          "tree_testing": {
+            "description": "Users find items in a text-based hierarchy (no design)",
+            "purpose": "Validate IA before design",
+            "process": ["Give task ('Where would you find...')", "User navigates tree", "Measure success rate and path"],
+            "tools": ["Treejack", "UserZoom", "UsabilityHub"]
+          }
+        }
+      },
+      "content_inventory": {
+        "description": "Comprehensive list of all content",
+        "fields": ["Page ID", "URL", "Title", "Owner", "Last updated", "Format", "Status", "Notes"],
+        "use": "Understand scope, identify duplication, plan migration"
+      },
+      "content_audit": {
+        "description": "Qualitative assessment of content",
+        "evaluate": ["Accuracy", "Relevance", "Tone", "Completeness", "Findability"],
+        "actions": ["Keep", "Revise", "Delete", "Combine", "Create new"],
+        "use": "Improve content quality, reduce clutter"
+      },
+      "competitive_analysis": {
+        "description": "Analyze competitor IA",
+        "evaluate": ["Navigation structure", "Labeling", "Search functionality", "User flows"],
+        "use": "Identify industry standards, opportunities, best practices"
+      }
+    },
+    "strategy": {
+      "ia_diagram": {
+        "description": "Visual representation of site structure",
+        "types": {
+          "site_map": "Hierarchical page structure",
+          "user_flow": "Paths users take to complete tasks",
+          "content_model": "Relationships between content types"
+        },
+        "tools": ["Miro", "Figma", "Lucidchart", "Whimsical", "OmniGraffle"]
+      },
+      "taxonomy": {
+        "description": "Hierarchical classification system",
+        "structure": "Controlled vocabulary organized in parent-child relationships",
+        "example": "Animals > Mammals > Primates > Apes > Gorillas",
+        "best_practices": [
+          "Single hierarchy (not multiple parents)",
+          "Mutually exclusive categories",
+          "Balance breadth vs depth (avoid too deep)",
+          "Document criteria for categories",
+          "Plan for growth"
+        ]
+      },
+      "controlled_vocabulary": {
+        "description": "Standardized terms for consistent labeling",
+        "benefits": ["Reduces ambiguity", "Improves search", "Supports translation", "Enables filtering"],
+        "maintenance": ["Assign owner", "Regular reviews", "Documented process for adding terms"]
+      },
+      "metadata_schema": {
+        "description": "Standardized metadata fields",
+        "process": ["Identify content types", "Define required/optional fields", "Create data dictionary", "Document guidelines"],
+        "governance": ["Assign roles", "Enforce validation", "Regular audits"]
+      }
+    },
+    "validation": {
+      "tree_testing": {
+        "description": "Test IA before design (see user_research above)",
+        "metrics": ["Success rate (> 80% good)", "Directness (first click accuracy)", "Time on task"]
+      },
+      "first_click_testing": {
+        "description": "Where users click first for a task",
+        "finding": "First click predicts success (users rarely recover from wrong first click)",
+        "tools": ["Chalkmark", "UsabilityHub"]
+      },
+      "usability_testing": {
+        "description": "Test IA in context of design",
+        "tasks": ["Find specific information", "Complete a goal", "Compare options"],
+        "observe": ["Navigation paths", "Search usage", "Confusion points", "Success/failure"]
+      }
+    }
+  },
+  "ia_patterns": {
+    "hierarchical": {
+      "description": "Tree structure with parent-child relationships",
+      "use_when": "Clear categorization, content can be grouped logically",
+      "example": "News site: Home > Category > Subcategory > Article",
+      "pros": ["Familiar", "Scalable", "Clear structure"],
+      "cons": ["Can be limiting", "May not match user mental model", "Difficult to represent cross-cutting content"]
+    },
+    "database_model": {
+      "description": "Bottom-up, metadata-driven (faceted)",
+      "use_when": "Large, homogeneous content sets (products, articles)",
+      "example": "E-commerce filtering by brand, price, color, size",
+      "pros": ["Flexible", "Multiple access points", "User control"],
+      "cons": ["Requires robust metadata", "Can be overwhelming", "Complex to implement"]
+    },
+    "hub_spoke": {
+      "description": "Central hub with spokes to sub-sites",
+      "use_when": "Multiple semi-independent sections",
+      "example": "University site: Main site → School of Engineering, School of Arts",
+      "pros": ["Supports autonomy", "Clear structure", "Scalable"],
+      "cons": ["Can feel fragmented", "Requires strong central brand"]
+    },
+    "sequential": {
+      "description": "Linear progression through content",
+      "use_when": "Onboarding, checkout, tutorials, multi-step forms",
+      "example": "E-commerce checkout: Cart → Shipping → Payment → Confirmation",
+      "pros": ["Focused", "Clear next steps", "Reduces overwhelm"],
+      "cons": ["Inflexible", "Can't skip steps easily", "Back button issues"]
+    },
+    "matrix": {
+      "description": "Two-dimensional organization",
+      "use_when": "Content has two clear dimensions",
+      "example": "Recipe site: Cuisine (rows) × Course (columns)",
+      "pros": ["Multiple access paths", "Comprehensive"],
+      "cons": ["Can be confusing", "Doesn't scale beyond 2 dimensions"]
+    }
+  },
+  "best_practices": [
+    "Start with user research (don't guess)",
+    "Use card sorting to understand mental models",
+    "Test IA with tree testing before design",
+    "Limit navigation to 7±2 items (Miller's Law)",
+    "Use clear, user-centered labels (avoid jargon)",
+    "Provide multiple ways to find content (navigation, search, links)",
+    "Keep hierarchy shallow (3-4 levels max)",
+    "Use breadcrumbs for deep sites",
+    "Make search prominent and powerful",
+    "Ensure consistent labeling across site",
+    "Document IA decisions and rationale",
+    "Plan for scalability (future content)",
+    "Use metadata to enable flexible organization",
+    "Test with real users and real tasks",
+    "Iterate based on analytics and feedback",
+    "Maintain a sitemap (for users and SEO)",
+    "Provide contextual navigation (related links)",
+    "Highlight current location in navigation",
+    "Optimize for both browsing and searching",
+    "Consider mobile navigation patterns"
+  ],
+  "anti_patterns": [
+    "Organizing by internal org structure (not user needs)",
+    "Using jargon or internal terminology",
+    "Too many navigation items (> 9)",
+    "Too deep hierarchy (> 4 levels)",
+    "Inconsistent labeling",
+    "Generic labels ('More', 'Other', 'Miscellaneous')",
+    "Hidden navigation (requires multiple clicks)",
+    "No search functionality",
+    "Poor search (no autocomplete, bad results)",
+    "No breadcrumbs on deep sites",
+    "Duplicate content in multiple categories",
+    "No way to recover from dead ends",
+    "Orphan pages (not linked from anywhere)",
+    "Mega menus with overwhelming options",
+    "Relying on icons without text",
+    "Forcing users to navigate through hierarchy",
+    "No faceted filtering for large datasets",
+    "Ignoring mobile navigation needs",
+    "Not validating IA with users",
+    "Skipping IA phase (jumping to design)"
+  ],
+  "metrics": {
+    "findability": {
+      "task_success_rate": { "target": "> 80%", "measure": "Users complete find-task successfully" },
+      "time_on_task": { "target": "As low as possible", "measure": "Time to find information" },
+      "search_refinements": { "target": "< 2 per session", "measure": "Users refine search query" }
+    },
+    "navigation": {
+      "first_click_accuracy": { "target": "> 60%", "measure": "Correct first click predicts success" },
+      "navigation_depth": { "target": "< 3 clicks to content", "measure": "Average clicks to reach content" },
+      "bounce_rate": { "target": "< 50%", "measure": "Users leave after one page" }
+    },
+    "search": {
+      "zero_result_searches": { "target": "< 10%", "measure": "Searches with no results" },
+      "search_exit_rate": { "target": "< 30%", "measure": "Users leave from search results" },
+      "search_refinement_rate": { "target": "< 40%", "measure": "Users refine search" }
+    }
+  },
+  "tools": {
+    "research": ["OptimalSort (card sorting)", "Treejack (tree testing)", "UserZoom", "UsabilityHub", "Miro (remote workshops)"],
+    "diagramming": ["Miro", "Figma", "Lucidchart", "Whimsical", "OmniGraffle", "draw.io"],
+    "content_inventory": ["Content Analysis Tool (CAT)", "Screaming Frog", "Google Sheets"],
+    "analytics": ["Google Analytics", "Hotjar", "FullStory", "Mixpanel"],
+    "search": ["Algolia", "Elasticsearch", "Coveo", "Swiftype"]
+  },
+  "resources": [
+    "Information Architecture for the World Wide Web (Rosenfeld & Morville) - 'Polar Bear Book'",
+    "How to Make Sense of Any Mess (Abby Covert)",
+    "Information Architecture: Blueprints for the Web (Christina Wodtke)",
+    "Nielsen Norman Group - IA articles",
+    "IA Institute - Professional organization",
+    "Boxes and Arrows - IA publication"
+  ]
+}

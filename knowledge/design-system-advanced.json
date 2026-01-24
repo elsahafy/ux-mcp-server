@@ -1,0 +1,533 @@
+{
+  "name": "Advanced Design System Patterns",
+  "description": "Advanced concepts for building, scaling, and maintaining enterprise design systems",
+  "note": "Builds on ux://design-systems/tokens. This covers advanced topics like theming, multi-brand, versioning, and governance.",
+  "advanced_token_patterns": {
+    "semantic_tokens": {
+      "description": "Tokens that reference other tokens and carry meaning",
+      "layers": {
+        "tier_1_core": {
+          "description": "Raw values, never change",
+          "examples": {
+            "color_blue_500": "#3b82f6",
+            "spacing_4": "16px",
+            "font_size_4": "16px"
+          }
+        },
+        "tier_2_semantic": {
+          "description": "Reference core, describe purpose",
+          "examples": {
+            "color_primary": "var(--color-blue-500)",
+            "spacing_content_padding": "var(--spacing-4)",
+            "font_size_body": "var(--font-size-4)"
+          }
+        },
+        "tier_3_component": {
+          "description": "Reference semantic, component-specific",
+          "examples": {
+            "button_background": "var(--color-primary)",
+            "button_padding_horizontal": "var(--spacing-content-padding)",
+            "button_font_size": "var(--font-size-body)"
+          }
+        }
+      },
+      "benefits": [
+        "Change theme by swapping semantic tokens",
+        "Single source of truth for colors/spacing",
+        "Easier maintenance (change blue-500 once, updates everywhere)",
+        "Theming support (light/dark mode)"
+      ]
+    },
+    "theming": {
+      "light_dark_mode": {
+        "approach_1_separate_tokens": {
+          "description": "Define separate tokens for light and dark",
+          "example": ":root { --bg-primary: #ffffff; --text-primary: #000000; }\n[data-theme='dark'] { --bg-primary: #000000; --text-primary: #ffffff; }",
+          "pros": ["Simple", "Full control"],
+          "cons": ["Duplication", "Hard to maintain"]
+        },
+        "approach_2_single_source": {
+          "description": "Core tokens + theme-specific semantic tokens",
+          "example": "--gray-100: #f7f7f7; /* light bg */\n--gray-900: #1a1a1a; /* dark bg */\n:root { --bg-primary: var(--gray-100); }\n[data-theme='dark'] { --bg-primary: var(--gray-900); }",
+          "pros": ["DRY", "Easier maintenance"],
+          "cons": ["More abstraction"],
+          "recommended": true
+        }
+      },
+      "multi_brand": {
+        "description": "Support multiple brands from one design system",
+        "structure": {
+          "shared_core": "Spacing, typography scale (consistent across brands)",
+          "brand_specific": "Colors, logos, border radius, fonts (per brand)",
+          "semantic_layer": "Maps brand-specific to semantic (--color-primary)"
+        },
+        "implementation": {
+          "css_custom_properties": "[data-brand='acme'] { --color-primary: #ff6b35; }\n[data-brand='globex'] { --color-primary: #3b82f6; }",
+          "build_time": "Generate separate CSS bundles per brand (webpack, Sass)",
+          "runtime": "Swap theme object in JavaScript (Styled Components, Emotion)"
+        },
+        "example": "Carbon Design System (IBM), multiple product brands"
+      },
+      "theme_switching": {
+        "user_preference": {
+          "implementation": "const theme = localStorage.getItem('theme') || 'light';\ndocument.documentElement.setAttribute('data-theme', theme);",
+          "accessibility": "Respect prefers-color-scheme media query",
+          "best_practice": "Provide theme toggle, remember preference"
+        },
+        "system_preference": {
+          "implementation": "const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;",
+          "override": "Allow user to override system preference"
+        }
+      }
+    },
+    "responsive_tokens": {
+      "description": "Tokens that change based on viewport",
+      "fluid_typography": {
+        "description": "Font size scales smoothly between min and max viewport",
+        "formula": "clamp(min, preferred, max)",
+        "example": "font-size: clamp(1rem, 2.5vw, 2rem);",
+        "tool": "https://modern-fluid-typography.vercel.app/"
+      },
+      "responsive_spacing": {
+        "description": "Spacing that adapts to viewport",
+        "approach_1_breakpoints": "--spacing-4: 16px; @media (min-width: 768px) { --spacing-4: 24px; }",
+        "approach_2_fluid": "--spacing-4: clamp(16px, 2vw, 24px);",
+        "recommended": "Approach 1 for discrete jumps, Approach 2 for smooth scaling"
+      }
+    }
+  },
+  "component_patterns": {
+    "compound_components": {
+      "description": "Components that work together with shared context",
+      "example": {
+        "tabs": "Tabs container shares state with Tab and TabPanel children",
+        "dropdown": "Dropdown provides context to Trigger and Menu",
+        "accordion": "Accordion manages state for multiple AccordionItem children"
+      },
+      "benefits": [
+        "Flexible composition",
+        "Clear relationships",
+        "Encapsulated state",
+        "Better DX (developer experience)"
+      ],
+      "implementation": {
+        "react": "Use Context API to share state between parent and children",
+        "vue": "Use provide/inject",
+        "web_components": "Use slots and custom events"
+      },
+      "code_example": "// React\nconst TabsContext = createContext();\n\nfunction Tabs({ children, defaultTab }) {\n  const [activeTab, setActiveTab] = useState(defaultTab);\n  return <TabsContext.Provider value={{ activeTab, setActiveTab }}>{children}</TabsContext.Provider>;\n}\n\nfunction Tab({ value, children }) {\n  const { activeTab, setActiveTab } = useContext(TabsContext);\n  return <button onClick={() => setActiveTab(value)}>{children}</button>;\n}\n\nfunction TabPanel({ value, children }) {\n  const { activeTab } = useContext(TabsContext);\n  return activeTab === value ? <div>{children}</div> : null;\n}"
+    },
+    "polymorphic_components": {
+      "description": "Components that can render as different HTML elements",
+      "use_case": "Button component that can render as <button>, <a>, or <Link>",
+      "api": "<Button as='a' href='/'>Link Button</Button>",
+      "benefits": ["Semantic HTML", "Accessibility", "Flexibility"],
+      "implementation": "TypeScript + 'as' prop polymorphism"
+    },
+    "render_props_slots": {
+      "description": "Allow users to customize rendering",
+      "react_render_props": "<DataTable data={items} renderRow={(item) => <CustomRow item={item} />} />",
+      "vue_slots": "<template #item='{ item }'><CustomItem :item='item' /></template>",
+      "benefits": ["Maximum flexibility", "Custom rendering", "Inversion of control"]
+    },
+    "controlled_uncontrolled": {
+      "description": "Support both controlled and uncontrolled modes",
+      "controlled": {
+        "description": "Parent manages state",
+        "example": "<Input value={value} onChange={setValue} />",
+        "use_when": "Need to validate, transform, or sync with other state"
+      },
+      "uncontrolled": {
+        "description": "Component manages own state",
+        "example": "<Input defaultValue='hello' />",
+        "use_when": "Simple forms, don't need to control state"
+      },
+      "hybrid": {
+        "description": "Support both modes",
+        "pattern": "If 'value' prop provided, use it (controlled). Else, use internal state (uncontrolled).",
+        "code": "const [internalValue, setInternalValue] = useState(defaultValue);\nconst isControlled = value !== undefined;\nconst currentValue = isControlled ? value : internalValue;"
+      }
+    }
+  },
+  "versioning_migration": {
+    "semantic_versioning": {
+      "description": "MAJOR.MINOR.PATCH (e.g., 2.3.1)",
+      "major": {
+        "description": "Breaking changes",
+        "examples": ["Rename prop", "Remove component", "Change default behavior"],
+        "release": "Quarterly or bi-annually (plan carefully)"
+      },
+      "minor": {
+        "description": "New features (backward compatible)",
+        "examples": ["New component", "New prop", "New variant"],
+        "release": "Monthly or as needed"
+      },
+      "patch": {
+        "description": "Bug fixes",
+        "examples": ["Fix accessibility issue", "Fix visual bug", "Performance improvement"],
+        "release": "As needed (can be frequent)"
+      }
+    },
+    "deprecation_strategy": {
+      "process": {
+        "1_announce": "Announce deprecation in release notes, changelog",
+        "2_warn": "Add console warnings in deprecated components/props",
+        "3_document": "Migration guide with examples",
+        "4_grace_period": "At least 2 minor versions before removal (e.g., deprecated in 2.1, removed in 3.0)",
+        "5_remove": "Remove in next major version"
+      },
+      "console_warning_example": "if (process.env.NODE_ENV === 'development') {\n  console.warn('<OldButton> is deprecated. Use <Button> instead. Will be removed in v3.0.');\n}",
+      "codemods": {
+        "description": "Automated migration scripts",
+        "tools": ["jscodeshift", "ast-grep"],
+        "use_when": "Large breaking changes affecting many consumers"
+      }
+    },
+    "changelog": {
+      "description": "Document all changes",
+      "format": "Keep a Changelog (https://keepachangelog.com/)",
+      "sections": ["Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"],
+      "example": "## [2.1.0] - 2024-01-15\n### Added\n- New `Toast` component for notifications\n- `size` prop to `Button` component\n\n### Fixed\n- `Modal` close button now keyboard accessible\n\n### Deprecated\n- `OldButton` (use `Button` instead)"
+    },
+    "migration_guides": {
+      "description": "Step-by-step guides for major version upgrades",
+      "include": [
+        "Breaking changes list",
+        "Before/after code examples",
+        "Find-and-replace patterns",
+        "Codemod scripts",
+        "Estimated time to migrate",
+        "Support contact"
+      ],
+      "example": "Material-UI v4 to v5 migration guide (comprehensive)"
+    }
+  },
+  "documentation": {
+    "component_docs": {
+      "essential_sections": {
+        "overview": "What the component does, when to use",
+        "examples": "Interactive examples (Storybook)",
+        "props_api": "All props, types, defaults, descriptions",
+        "accessibility": "ARIA attributes, keyboard support, screen reader behavior",
+        "theming": "How to customize (CSS vars, props)",
+        "best_practices": "Do's and don'ts",
+        "related_components": "Links to related components"
+      },
+      "interactive_examples": {
+        "tool": "Storybook, Docusaurus, custom docs site",
+        "features": ["Live code editor", "Props playground", "Theme switcher", "Accessibility tab"],
+        "benefits": ["Learn by doing", "Visual testing", "QA reference"]
+      }
+    },
+    "getting_started": {
+      "sections": [
+        "Installation instructions",
+        "Setup (provider, theme, global styles)",
+        "First component example",
+        "Common patterns",
+        "Troubleshooting"
+      ]
+    },
+    "design_guidelines": {
+      "description": "For designers using the system",
+      "include": [
+        "When to use each component",
+        "Layout patterns",
+        "Spacing guidelines",
+        "Color usage",
+        "Typography scale",
+        "Accessibility requirements",
+        "Figma/Sketch library link"
+      ]
+    },
+    "contribution_guide": {
+      "description": "How to contribute to the design system",
+      "include": [
+        "Proposal process (RFC for new components)",
+        "Code standards",
+        "Testing requirements",
+        "Documentation requirements",
+        "Review process",
+        "Design review process"
+      ]
+    }
+  },
+  "tooling": {
+    "storybook": {
+      "description": "Component explorer and documentation",
+      "features": ["Component isolation", "Props playground", "Accessibility checks", "Visual regression testing"],
+      "addons": ["@storybook/addon-a11y", "@storybook/addon-docs", "chromatic (visual testing)"],
+      "best_practices": [
+        "Story per component variant",
+        "Accessibility tab for all components",
+        "Interactive controls for props",
+        "Documentation MDX pages"
+      ]
+    },
+    "design_tokens_tools": {
+      "style_dictionary": {
+        "description": "Transform design tokens to multiple platforms",
+        "input": "JSON tokens",
+        "output": "CSS, Sass, JS, iOS, Android, etc.",
+        "use": "Single source of truth for all platforms"
+      },
+      "figma_tokens": {
+        "description": "Sync tokens between Figma and code",
+        "plugin": "Figma Tokens plugin",
+        "workflow": "Design in Figma → Export tokens → Generate code"
+      }
+    },
+    "testing": {
+      "unit_tests": {
+        "description": "Test component logic",
+        "framework": "Jest, Vitest",
+        "library": "@testing-library/react (or Vue, Svelte)",
+        "coverage_target": "> 80%"
+      },
+      "visual_regression": {
+        "description": "Detect unintended visual changes",
+        "tools": ["Chromatic", "Percy", "BackstopJS"],
+        "workflow": "Take screenshots → Compare with baseline → Approve/reject"
+      },
+      "accessibility_testing": {
+        "automated": "axe-core, jest-axe",
+        "manual": "Keyboard navigation, screen reader testing",
+        "ci": "Run axe in CI, fail on violations"
+      },
+      "cross_browser": {
+        "tools": "BrowserStack, Sauce Labs",
+        "browsers": "Chrome, Firefox, Safari, Edge",
+        "devices": "iOS, Android (real devices)"
+      }
+    },
+    "linting": {
+      "eslint": "Code quality, best practices",
+      "stylelint": "CSS/Sass linting",
+      "prettier": "Code formatting",
+      "custom_rules": "Enforce design system usage (no hardcoded colors, use tokens)"
+    },
+    "build_tools": {
+      "bundlers": ["Rollup (libraries)", "Webpack", "Vite", "esbuild"],
+      "outputs": ["ESM (modern)", "CJS (Node)", "UMD (browser)"],
+      "tree_shaking": "Ensure components can be tree-shaken (ESM + sideEffects: false)"
+    }
+  },
+  "governance": {
+    "design_system_team": {
+      "roles": {
+        "core_team": {
+          "description": "Full-time design system engineers and designers",
+          "responsibilities": ["Build and maintain components", "Review contributions", "Roadmap planning", "Support"]
+        },
+        "working_group": {
+          "description": "Representatives from product teams",
+          "responsibilities": ["Provide feedback", "Propose new components", "Champion adoption"]
+        },
+        "contributors": {
+          "description": "Anyone contributing components, fixes, docs",
+          "responsibilities": ["Follow contribution guide", "Respond to feedback"]
+        }
+      }
+    },
+    "rfc_process": {
+      "description": "Request for Comments - propose new components/changes",
+      "process": {
+        "1_proposal": "Write RFC document (problem, solution, alternatives, API)",
+        "2_review": "Core team + working group review, provide feedback",
+        "3_iteration": "Revise based on feedback",
+        "4_approval": "Core team approves or rejects",
+        "5_implementation": "Build, test, document, release"
+      },
+      "example": "React RFC process (https://github.com/reactjs/rfcs)"
+    },
+    "adoption_metrics": {
+      "track": [
+        "Component usage (which components, how often)",
+        "Design system version (how many on latest)",
+        "Custom implementations (teams not using DS)",
+        "Accessibility violations",
+        "Performance metrics"
+      ],
+      "tools": ["Telemetry (anonymous usage data)", "Static analysis (scan codebases)", "Surveys"]
+    },
+    "support_model": {
+      "slack_channel": "Real-time support and discussion",
+      "office_hours": "Weekly sessions with core team",
+      "documentation": "Self-service docs and guides",
+      "github_issues": "Bug reports and feature requests",
+      "training": "Onboarding sessions for new teams"
+    }
+  },
+  "scaling_challenges": {
+    "multi_framework": {
+      "problem": "Teams use React, Vue, Angular, Svelte, etc.",
+      "solutions": {
+        "web_components": {
+          "description": "Framework-agnostic components",
+          "pros": ["Works everywhere", "Encapsulation"],
+          "cons": ["Limited React support (historically)", "Learning curve"],
+          "tools": ["Lit", "Stencil"]
+        },
+        "multiple_implementations": {
+          "description": "Build for each framework",
+          "pros": ["Native feel", "Best DX per framework"],
+          "cons": ["Maintenance burden", "Divergence risk"],
+          "example": "Carbon Design System (React, Vue, Angular, Svelte, Web Components)"
+        },
+        "headless_components": {
+          "description": "Logic without styles (BYO styles)",
+          "pros": ["Framework adapters easy", "Separation of concerns"],
+          "cons": ["No visual consistency out of box"],
+          "libraries": ["Radix UI", "Headless UI", "React Aria"]
+        }
+      }
+    },
+    "global_teams": {
+      "challenges": ["Time zones", "Language barriers", "Different processes"],
+      "solutions": [
+        "Clear documentation (reduce synchronous communication)",
+        "Async communication (GitHub, Slack threads)",
+        "Recorded demos and trainings",
+        "Internationalization support in DS"
+      ]
+    },
+    "legacy_migration": {
+      "problem": "Migrating old products to design system",
+      "strategy": {
+        "incremental": {
+          "description": "Migrate page by page, component by component",
+          "pros": ["Lower risk", "Continuous value"],
+          "cons": ["Takes time", "Inconsistency during migration"]
+        },
+        "big_bang": {
+          "description": "Rewrite entire product at once",
+          "pros": ["Fully consistent", "Clean slate"],
+          "cons": ["High risk", "Long development time"],
+          "use_when": "Small apps or major redesign"
+        }
+      },
+      "coexistence": {
+        "description": "Run old and new design system side-by-side",
+        "technique": "CSS scoping, namespacing, Shadow DOM",
+        "example": "Namespace old styles with .legacy, new with .ds"
+      }
+    }
+  },
+  "advanced_patterns": {
+    "component_composition": {
+      "description": "Building complex components from primitives",
+      "example": "Card component built from Box, Text, Button primitives",
+      "benefits": ["Flexibility", "Consistency", "Smaller bundle (reuse)"],
+      "approach": "Provide both primitives (low-level) and compositions (high-level)"
+    },
+    "css_in_js_vs_css_modules": {
+      "css_in_js": {
+        "pros": ["Dynamic theming", "Scoped styles", "Type-safe"],
+        "cons": ["Runtime overhead", "Larger bundle"],
+        "libraries": ["Styled Components", "Emotion", "Stitches", "Vanilla Extract (zero-runtime)"]
+      },
+      "css_modules": {
+        "pros": ["No runtime", "Familiar CSS"],
+        "cons": ["Less dynamic", "Theming harder"],
+        "use_when": "Performance critical, simple theming"
+      },
+      "utility_first": {
+        "pros": ["Fast development", "Small bundle (purge unused)"],
+        "cons": ["Verbose HTML", "Harder to change globally"],
+        "libraries": ["Tailwind CSS", "UnoCSS"],
+        "use_with_ds": "Use for layout, DS for components"
+      }
+    },
+    "accessibility_primitives": {
+      "description": "Low-level accessible components (no styling)",
+      "examples": {
+        "focus_trap": "Trap focus within modal",
+        "visually_hidden": "Hide content visually, keep for screen readers",
+        "keyboard_navigation": "Arrow key navigation for lists/menus"
+      },
+      "libraries": ["Radix Primitives", "React Aria", "Reach UI"]
+    }
+  },
+  "case_studies": {
+    "material_ui": {
+      "scale": "Most popular React UI library",
+      "approach": "Themeable, extensive component set, multiple packages",
+      "lessons": ["Theming is critical", "Documentation is make-or-break", "Community contributions scale"]
+    },
+    "carbon_ibm": {
+      "scale": "Multiple frameworks (React, Vue, Angular, Svelte, Web Components)",
+      "approach": "Design tokens, extensive guidelines, governance model",
+      "lessons": ["Multi-framework is possible but complex", "Governance essential at scale"]
+    },
+    "polaris_shopify": {
+      "scale": "Powers all Shopify admin interfaces",
+      "approach": "Opinionated, accessibility-first, React-only",
+      "lessons": ["Opinionated DS can work (less choice = consistency)", "Invest in tools (Polaris Icons, etc.)"]
+    },
+    "atlassian_design_system": {
+      "scale": "Jira, Confluence, Trello, etc.",
+      "approach": "Extensive token system, dark mode, rigorous accessibility",
+      "lessons": ["Tokens enable flexibility", "Accessibility testing in CI", "Versioning and migration matter"]
+    }
+  },
+  "best_practices": [
+    "Use semantic tokens (3-tier: core → semantic → component)",
+    "Support theming (light/dark, multi-brand)",
+    "Version semantically (MAJOR.MINOR.PATCH)",
+    "Deprecate gracefully (warn, document, grace period)",
+    "Write migration guides for major versions",
+    "Document extensively (API, examples, accessibility, guidelines)",
+    "Use Storybook or similar for component explorer",
+    "Test accessibility (automated + manual)",
+    "Visual regression testing (Chromatic, Percy)",
+    "Provide both primitives and compositions",
+    "Support controlled and uncontrolled components",
+    "Use compound components for related UI",
+    "Establish governance (core team, RFC process)",
+    "Track adoption metrics",
+    "Provide multiple support channels",
+    "Internationalize (i18n)",
+    "Consider multi-framework if needed (Web Components or multiple implementations)",
+    "Incremental migration strategy for legacy apps",
+    "Keep changelog up-to-date",
+    "Publish to npm with proper versioning"
+  ],
+  "anti_patterns": [
+    "Hardcoded values in components (use tokens)",
+    "No versioning strategy (breaks consumers)",
+    "Breaking changes without warning (no deprecation)",
+    "Poor documentation (unmaintainable)",
+    "No accessibility testing (violates WCAG)",
+    "No governance (design system anarchy)",
+    "Ignoring feedback from consumers",
+    "Building components no one needs (ivory tower)",
+    "Over-abstracting (too many layers of tokens)",
+    "Under-abstracting (no tokens, hardcoded)",
+    "No testing (unit, visual, a11y)",
+    "Inconsistent API across components",
+    "Forcing adoption (mandate without buy-in)",
+    "Not tracking adoption (blind to usage)",
+    "No migration guides (consumers stuck on old versions)",
+    "Releasing breaking changes in minor versions",
+    "Not supporting theming (inflexible)",
+    "Single framework lock-in (when org uses multiple)",
+    "No changelog (consumers don't know what changed)",
+    "Skipping visual regression tests (unintended changes ship)"
+  ],
+  "resources": [
+    "Design Systems Handbook (DesignBetter.co)",
+    "Atomic Design (Brad Frost)",
+    "Component-Driven Development (Storybook)",
+    "Design Tokens W3C Community Group",
+    "Style Dictionary (token transformation)",
+    "Storybook Documentation",
+    "Chromatic (visual testing)",
+    "Radix UI (headless components)",
+    "Material-UI (mature example)",
+    "Carbon Design System (IBM)",
+    "Polaris (Shopify)",
+    "Atlassian Design System",
+    "Keep a Changelog (changelog format)",
+    "Semantic Versioning (semver.org)"
+  ]
+}

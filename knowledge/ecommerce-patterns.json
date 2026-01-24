@@ -1,0 +1,616 @@
+{
+  "name": "E-commerce UX Patterns",
+  "description": "Comprehensive guide to e-commerce user experience patterns, conversion optimization, and best practices",
+  "version_note": "Based on research from Baymard Institute, Nielsen Norman Group, and industry leaders",
+  "product_discovery": {
+    "homepage": {
+      "hero_section": {
+        "elements": ["Value proposition", "Primary CTA", "High-quality hero image/video", "Trust signals"],
+        "best_practices": [
+          "Clear value proposition in < 5 words",
+          "Single, prominent CTA",
+          "Show real products, not stock photos",
+          "Display trust badges (secure checkout, returns, etc.)"
+        ]
+      },
+      "navigation": {
+        "mega_menu": {
+          "use_when": "100+ products across multiple categories",
+          "structure": ["Category columns", "Featured items", "Visual thumbnails", "Promotional banners"],
+          "best_practices": [
+            "Limit to 2-3 menu levels",
+            "Use clear category names (not jargon)",
+            "Include 'View All' links",
+            "Show on hover (desktop) or tap (mobile)"
+          ]
+        },
+        "hamburger_menu": {
+          "use_when": "Mobile-first design",
+          "caution": "Lower discoverability on desktop",
+          "mobile_best_practices": ["Full-screen overlay", "Search at top", "Account links at bottom"]
+        }
+      },
+      "search": {
+        "autocomplete": {
+          "required": true,
+          "show": ["Product suggestions", "Category suggestions", "Popular searches", "Trending items"],
+          "performance": "< 200ms response time",
+          "mobile": "Make search prominent (icon in header)"
+        },
+        "filters_facets": {
+          "types": {
+            "checkbox": { "use": "Multiple selections (brands, colors)" },
+            "radio": { "use": "Single selection (price range tiers)" },
+            "slider": { "use": "Continuous range (price, size)" }
+          },
+          "best_practices": [
+            "Show number of results per filter",
+            "Allow multi-select for most filters",
+            "Sticky filters on scroll (desktop)",
+            "Drawer/sheet for filters (mobile)",
+            "Show applied filters with remove option"
+          ]
+        }
+      }
+    },
+    "product_listing_page": {
+      "layout": {
+        "grid_columns": {
+          "desktop": "3-4 columns (optimal for comparison)",
+          "tablet": "2-3 columns",
+          "mobile": "1-2 columns (2 for small items like clothes)"
+        }
+      },
+      "product_card": {
+        "essential_elements": [
+          "Product image (high quality, zoomable)",
+          "Product name (clear, descriptive)",
+          "Price (current, compare-at if on sale)",
+          "Star rating + review count",
+          "Key differentiator (free shipping, bestseller badge)"
+        ],
+        "optional_elements": ["Color swatches", "Quick view button", "Add to wishlist", "Add to cart (quick buy)"],
+        "image_best_practices": [
+          "Square or 4:5 aspect ratio",
+          "White or neutral background",
+          "Show product in use (lifestyle image)",
+          "Lazy load images",
+          "WebP format with fallback"
+        ]
+      },
+      "sorting": {
+        "default": "Relevance or Bestsellers (not alphabetical)",
+        "options": ["Relevance", "Price: Low to High", "Price: High to Low", "Newest", "Best Rated", "Bestsellers"],
+        "placement": "Above product grid, right-aligned"
+      },
+      "pagination": {
+        "options": {
+          "infinite_scroll": {
+            "pros": ["Mobile-friendly", "Seamless browsing"],
+            "cons": ["Footer hard to reach", "Back button issues"],
+            "use_when": "Mobile-first, inspiration browsing"
+          },
+          "load_more": {
+            "pros": ["User control", "Footer accessible"],
+            "cons": ["Extra click required"],
+            "use_when": "Hybrid approach (best of both)"
+          },
+          "numbered_pagination": {
+            "pros": ["Precise navigation", "SEO-friendly"],
+            "cons": ["Less engaging on mobile"],
+            "use_when": "Desktop-focused, B2B"
+          }
+        },
+        "recommended": "Load More button with automatic load on scroll near bottom"
+      }
+    }
+  },
+  "product_detail_page": {
+    "layout": {
+      "desktop_structure": {
+        "left": "Product images (60% width)",
+        "right": "Product info + purchase (40% width)",
+        "below": "Tabs or accordion (description, reviews, specs)"
+      },
+      "mobile_structure": [
+        "Product images (full width, swipeable)",
+        "Product name + price",
+        "Key features (bullets)",
+        "Add to cart (sticky)",
+        "Accordion sections (description, reviews, specs)"
+      ]
+    },
+    "product_images": {
+      "gallery": {
+        "minimum_images": "4-6 images from different angles",
+        "types": ["Front view", "Back view", "Detail shots", "In-use/lifestyle", "Size reference"],
+        "interactions": {
+          "desktop": ["Zoom on hover", "Click for lightbox", "Thumbnail navigation"],
+          "mobile": ["Swipe between images", "Pinch to zoom", "Dot indicators"]
+        }
+      },
+      "video": {
+        "use_when": "Complex products, fashion, electronics",
+        "placement": "Within image gallery or as first item",
+        "best_practices": ["Auto-play muted", "Short (< 30 seconds)", "Show controls"]
+      }
+    },
+    "product_information": {
+      "hierarchy": {
+        "1_product_name": { "size": "H1, large (24-32px)", "style": "Clear, descriptive" },
+        "2_price": { "size": "Prominent (20-28px)", "format": "$99.99 (large) $129.99 (strike-through, smaller)" },
+        "3_rating_reviews": { "format": "★★★★☆ 4.5 (1,234 reviews)", "link": "Link to reviews section" },
+        "4_key_features": { "format": "3-5 bullet points", "content": "Benefits, not just specs" },
+        "5_variants": { "type": "Color, size, material", "interaction": "Visual swatches, clear selection" },
+        "6_quantity": { "default": 1, "type": "Stepper (- 1 +) or dropdown" },
+        "7_add_to_cart": { "style": "Large, primary button", "text": "Add to Cart or Buy Now" }
+      },
+      "trust_signals": {
+        "placement": "Near Add to Cart button",
+        "elements": [
+          { "signal": "Free shipping", "icon": "🚚", "text": "Free shipping on orders $50+" },
+          { "signal": "Returns", "icon": "↩️", "text": "Free 30-day returns" },
+          { "signal": "Security", "icon": "🔒", "text": "Secure checkout" },
+          { "signal": "Stock status", "icon": "✓", "text": "In stock, ships in 1-2 days" }
+        ]
+      },
+      "variant_selection": {
+        "color": {
+          "type": "Visual swatches (circles with color)",
+          "size": "32-48px",
+          "interaction": "Click to select, show border on active",
+          "label": "Show color name on hover"
+        },
+        "size": {
+          "type": "Buttons or dropdown",
+          "best_practice": "Show size guide link",
+          "stock_indication": "Disable out-of-stock sizes, show 'Notify me'"
+        }
+      }
+    },
+    "descriptions_tabs": {
+      "options": {
+        "tabs": {
+          "use_when": "Desktop, lots of content",
+          "sections": ["Description", "Specifications", "Reviews", "Shipping & Returns"]
+        },
+        "accordion": {
+          "use_when": "Mobile, scannable content",
+          "default_state": "First section open, rest collapsed"
+        }
+      },
+      "content": {
+        "description": {
+          "format": ["Short paragraph (2-3 sentences)", "Bullet points for features", "Benefits, not just specs"],
+          "length": "150-300 words (scannable)"
+        },
+        "specifications": {
+          "format": "Table or definition list",
+          "example": "Material: 100% Cotton | Dimensions: 10\"x8\"x4\" | Weight: 1.2 lbs"
+        }
+      }
+    },
+    "social_proof": {
+      "reviews": {
+        "display": {
+          "summary": { "show": "Average rating (large)", "breakdown": "Star distribution bar chart" },
+          "individual_reviews": {
+            "elements": ["Reviewer name", "Star rating", "Review date", "Verified purchase badge", "Review text", "Helpful votes"],
+            "sorting": ["Most recent", "Highest rated", "Lowest rated", "Most helpful"],
+            "filtering": ["By star rating", "Verified purchases only", "With photos/videos"]
+          }
+        },
+        "user_generated_content": {
+          "photos": { "display": "Grid of customer photos", "interaction": "Click to enlarge" },
+          "videos": { "display": "Thumbnail with play button" }
+        }
+      },
+      "trust_badges": {
+        "placement": "Footer of product info section",
+        "types": ["SSL secure", "Money-back guarantee", "Authorized retailer", "Awards/certifications"]
+      }
+    },
+    "recommendations": {
+      "types": {
+        "cross_sell": {
+          "title": "Frequently Bought Together",
+          "logic": "Products often purchased with this item",
+          "display": "2-4 items with bundle discount option"
+        },
+        "upsell": {
+          "title": "Customers Also Viewed",
+          "logic": "Similar or higher-priced alternatives",
+          "display": "Horizontal carousel, 4-6 items"
+        },
+        "recently_viewed": {
+          "title": "Recently Viewed",
+          "logic": "User's browsing history",
+          "display": "Horizontal carousel, bottom of page"
+        }
+      }
+    }
+  },
+  "shopping_cart": {
+    "cart_page_vs_drawer": {
+      "cart_drawer": {
+        "pros": ["No page reload", "Context preserved", "Quick review"],
+        "cons": ["Limited space", "Hard to edit quantities"],
+        "use_when": "Fast checkout flow, mobile-first"
+      },
+      "cart_page": {
+        "pros": ["More space for details", "Easier to edit", "Cross-sells visible"],
+        "cons": ["Page reload", "Lose context"],
+        "use_when": "Complex products, B2B, desktop-focused"
+      },
+      "recommended": "Cart drawer with 'View Full Cart' link for editing"
+    },
+    "cart_contents": {
+      "line_item": {
+        "elements": [
+          { "element": "Product image", "size": "80-120px", "interaction": "Link to PDP" },
+          { "element": "Product name", "style": "Link to PDP" },
+          { "element": "Variant details", "format": "Color: Blue | Size: M" },
+          { "element": "Price", "format": "$49.99 (current) $59.99 (strike-through if sale)" },
+          { "element": "Quantity", "type": "Stepper with validation" },
+          { "element": "Subtotal", "format": "Price × Quantity" },
+          { "element": "Remove", "type": "Icon button (trash/X)" }
+        ]
+      },
+      "empty_cart": {
+        "message": "Your cart is empty",
+        "cta": "Continue Shopping",
+        "recommendations": "Show popular products or recent views"
+      }
+    },
+    "cart_summary": {
+      "placement": "Right sidebar (desktop) or bottom (mobile)",
+      "sticky": true,
+      "elements": [
+        { "label": "Subtotal", "value": "Sum of line items" },
+        { "label": "Shipping", "value": "Calculated at checkout or Free" },
+        { "label": "Tax", "value": "Calculated at checkout" },
+        { "label": "Total", "value": "Bold, larger font", "note": "Show savings if applicable" }
+      ],
+      "cta": {
+        "primary": "Proceed to Checkout (large, prominent)",
+        "secondary": "Continue Shopping (text link)"
+      }
+    },
+    "optimization": {
+      "progress_indicator": {
+        "display": "Cart → Checkout → Payment → Confirmation",
+        "purpose": "Set expectations, reduce abandonment"
+      },
+      "urgency_scarcity": {
+        "examples": [
+          "Only 2 left in stock",
+          "5 people viewing this item",
+          "Free shipping on orders $50+ (you're $15 away)"
+        ],
+        "caution": "Use sparingly, must be truthful"
+      },
+      "save_for_later": {
+        "purpose": "Move items out of cart without losing them",
+        "placement": "Below cart items or in line item actions"
+      }
+    }
+  },
+  "checkout_process": {
+    "checkout_flow": {
+      "options": {
+        "single_page": {
+          "pros": ["See all steps", "No page loads", "Fewer abandonment points"],
+          "cons": ["Long scroll on mobile", "Overwhelming"],
+          "use_when": "Simple products, few fields"
+        },
+        "multi_step": {
+          "pros": ["Less overwhelming", "Clear progress", "Mobile-friendly"],
+          "cons": ["Multiple page loads", "Back button confusion"],
+          "use_when": "Complex checkout, many fields"
+        },
+        "accordion": {
+          "pros": ["Balance of both", "Sections collapsible"],
+          "cons": ["More clicks to review"],
+          "use_when": "Hybrid approach (recommended)"
+        }
+      },
+      "recommended": "Multi-step with progress bar (3-4 steps max)"
+    },
+    "checkout_steps": {
+      "step_1_contact": {
+        "fields": ["Email (for order confirmation)", "Phone (optional, for delivery)"],
+        "guest_vs_account": {
+          "default": "Guest checkout (lower friction)",
+          "option": "Checkbox: 'Create account' (pre-fill info)",
+          "timing": "Offer account creation AFTER purchase"
+        }
+      },
+      "step_2_shipping": {
+        "fields": [
+          "Full name",
+          "Address line 1",
+          "Address line 2 (optional)",
+          "City",
+          "State/Province (dropdown)",
+          "ZIP/Postal code",
+          "Country (dropdown, default to user's location)"
+        ],
+        "autocomplete": {
+          "required": true,
+          "implementation": "Use HTML autocomplete attributes",
+          "address_lookup": "Integrate address validation API (Google, Loqate)"
+        },
+        "shipping_method": {
+          "display": "Radio buttons with price and delivery estimate",
+          "options": ["Standard (5-7 days) - Free", "Express (2-3 days) - $9.99", "Overnight (1 day) - $24.99"],
+          "default": "Pre-select cheapest or most popular"
+        }
+      },
+      "step_3_payment": {
+        "payment_methods": {
+          "credit_card": {
+            "fields": ["Card number", "Expiry date (MM/YY)", "CVV", "Cardholder name"],
+            "validation": "Real-time (Stripe, Braintree)",
+            "icons": "Show accepted cards (Visa, Mastercard, Amex)"
+          },
+          "digital_wallets": {
+            "options": ["Apple Pay", "Google Pay", "PayPal"],
+            "placement": "Above credit card form",
+            "benefit": "1-click checkout, higher conversion"
+          }
+        },
+        "billing_address": {
+          "default": "Same as shipping (checkbox checked)",
+          "option": "Different billing address (show fields on uncheck)"
+        },
+        "security": {
+          "visual_cues": ["SSL badge", "Secure checkout icon", "PCI compliance badge"],
+          "placement": "Near payment form"
+        }
+      },
+      "step_4_review": {
+        "display": ["Order summary", "Shipping address", "Shipping method", "Payment method (last 4 digits)", "Total breakdown"],
+        "edit": "Allow editing any section without losing data",
+        "cta": {
+          "text": "Place Order or Complete Purchase",
+          "style": "Large, primary button",
+          "loading_state": "Show spinner, disable button, prevent double-click"
+        }
+      }
+    },
+    "form_best_practices": {
+      "general": [
+        "Single-column layout",
+        "Inline validation (on blur)",
+        "Show error messages next to fields",
+        "Auto-advance cursor (credit card, expiry)",
+        "Save progress (for logged-in users)",
+        "Mobile keyboard optimization (numeric for ZIP, tel for phone)"
+      ],
+      "field_labels": {
+        "placement": "Above field (not placeholder)",
+        "style": "Clear, not jargon ('Zip code' not 'Postal code identifier')"
+      },
+      "error_handling": {
+        "timing": "On blur or on submit",
+        "display": "Red border + icon + message",
+        "message": "Specific and actionable ('Enter a valid email' not 'Error')"
+      }
+    },
+    "order_confirmation": {
+      "page_elements": [
+        "Success message (✓ Order confirmed!)",
+        "Order number (prominent, easy to copy)",
+        "Email confirmation notice",
+        "Order summary (items, total)",
+        "Shipping address",
+        "Estimated delivery date",
+        "Next steps (track order, contact support)",
+        "Continue shopping CTA"
+      ],
+      "email": {
+        "send_immediately": true,
+        "subject": "Order Confirmation #12345",
+        "content": ["Thank you message", "Order number", "Order details", "Shipping info", "Track order link", "Support contact"]
+      }
+    }
+  },
+  "conversion_optimization": {
+    "trust_signals": {
+      "types": {
+        "security": ["SSL certificate", "PCI compliant", "Secure checkout badge"],
+        "social_proof": ["Customer reviews", "Testimonials", "Social media followers", "Press mentions"],
+        "guarantees": ["Money-back guarantee", "Free returns", "Price match", "Warranty"],
+        "shipping": ["Free shipping threshold", "Fast delivery", "Free returns"]
+      },
+      "placement": ["Homepage hero", "Product pages (near CTA)", "Cart page", "Checkout header"]
+    },
+    "urgency_scarcity": {
+      "techniques": {
+        "stock_scarcity": { "example": "Only 3 left in stock!", "rule": "Must be truthful" },
+        "time_scarcity": { "example": "Sale ends in 2 hours", "rule": "Use countdown timer" },
+        "social_proof": { "example": "127 people viewing this item", "rule": "Real-time if possible" }
+      },
+      "caution": "Overuse reduces trust. Use sparingly and honestly."
+    },
+    "abandoned_cart_recovery": {
+      "email_sequence": {
+        "email_1": { "timing": "1 hour after abandonment", "subject": "You left something behind", "content": "Cart contents + CTA" },
+        "email_2": { "timing": "24 hours", "subject": "Still thinking about it?", "content": "Cart + social proof or reviews" },
+        "email_3": { "timing": "72 hours", "subject": "Last chance - 10% off", "content": "Cart + discount code" }
+      },
+      "exit_intent_popup": {
+        "trigger": "Mouse leaves viewport (desktop)",
+        "offer": "Discount code or free shipping",
+        "timing": "Don't show immediately (10+ seconds on site)"
+      }
+    },
+    "personalization": {
+      "techniques": {
+        "product_recommendations": { "based_on": "Browsing history, purchase history, similar users" },
+        "dynamic_content": { "examples": ["Welcome back, [Name]", "Recommended for you", "Based on your recent views"] },
+        "geo_targeting": { "examples": ["Show currency based on location", "Show in-stock items at nearby store"] }
+      }
+    }
+  },
+  "mobile_ecommerce": {
+    "mobile_first_principles": [
+      "Simplified navigation (hamburger menu + search + cart)",
+      "Large touch targets (44x44px minimum)",
+      "Sticky header with search + cart",
+      "Sticky Add to Cart button (PDP)",
+      "Minimal form fields",
+      "Auto-fill and auto-advance",
+      "Digital wallet support (Apple Pay, Google Pay)"
+    ],
+    "mobile_specific_patterns": {
+      "product_images": {
+        "interaction": "Swipe between images",
+        "zoom": "Pinch to zoom (not hover)",
+        "fullscreen": "Tap for fullscreen view"
+      },
+      "filters": {
+        "placement": "Bottom sheet or slide-in drawer",
+        "cta": "Floating 'Filter' button at bottom"
+      },
+      "checkout": {
+        "steps": "One field per screen or grouped sections",
+        "payment": "Prioritize Apple Pay / Google Pay",
+        "autofill": "Essential for mobile conversion"
+      }
+    }
+  },
+  "accessibility": {
+    "wcag_compliance": {
+      "keyboard_navigation": ["Tab through all interactive elements", "Enter to submit forms", "Escape to close modals/drawers"],
+      "screen_readers": ["Alt text for all product images", "ARIA labels for icon buttons", "Announce cart updates", "Form field labels"],
+      "color_contrast": "4.5:1 for text, 3:1 for interactive elements",
+      "focus_indicators": "Visible focus state for all interactive elements"
+    },
+    "inclusive_design": {
+      "text_size": "Minimum 16px for body text",
+      "font_choice": "Sans-serif, readable (not decorative)",
+      "error_messages": "Don't rely on color alone (use icon + text)",
+      "timeout_warnings": "Warn before session expires, allow extension"
+    }
+  },
+  "performance": {
+    "core_web_vitals": {
+      "lcp": { "metric": "Largest Contentful Paint", "target": "< 2.5s", "optimize": "Lazy load images, use CDN, optimize hero image" },
+      "fid": { "metric": "First Input Delay", "target": "< 100ms", "optimize": "Minimize JavaScript, code splitting" },
+      "cls": { "metric": "Cumulative Layout Shift", "target": "< 0.1", "optimize": "Set image dimensions, avoid dynamic content insertion" }
+    },
+    "optimization_techniques": {
+      "images": ["Use WebP format", "Lazy load below fold", "Responsive images (srcset)", "Compress (TinyPNG, ImageOptim)"],
+      "code_splitting": ["Route-based splitting", "Lazy load components", "Tree shaking"],
+      "caching": ["Browser caching (static assets)", "CDN for images", "Service worker for offline"]
+    }
+  },
+  "testing_metrics": {
+    "ab_testing": {
+      "elements_to_test": [
+        "CTA button text/color",
+        "Product image style (lifestyle vs white background)",
+        "Pricing display (was/now vs just price)",
+        "Shipping threshold messaging",
+        "Checkout flow (single vs multi-step)"
+      ],
+      "tools": ["Google Optimize", "Optimizely", "VWO"],
+      "duration": "Run until statistical significance (95% confidence)"
+    },
+    "key_metrics": {
+      "conversion_rate": { "formula": "Orders / Visitors * 100", "benchmark": "1-3% (varies by industry)" },
+      "cart_abandonment_rate": { "formula": "(Carts - Orders) / Carts * 100", "benchmark": "60-80% (average 70%)" },
+      "average_order_value": { "formula": "Total Revenue / Number of Orders", "increase_with": "Cross-sells, upsells, bundles" },
+      "revenue_per_visitor": { "formula": "Total Revenue / Total Visitors", "optimize": "Improve conversion rate + AOV" }
+    }
+  },
+  "best_practices": [
+    "Show real product images, not stock photos",
+    "Display prices prominently (no hidden costs)",
+    "Offer guest checkout (don't force account creation)",
+    "Provide multiple payment options (cards + digital wallets)",
+    "Show trust signals (reviews, security badges, returns policy)",
+    "Use high-quality product images (4-6 per product)",
+    "Write benefit-focused copy, not just features",
+    "Make search prominent and powerful (autocomplete, filters)",
+    "Optimize for mobile (50%+ of traffic is mobile)",
+    "Provide clear shipping information (cost, delivery time)",
+    "Use progress indicators in checkout",
+    "Minimize form fields (only ask what's necessary)",
+    "Allow easy cart editing (quantity, remove items)",
+    "Send order confirmation immediately",
+    "Implement abandoned cart email sequence",
+    "A/B test everything (CTAs, images, copy, flow)",
+    "Use lazy loading for images",
+    "Implement digital wallets (Apple Pay, Google Pay)",
+    "Show related products (cross-sells, upsells)",
+    "Provide size guides for apparel"
+  ],
+  "anti_patterns": [
+    "Forcing account creation before checkout",
+    "Hiding shipping costs until final step",
+    "Too many form fields",
+    "Unclear return/refund policy",
+    "Poor product images (low quality, few angles)",
+    "No guest checkout option",
+    "Complex mega menus on mobile",
+    "Intrusive popups (immediate exit intent)",
+    "Fake urgency (dishonest scarcity tactics)",
+    "Auto-playing videos with sound",
+    "Cluttered product pages (too much info)",
+    "No product reviews or ratings",
+    "Slow page load times",
+    "Lack of trust signals",
+    "Complicated checkout (> 4 steps)",
+    "No mobile optimization",
+    "Hidden contact information",
+    "Aggressive email capture (before browsing)",
+    "Poor search functionality",
+    "No filtering or sorting options"
+  ],
+  "industry_benchmarks": {
+    "conversion_rates": {
+      "overall_average": "2-3%",
+      "fashion": "1-2%",
+      "electronics": "1.5-2.5%",
+      "health_beauty": "2-3%",
+      "food_beverage": "3-4%"
+    },
+    "cart_abandonment": {
+      "average": "69.8%",
+      "reasons": [
+        "Extra costs (shipping, taxes) - 48%",
+        "Account creation required - 24%",
+        "Complicated checkout - 18%",
+        "Concerns about payment security - 17%",
+        "Slow delivery - 16%"
+      ]
+    }
+  },
+  "tools_services": {
+    "platforms": ["Shopify", "WooCommerce", "Magento", "BigCommerce", "Wix eCommerce"],
+    "payment_gateways": ["Stripe", "PayPal", "Square", "Braintree", "Authorize.net"],
+    "analytics": ["Google Analytics 4", "Hotjar", "Mixpanel", "Heap"],
+    "ab_testing": ["Google Optimize", "Optimizely", "VWO", "Convert"],
+    "reviews": ["Yotpo", "Trustpilot", "Judge.me", "Bazaarvoice"],
+    "personalization": ["Dynamic Yield", "Nosto", "Algolia", "Barilliance"]
+  },
+  "case_studies": {
+    "amazon": {
+      "innovations": ["1-Click ordering", "Product recommendations", "Prime membership", "Customer reviews"],
+      "lessons": ["Reduce friction at every step", "Personalization drives sales", "Trust signals matter"]
+    },
+    "zappos": {
+      "innovations": ["Free shipping both ways", "365-day returns", "24/7 customer service"],
+      "lessons": ["Remove risk from purchase decision", "Customer service is a competitive advantage"]
+    }
+  },
+  "references": [
+    "Baymard Institute - E-commerce UX Research",
+    "Nielsen Norman Group - E-commerce UX Guidelines",
+    "Smashing Magazine - E-commerce Design Patterns",
+    "Google - Retail UX Playbook",
+    "Shopify - E-commerce Best Practices"
+  ]
+}
