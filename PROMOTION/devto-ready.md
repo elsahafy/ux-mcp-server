@@ -1,12 +1,9 @@
 ---
 title: I Built an MCP Server with 28 UX Knowledge Bases and 23 Tools - Here's What I Learned
-published: true
+published: false
 description: How I created a comprehensive UX toolkit for AI coding assistants using the Model Context Protocol
 tags: mcp, ux, accessibility, ai
-cover_image: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/[YOUR_IMAGE].png
 ---
-
-# I Built an MCP Server with 28 UX Knowledge Bases and 23 Tools
 
 Ever wished your AI coding assistant knew about WCAG accessibility guidelines, Nielsen's usability heuristics, or the latest e-commerce UX patterns? I did too. So I built an MCP server to solve that problem.
 
@@ -159,49 +156,6 @@ The server works with any MCP-compatible client:
 | Cline (VS Code) | ✅ |
 | Zed Editor | ✅ |
 
-## Technical Implementation
-
-The server is built with:
-- **TypeScript** for type safety
-- **@modelcontextprotocol/sdk** for MCP implementation
-- **JSON knowledge files** for easy updates
-- **Modular tool architecture** for extensibility
-
-### Resource Structure
-
-```typescript
-// Knowledge resources follow a consistent pattern
-{
-  uri: "ux://accessibility/wcag",
-  name: "WCAG 2.1 AA Guidelines",
-  description: "Complete accessibility guidelines",
-  mimeType: "application/json"
-}
-```
-
-### Tool Implementation
-
-```typescript
-// Tools return structured JSON responses
-async function checkContrast(args: {
-  foreground: string;
-  background: string;
-}) {
-  const ratio = calculateContrastRatio(args.foreground, args.background);
-  return {
-    content: [{
-      type: "text",
-      text: JSON.stringify({
-        ratio,
-        wcag_aa_normal: ratio >= 4.5,
-        wcag_aa_large: ratio >= 3,
-        wcag_aaa_normal: ratio >= 7
-      })
-    }]
-  };
-}
-```
-
 ## Lessons Learned
 
 ### 1. Structure Knowledge for AI Consumption
@@ -249,6 +203,7 @@ npm install -g @elsahafy/ux-mcp-server
 
 - **GitHub**: [github.com/elsahafy/ux-mcp-server](https://github.com/elsahafy/ux-mcp-server)
 - **npm**: [@elsahafy/ux-mcp-server](https://www.npmjs.com/package/@elsahafy/ux-mcp-server)
+- **MCP Registry**: [io.github.elsahafy/ux-mcp-server](https://registry.modelcontextprotocol.io)
 
 ## Support
 
@@ -259,24 +214,3 @@ If this helps you build better user experiences, consider supporting development
 ---
 
 *What UX knowledge would you like to see added? Let me know in the comments!*
-
----
-
-## Tags for Dev.to
-
-When publishing, use these tags:
-- `mcp`
-- `ux`
-- `accessibility`
-- `ai`
-- `webdev` (alternative)
-- `design` (alternative)
-
-## Publishing Checklist
-
-- [ ] Create account at dev.to
-- [ ] Upload a cover image (1000x420px recommended)
-- [ ] Copy this content (remove the frontmatter instructions)
-- [ ] Add your own screenshots/GIFs
-- [ ] Publish!
-- [ ] Share on Twitter/LinkedIn with link

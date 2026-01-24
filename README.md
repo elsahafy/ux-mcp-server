@@ -627,7 +627,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 If this project helps you build better user experiences, consider supporting its development:
 
-[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-GitHub-ea4aaa?logo=github)](https://github.com/sponsors/elsahafy)
 [![Ko-fi](https://img.shields.io/badge/Support-Ko--fi-FF5E5B?logo=ko-fi)](https://ko-fi.com/elsahafy)
 
 Your support helps:
