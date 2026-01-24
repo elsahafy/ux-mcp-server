@@ -623,6 +623,21 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Support This Project
+
+If this project helps you build better user experiences, consider supporting its development:
+
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-GitHub-ea4aaa?logo=github)](https://github.com/sponsors/elsahafy)
+[![Ko-fi](https://img.shields.io/badge/Support-Ko--fi-FF5E5B?logo=ko-fi)](https://ko-fi.com/elsahafy)
+
+Your support helps:
+- Maintain and update UX knowledge bases
+- Add new tools and resources
+- Keep documentation current
+- Respond to issues and feature requests
+
+**Enterprise users**: For priority support, custom integrations, or consulting, [contact us](mailto:your-email@example.com).
+
 ## Credits
 
 - WCAG 2.1 Guidelines from W3C
