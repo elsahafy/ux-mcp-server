@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation
+    url: https://github.com/elsahafy/ux-mcp-server#readme
+    about: Check the README for usage instructions and examples
+  - name: npm Package
+    url: https://www.npmjs.com/package/@elsahafy/ux-mcp-server
+    about: View the package on npm

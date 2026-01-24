@@ -4,7 +4,6 @@ Thank you for your interest in contributing to the UX MCP Server! This document 
 
 ## Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
 - [How Can I Contribute?](#how-can-i-contribute)
 - [Development Setup](#development-setup)
 - [Contribution Workflow](#contribution-workflow)
@@ -12,10 +11,6 @@ Thank you for your interest in contributing to the UX MCP Server! This document 
 - [Adding New Content](#adding-new-content)
 - [Testing](#testing)
 - [Pull Request Process](#pull-request-process)
-
-## Code of Conduct
-
-This project adheres to a Code of Conduct that all contributors are expected to follow. Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before contributing.
 
 ## How Can I Contribute?
 
