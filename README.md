@@ -5,7 +5,9 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![GitHub issues](https://img.shields.io/github/issues/elsahafy/ux-mcp-server)](https://github.com/elsahafy/ux-mcp-server/issues)
 
-Model Context Protocol server that provides comprehensive UX best practices covering the complete UX ecosystem: accessibility guidelines (WCAG), usability heuristics (Nielsen), UI patterns, design systems, performance optimization, SEO, internationalization, animation, framework patterns (React/Vue/Angular), e-commerce, testing, PWA, ethical design, SaaS, analytics, voice UI, AR/VR, AI/ML patterns, healthcare, finance, neurodiversity, and web components.
+Model Context Protocol (MCP) server that provides comprehensive UX best practices covering the complete UX ecosystem: accessibility guidelines (WCAG), usability heuristics (Nielsen), UI patterns, design systems, performance optimization, SEO, internationalization, animation, framework patterns (React/Vue/Angular), e-commerce, testing, PWA, ethical design, SaaS, analytics, voice UI, AR/VR, AI/ML patterns, healthcare, finance, neurodiversity, and web components.
+
+**Works with any MCP-compatible client** including Claude Desktop, Cursor IDE, Continue.dev, Cline, and custom applications.
 
 ## Installation
 
@@ -124,17 +126,27 @@ Comprehensive review workflows:
 3. **design_system_setup** - Guide for creating design systems
 4. **complete_ux_audit** - Comprehensive multi-dimensional UX audit (accessibility, usability, performance, responsive design, typography, color, forms, SEO)
 
-## Usage with Claude Desktop
+## Compatibility
 
-After installing via npm, add to your Claude Desktop config file.
+This MCP server works with any client that supports the Model Context Protocol:
 
-### Configuration
+| Client | Status | Configuration |
+|--------|--------|---------------|
+| **Claude Desktop** | ✅ Fully Supported | [See below](#claude-desktop) |
+| **Claude Code (CLI)** | ✅ Fully Supported | [See below](#claude-code-cli) |
+| **Cursor IDE** | ✅ Fully Supported | [See below](#cursor-ide) |
+| **Continue.dev** | ✅ Fully Supported | [See below](#continuedev) |
+| **Cline (VS Code)** | ✅ Fully Supported | [See below](#cline-vs-code) |
+| **Zed Editor** | ✅ Fully Supported | [See below](#zed-editor) |
+| **Custom MCP Clients** | ✅ Fully Supported | [See below](#custom-mcp-clients) |
 
-**Location of config file:**
+## Client Configuration
+
+### Claude Desktop
+
+**Config file location:**
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-
-**If installed globally via npm:**
 
 ```json
 {
@@ -146,97 +158,251 @@ After installing via npm, add to your Claude Desktop config file.
 }
 ```
 
-**If installed from source:**
-
+**From source:**
 ```json
 {
   "mcpServers": {
     "ux-best-practices": {
       "command": "node",
-      "args": [
-        "/absolute/path/to/ux-mcp-server/dist/index.js"
-      ]
+      "args": ["/absolute/path/to/ux-mcp-server/dist/index.js"]
     }
   }
 }
 ```
 
-On Windows (source install), the path might look like:
+Restart Claude Desktop after configuration.
+
+### Claude Code (CLI)
+
+Add to your Claude Code MCP settings (`~/.claude/settings.json`):
+
 ```json
-"C:\\Users\\YourName\\ux-mcp-server\\dist\\index.js"
+{
+  "mcpServers": {
+    "ux-best-practices": {
+      "command": "ux-mcp-server"
+    }
+  }
+}
 ```
 
-After updating the config, restart Claude Desktop.
+Or use with npx:
+```json
+{
+  "mcpServers": {
+    "ux-best-practices": {
+      "command": "npx",
+      "args": ["@elsahafy/ux-mcp-server"]
+    }
+  }
+}
+```
+
+### Cursor IDE
+
+Add to Cursor's MCP configuration (`~/.cursor/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "ux-best-practices": {
+      "command": "ux-mcp-server"
+    }
+  }
+}
+```
+
+Or configure via Cursor Settings → MCP Servers → Add Server.
+
+### Continue.dev
+
+Add to Continue configuration (`~/.continue/config.json`):
+
+```json
+{
+  "experimental": {
+    "modelContextProtocolServers": [
+      {
+        "transport": {
+          "type": "stdio",
+          "command": "ux-mcp-server"
+        }
+      }
+    ]
+  }
+}
+```
+
+### Cline (VS Code)
+
+In VS Code with Cline extension, add to MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "ux-best-practices": {
+      "command": "ux-mcp-server",
+      "args": []
+    }
+  }
+}
+```
+
+### Zed Editor
+
+Add to Zed's settings (`~/.config/zed/settings.json`):
+
+```json
+{
+  "context_servers": {
+    "ux-best-practices": {
+      "command": {
+        "path": "ux-mcp-server"
+      }
+    }
+  }
+}
+```
+
+### Custom MCP Clients
+
+For custom applications using the MCP SDK:
+
+```typescript
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+
+const transport = new StdioClientTransport({
+  command: "ux-mcp-server",
+  args: []
+});
+
+const client = new Client({
+  name: "my-app",
+  version: "1.0.0"
+}, {
+  capabilities: {}
+});
+
+await client.connect(transport);
+
+// List available resources
+const resources = await client.listResources();
+
+// Read a resource
+const wcag = await client.readResource({ uri: "ux://accessibility/wcag" });
+
+// Call a tool
+const result = await client.callTool({
+  name: "check_contrast",
+  arguments: { foreground: "#333333", background: "#ffffff" }
+});
+```
+
+### Windows Notes
+
+On Windows, use full paths with escaped backslashes:
+```json
+{
+  "mcpServers": {
+    "ux-best-practices": {
+      "command": "node",
+      "args": ["C:\\Users\\YourName\\ux-mcp-server\\dist\\index.js"]
+    }
+  }
+}
+```
 
 ## Example Usage
 
-### Analyze Accessibility
+Once configured, you can ask your AI assistant to use these UX tools and resources. Here are some example prompts:
 
-```typescript
-// In Claude Desktop, you can now ask:
+### Accessibility Analysis
+
+```
 "Analyze this button for accessibility issues"
+→ Uses: analyze_accessibility tool
 
-// Claude will use the analyze_accessibility tool
+"Check if #3b82f6 on #ffffff meets WCAG AA contrast requirements"
+→ Uses: check_contrast tool
+
+"Generate an accessibility audit report for my login page"
+→ Uses: generate_accessibility_report tool
 ```
 
-### Get UI Pattern Suggestions
+### UI Patterns & Design
 
-```typescript
+```
 "I need to display a list of items with filtering - what UI pattern should I use?"
+→ Uses: suggest_pattern tool
 
-// Claude will use suggest_pattern tool
-```
-
-### Generate Component Examples
-
-```typescript
 "Generate an accessible modal dialog example"
+→ Uses: generate_component_example tool
 
-// Claude will use generate_component_example tool
+"Create a color palette based on #3b82f6"
+→ Uses: generate_color_palette tool
+
+"Generate a wireframe for a dashboard page"
+→ Uses: generate_wireframe tool
 ```
 
-### Check Color Contrast
+### Performance & SEO
 
-```typescript
-"Check if #3b82f6 on #ffffff meets WCAG AA"
-
-// Claude will use check_contrast tool
 ```
-
-### Analyze Performance
-
-```typescript
 "Analyze this React component for performance issues"
+→ Uses: analyze_performance tool (checks Core Web Vitals, bundle size, loading patterns)
 
-// Claude will use analyze_performance tool to check:
-// - Image optimization
-// - CSS performance
-// - JavaScript bundle size
-// - Loading patterns
-```
-
-### Check SEO
-
-```typescript
 "Review this HTML page for SEO best practices"
-
-// Claude will use check_seo tool to validate:
-// - Meta tags (title, description)
-// - Open Graph tags
-// - Structured data (JSON-LD)
-// - Canonical URLs
+→ Uses: check_seo tool (validates meta tags, Open Graph, structured data)
 ```
 
-### Suggest Animation
+### UX Writing & Forms
 
-```typescript
+```
+"Suggest better microcopy for this error message"
+→ Uses: suggest_microcopy tool
+
+"What form pattern should I use for a multi-step checkout?"
+→ Uses: recommend_form_pattern tool
+```
+
+### Animation & Interaction
+
+```
 "What animation should I use for a button click?"
+→ Uses: suggest_animation tool
 
-// Claude will use suggest_animation tool to recommend:
-// - Animation type
-// - Duration and easing
-// - CSS/JS implementation
-// - Accessibility considerations
+"Suggest microinteractions for a toggle switch"
+→ Uses: suggest_microinteraction tool
+```
+
+### Testing & Metrics
+
+```
+"Calculate the SUS score from these survey responses"
+→ Uses: calculate_ux_metrics tool
+
+"Suggest A/B test variants for my pricing page"
+→ Uses: suggest_ab_variant tool
+
+"Check this page for dark patterns"
+→ Uses: detect_dark_patterns tool
+```
+
+### Accessing Knowledge Resources
+
+```
+"What are Nielsen's usability heuristics?"
+→ Reads: ux://usability/nielsen-heuristics
+
+"Show me WCAG accessibility guidelines"
+→ Reads: ux://accessibility/wcag
+
+"What are best practices for e-commerce checkout?"
+→ Reads: ux://ecommerce/patterns
+
+"How do I design for neurodiversity?"
+→ Reads: ux://neurodiversity/design
 ```
 
 ## Knowledge Base Contents
