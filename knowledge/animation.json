@@ -1,0 +1,469 @@
+{
+  "name": "Animation & Motion Design",
+  "description": "Motion design principles, performance, and accessibility for UI animations",
+  "principles": {
+    "purpose_driven": {
+      "description": "Every animation should have a purpose",
+      "valid_purposes": [
+        "Direct attention to important elements",
+        "Provide feedback on user actions",
+        "Show relationships between elements",
+        "Smooth transitions between states",
+        "Communicate system status",
+        "Guide users through flows",
+        "Add personality and delight"
+      ],
+      "avoid": "Animation for decoration only"
+    },
+    "disney_12_principles": {
+      "description": "Classic animation principles applied to UI",
+      "relevant_to_ui": {
+        "squash_and_stretch": {
+          "principle": "Objects deform to show flexibility",
+          "ui_use": "Buttons that compress on click, elastic loading indicators",
+          "example": "Scale down slightly on press, bounce back"
+        },
+        "anticipation": {
+          "principle": "Prepare for main action",
+          "ui_use": "Slight move before big transition",
+          "example": "Pull back before sliding forward"
+        },
+        "staging": {
+          "principle": "Direct attention to what's important",
+          "ui_use": "Animate important elements first, others follow",
+          "example": "Modal backdrop fades in, then content slides in"
+        },
+        "follow_through": {
+          "principle": "Different parts move at different rates",
+          "ui_use": "Staggered list animations, momentum after main movement",
+          "example": "Card slides in, shadow follows with slight delay"
+        },
+        "ease_in_ease_out": {
+          "principle": "Gradual acceleration and deceleration",
+          "ui_use": "All UI animations (nothing moves at constant speed)",
+          "example": "cubic-bezier easing functions",
+          "critical": "Most important principle for UI"
+        },
+        "secondary_action": {
+          "principle": "Smaller actions support main action",
+          "ui_use": "Icon wobbles as notification appears",
+          "example": "Menu opens (main), items fade in sequentially (secondary)"
+        }
+      }
+    },
+    "material_motion": {
+      "description": "Google's motion design system",
+      "key_concepts": {
+        "responsive": "Animations react to user input",
+        "natural": "Inspired by real-world physics",
+        "aware": "Elements aware of each other and user",
+        "intentional": "Guide focus and hierarchy"
+      },
+      "duration": {
+        "mobile": "Shorter (200-300ms)",
+        "tablet": "Medium (250-400ms)",
+        "desktop": "Longer (300-500ms)",
+        "rationale": "Smaller screens = faster animations"
+      }
+    }
+  },
+  "timing": {
+    "durations": {
+      "instant": {
+        "duration": "0-100ms",
+        "use": "Immediate feedback (hover states, ripples)",
+        "note": "Feels instant to users"
+      },
+      "fast": {
+        "duration": "100-200ms",
+        "use": "Simple transitions (fades, simple slides)",
+        "examples": ["Tooltip appear", "Dropdown open", "Button hover"]
+      },
+      "medium": {
+        "duration": "200-500ms",
+        "use": "Most UI animations (default choice)",
+        "examples": ["Modal appear", "Page transition", "Card expand"]
+      },
+      "slow": {
+        "duration": "500ms-1s",
+        "use": "Complex transitions, large movements",
+        "examples": ["Full-screen transition", "Complex reveal"],
+        "warning": "Can feel sluggish if overused"
+      },
+      "very_slow": {
+        "duration": "> 1s",
+        "use": "Loading states, progress indicators",
+        "avoid": "Regular UI transitions (too slow)"
+      }
+    },
+    "golden_rule": "200-300ms for most UI animations",
+    "speed_perception": "Mobile feels faster with shorter durations",
+    "consider_motion_preference": "Reduce or disable for users with prefers-reduced-motion"
+  },
+  "easing": {
+    "description": "How animation accelerates/decelerates",
+    "types": {
+      "linear": {
+        "curve": "constant speed throughout",
+        "css": "ease: linear",
+        "use": "Color changes, opacity (rarely for movement)",
+        "avoid": "Feels robotic for movement"
+      },
+      "ease_in": {
+        "curve": "Slow start, fast end",
+        "css": "ease: ease-in or cubic-bezier(0.4, 0, 1, 1)",
+        "use": "Exit animations (leaving screen)",
+        "rationale": "Accelerates away from view"
+      },
+      "ease_out": {
+        "curve": "Fast start, slow end",
+        "css": "ease: ease-out or cubic-bezier(0, 0, 0.2, 1)",
+        "use": "Enter animations (appearing on screen)",
+        "rationale": "Decelerates into position",
+        "most_common": "Default for most UI animations"
+      },
+      "ease_in_out": {
+        "curve": "Slow start and end, fast middle",
+        "css": "ease: ease-in-out or cubic-bezier(0.4, 0, 0.2, 1)",
+        "use": "Moving within same screen",
+        "example": "Modal sliding from side to center"
+      },
+      "custom_cubic_bezier": {
+        "description": "Fine-tune easing curve",
+        "tool": "https://cubic-bezier.com",
+        "material_standard": "cubic-bezier(0.4, 0.0, 0.2, 1)",
+        "ios_standard": "cubic-bezier(0.25, 0.1, 0.25, 1)"
+      }
+    },
+    "recommendation": "Use ease-out for 90% of UI animations"
+  },
+  "animation_types": {
+    "micro_interactions": {
+      "description": "Small animations for user feedback",
+      "examples": {
+        "button_press": {
+          "animation": "Scale down slightly, then back",
+          "duration": "100-150ms",
+          "css": "transform: scale(0.95); transition: transform 100ms ease-out;"
+        },
+        "checkbox_check": {
+          "animation": "Checkmark draws in",
+          "duration": "200ms",
+          "technique": "SVG stroke animation or transform"
+        },
+        "toggle_switch": {
+          "animation": "Circle slides across track",
+          "duration": "200ms",
+          "easing": "ease-out"
+        },
+        "like_button": {
+          "animation": "Heart pops and changes color",
+          "duration": "300ms",
+          "sequence": "Scale up → bounce → settle"
+        }
+      },
+      "purpose": "Confirm action, provide feedback"
+    },
+    "loading_states": {
+      "spinner": {
+        "use": "Unknown duration (< 10 seconds expected)",
+        "animation": "Rotate infinitely",
+        "best_practice": "Show immediately if expected > 1 second"
+      },
+      "progress_bar": {
+        "use": "Known duration or progress",
+        "animation": "Width grows left to right",
+        "best_practice": "Update regularly, smooth transitions"
+      },
+      "skeleton_screen": {
+        "use": "Content loading (better than spinner)",
+        "animation": "Shimmer effect across placeholder",
+        "benefit": "Shows structure, feels faster"
+      },
+      "pulse": {
+        "use": "Loading placeholder",
+        "animation": "Opacity or background color pulse",
+        "duration": "1-2s infinite loop"
+      }
+    },
+    "page_transitions": {
+      "fade": {
+        "description": "Simplest transition",
+        "use": "Unrelated pages",
+        "duration": "200-300ms",
+        "css": "opacity: 0 → 1"
+      },
+      "slide": {
+        "description": "New page slides in",
+        "use": "Forward/back navigation",
+        "direction": "Left for forward, right for back",
+        "duration": "300-400ms"
+      },
+      "shared_element": {
+        "description": "Element morphs between pages",
+        "use": "Detail views (thumbnail → full image)",
+        "complexity": "High (requires careful coordination)",
+        "impact": "Strongest sense of continuity"
+      },
+      "cross_fade": {
+        "description": "Overlap old and new content",
+        "use": "Similar pages, content updates",
+        "duration": "300-400ms"
+      }
+    },
+    "modal_animations": {
+      "backdrop": {
+        "animation": "Fade in from transparent",
+        "duration": "200ms",
+        "easing": "ease-out"
+      },
+      "content": {
+        "options": [
+          "Scale from 0.9 to 1.0 + fade",
+          "Slide down from top",
+          "Slide up from bottom",
+          "Fade + slight upward movement"
+        ],
+        "duration": "250-300ms",
+        "timing": "Start after backdrop (100ms delay)"
+      },
+      "exit": {
+        "reverse": "Reverse entry animation",
+        "duration": "200ms (slightly faster than enter)",
+        "backdrop_timing": "Fade out after content starts"
+      }
+    },
+    "list_animations": {
+      "stagger": {
+        "description": "Items appear sequentially",
+        "delay": "50-100ms between items",
+        "use": "Initial load, new items added",
+        "limit": "First 10-15 items (rest instant)"
+      },
+      "reorder": {
+        "description": "Smooth position changes",
+        "duration": "300-400ms",
+        "easing": "ease-in-out",
+        "use": "Drag-and-drop, sorting"
+      },
+      "add_remove": {
+        "add": "Fade + scale in from 0.8",
+        "remove": "Fade + scale out to 0.8",
+        "duration": "200-250ms"
+      }
+    },
+    "scroll_animations": {
+      "parallax": {
+        "description": "Background moves slower than foreground",
+        "use": "Hero sections (sparingly)",
+        "performance": "Use transform for GPU acceleration",
+        "accessibility": "Disable for reduced-motion"
+      },
+      "reveal_on_scroll": {
+        "description": "Elements fade/slide in when scrolled into view",
+        "trigger": "When element is 10-20% visible",
+        "duration": "400-600ms",
+        "avoid": "Don't animate all elements (overwhelming)"
+      },
+      "sticky_header": {
+        "animation": "Shrink on scroll down",
+        "duration": "200ms",
+        "trigger": "After scrolling 50-100px"
+      }
+    }
+  },
+  "performance": {
+    "gpu_acceleration": {
+      "efficient_properties": [
+        "transform (translate, scale, rotate)",
+        "opacity"
+      ],
+      "avoid_animating": [
+        "width, height (triggers layout)",
+        "top, left, margin, padding (triggers layout)",
+        "background-position (slow repaint)",
+        "box-shadow (slow)"
+      ],
+      "trigger_gpu": "will-change: transform, opacity;",
+      "warning": "Don't overuse will-change (memory intensive)"
+    },
+    "60fps_target": {
+      "frame_budget": "16.67ms per frame",
+      "javascript": "Use requestAnimationFrame, not setInterval",
+      "css": "Prefer CSS animations for simple cases",
+      "avoid": "Animating too many elements simultaneously"
+    },
+    "best_practices": [
+      "Use transform and opacity only when possible",
+      "Apply will-change sparingly",
+      "Use requestAnimationFrame for JS animations",
+      "Reduce animation complexity on low-end devices",
+      "Debounce scroll/resize event handlers",
+      "Use CSS animations for simple loops",
+      "Use Web Animations API for complex JS control"
+    ],
+    "monitoring": [
+      "Chrome DevTools Performance tab",
+      "Check frame rate during animations",
+      "Watch for layout thrashing",
+      "Monitor memory usage with will-change"
+    ]
+  },
+  "accessibility": {
+    "prefers_reduced_motion": {
+      "media_query": "@media (prefers-reduced-motion: reduce) { /* disable/reduce animations */ }",
+      "requirement": "WCAG 2.1 Success Criterion 2.3.3",
+      "implementation": {
+        "disable": "Remove animations entirely",
+        "reduce": "Shorten duration, remove bounces/springs",
+        "crossfade": "Use simple fades instead of complex motions"
+      },
+      "javascript": "const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;",
+      "respect": "Always respect this preference"
+    },
+    "seizure_triggers": {
+      "avoid": [
+        "Flashing more than 3 times per second",
+        "Large flashing areas",
+        "High contrast flashing",
+        "Rapid motion across large screen areas"
+      ],
+      "wcag": "WCAG 2.1 Success Criterion 2.3.1 (Level A)"
+    },
+    "vestibular_disorders": {
+      "description": "Motion can cause dizziness, nausea in some users",
+      "reduce_risk": [
+        "Avoid excessive motion",
+        "Use subtle animations",
+        "Respect reduced-motion preference",
+        "Don't animate background/large areas",
+        "Avoid parallax effects for essential content"
+      ]
+    },
+    "focus_indicators": {
+      "requirement": "Animated focus indicators must remain visible",
+      "avoid": "Don't fade out focus rings",
+      "ok": "Pulsing or highlighting focus is acceptable"
+    }
+  },
+  "tools_and_libraries": {
+    "css": {
+      "transitions": "Simple state changes (hover, active)",
+      "animations": "Keyframe animations, loops",
+      "example": ".button {\n  transition: transform 200ms ease-out;\n}\n.button:hover {\n  transform: scale(1.05);\n}"
+    },
+    "javascript_libraries": [
+      {
+        "name": "GSAP (GreenSock)",
+        "use": "Complex, timeline-based animations",
+        "pros": ["Powerful", "Great performance", "Timeline control"],
+        "cons": ["Large bundle size"]
+      },
+      {
+        "name": "Framer Motion",
+        "use": "React animations",
+        "pros": ["React-friendly", "Declarative", "Shared layout animations"],
+        "cons": ["React only"]
+      },
+      {
+        "name": "Anime.js",
+        "use": "Lightweight general-purpose",
+        "pros": ["Small size", "Versatile"],
+        "cons": ["Less powerful than GSAP"]
+      },
+      {
+        "name": "Lottie",
+        "use": "Designer-created animations (After Effects)",
+        "pros": ["Complex animations from designers", "Cross-platform"],
+        "cons": ["Large file sizes possible"]
+      },
+      {
+        "name": "Web Animations API",
+        "use": "Native browser API",
+        "pros": ["No library needed", "Good performance"],
+        "cons": ["Verbose syntax", "Limited browser support (older IE)"]
+      }
+    ],
+    "design_tools": [
+      "After Effects (with Lottie plugin)",
+      "Figma (prototyping)",
+      "Principle",
+      "ProtoPie"
+    ]
+  },
+  "common_patterns": {
+    "button_states": {
+      "idle_to_hover": "transform: scale(1.05); duration: 150ms",
+      "hover_to_active": "transform: scale(0.95); duration: 100ms",
+      "loading": "Disable + show spinner, duration: instant"
+    },
+    "toast_notification": {
+      "enter": "Slide in from top/bottom + fade, 300ms",
+      "exit": "Fade out + slight slide, 200ms",
+      "auto_dismiss": "After 4-6 seconds"
+    },
+    "dropdown_menu": {
+      "enter": "Fade + scale from 0.95, origin: top, 200ms",
+      "exit": "Fade out, 150ms"
+    },
+    "accordion": {
+      "expand": "Height auto (use max-height trick), 300ms ease-out",
+      "collapse": "Height 0, 250ms ease-in"
+    },
+    "tabs": {
+      "indicator": "Slide smoothly to active tab, 250ms ease-out",
+      "content": "Cross-fade, 200ms"
+    }
+  },
+  "anti_patterns": [
+    {
+      "pattern": "Animations everywhere",
+      "problem": "Overwhelming, slows perceived performance",
+      "solution": "Animate only important interactions"
+    },
+    {
+      "pattern": "Very long durations (> 500ms)",
+      "problem": "Users wait, feels sluggish",
+      "solution": "Keep most animations 200-300ms"
+    },
+    {
+      "pattern": "Linear easing for movement",
+      "problem": "Feels robotic, unnatural",
+      "solution": "Use ease-out or ease-in-out"
+    },
+    {
+      "pattern": "Animating layout properties",
+      "problem": "Poor performance, jank",
+      "solution": "Use transform and opacity only"
+    },
+    {
+      "pattern": "Ignoring reduced-motion",
+      "problem": "Accessibility issue, can cause nausea",
+      "solution": "Always implement reduced-motion support"
+    },
+    {
+      "pattern": "Too many simultaneous animations",
+      "problem": "Visual chaos, performance issues",
+      "solution": "Stagger or sequence animations"
+    },
+    {
+      "pattern": "Inconsistent animation styles",
+      "problem": "Disjointed experience",
+      "solution": "Define animation system (durations, easings)"
+    }
+  ],
+  "checklist": [
+    "Every animation has a clear purpose",
+    "Durations are 200-300ms for most interactions",
+    "Using ease-out for enter animations",
+    "Animating transform and opacity (not layout properties)",
+    "Respecting prefers-reduced-motion",
+    "No flashing more than 3 times per second",
+    "Animations feel smooth at 60fps",
+    "Consistent timing across similar interactions",
+    "Loading states for operations > 1 second",
+    "Exit animations are slightly faster than enter",
+    "Focus indicators remain visible during animation",
+    "Works well on low-end devices"
+  ]
+}

@@ -1,0 +1,347 @@
+{
+  "name": "Performance Best Practices",
+  "description": "Core Web Vitals, performance optimization, and loading strategies",
+  "core_web_vitals": {
+    "description": "Google's metrics for user experience quality",
+    "metrics": {
+      "LCP": {
+        "name": "Largest Contentful Paint",
+        "description": "Measures loading performance - when the largest content element becomes visible",
+        "good": "≤ 2.5 seconds",
+        "needs_improvement": "2.5 - 4.0 seconds",
+        "poor": "> 4.0 seconds",
+        "how_to_measure": "Chrome DevTools → Performance → LCP in User Timing",
+        "optimization_strategies": [
+          "Optimize server response times (TTFB)",
+          "Eliminate render-blocking resources",
+          "Optimize and compress images",
+          "Preload critical resources",
+          "Use CDN for static assets",
+          "Implement lazy loading for below-fold content",
+          "Minimize CSS and JavaScript",
+          "Use modern image formats (WebP, AVIF)"
+        ],
+        "common_culprits": [
+          "Large unoptimized images",
+          "Slow server response",
+          "Render-blocking CSS/JS",
+          "Client-side rendering without SSR"
+        ]
+      },
+      "FID": {
+        "name": "First Input Delay",
+        "description": "Measures interactivity - time from user interaction to browser response",
+        "good": "≤ 100 milliseconds",
+        "needs_improvement": "100 - 300 milliseconds",
+        "poor": "> 300 milliseconds",
+        "replaced_by": "INP (Interaction to Next Paint) as of 2024",
+        "optimization_strategies": [
+          "Break up long tasks (>50ms)",
+          "Optimize JavaScript execution",
+          "Use web workers for heavy computation",
+          "Minimize third-party script impact",
+          "Use code splitting",
+          "Defer non-critical JavaScript",
+          "Reduce JavaScript bundle size"
+        ]
+      },
+      "INP": {
+        "name": "Interaction to Next Paint",
+        "description": "Measures overall responsiveness - time from interaction to visual update",
+        "good": "≤ 200 milliseconds",
+        "needs_improvement": "200 - 500 milliseconds",
+        "poor": "> 500 milliseconds",
+        "replaces": "FID (First Input Delay)",
+        "optimization_strategies": [
+          "Minimize main thread work",
+          "Reduce input delay",
+          "Optimize event handlers",
+          "Use requestIdleCallback for non-urgent work",
+          "Debounce/throttle frequent events",
+          "Optimize DOM updates",
+          "Use CSS animations over JavaScript when possible"
+        ]
+      },
+      "CLS": {
+        "name": "Cumulative Layout Shift",
+        "description": "Measures visual stability - unexpected layout shifts during page load",
+        "good": "≤ 0.1",
+        "needs_improvement": "0.1 - 0.25",
+        "poor": "> 0.25",
+        "optimization_strategies": [
+          "Always include width and height on images and videos",
+          "Reserve space for ads and embeds",
+          "Avoid inserting content above existing content",
+          "Use CSS aspect-ratio for responsive elements",
+          "Preload custom fonts",
+          "Use font-display: optional or swap",
+          "Avoid animations that trigger layout"
+        ],
+        "common_culprits": [
+          "Images without dimensions",
+          "Ads/embeds without reserved space",
+          "Web fonts causing FOIT/FOUT",
+          "Dynamically injected content",
+          "Animations triggering layout"
+        ]
+      }
+    }
+  },
+  "loading_strategies": {
+    "critical_rendering_path": {
+      "description": "Optimize the sequence of steps browser takes to render page",
+      "steps": [
+        "1. Parse HTML → DOM tree",
+        "2. Parse CSS → CSSOM tree",
+        "3. Combine DOM + CSSOM → Render tree",
+        "4. Layout (calculate positions)",
+        "5. Paint (draw pixels)"
+      ],
+      "optimization": [
+        "Minimize critical resources (HTML, CSS, JS)",
+        "Minimize critical bytes",
+        "Minimize critical path length (round trips)"
+      ]
+    },
+    "resource_hints": {
+      "dns_prefetch": {
+        "tag": "<link rel='dns-prefetch' href='https://example.com'>",
+        "use": "Resolve domain names in advance",
+        "when": "Third-party resources (fonts, analytics, APIs)"
+      },
+      "preconnect": {
+        "tag": "<link rel='preconnect' href='https://example.com'>",
+        "use": "Establish connection (DNS + TCP + TLS)",
+        "when": "Critical third-party resources",
+        "note": "More expensive than dns-prefetch, use sparingly"
+      },
+      "prefetch": {
+        "tag": "<link rel='prefetch' href='/next-page.html'>",
+        "use": "Load resources for next navigation",
+        "when": "Predictable user journeys",
+        "priority": "Lowest priority"
+      },
+      "preload": {
+        "tag": "<link rel='preload' as='script' href='critical.js'>",
+        "use": "Load critical resources early",
+        "when": "Critical CSS, fonts, above-fold images",
+        "types": "script, style, font, image, fetch",
+        "important": "Must be used within 3 seconds or warning"
+      },
+      "modulepreload": {
+        "tag": "<link rel='modulepreload' href='module.js'>",
+        "use": "Preload ES modules and dependencies",
+        "when": "Critical JavaScript modules"
+      }
+    },
+    "lazy_loading": {
+      "images": {
+        "native": "<img src='image.jpg' loading='lazy' alt='Description'>",
+        "when": "Below-the-fold images",
+        "avoid": "Above-the-fold images (hurts LCP)",
+        "browser_support": "All modern browsers"
+      },
+      "iframes": {
+        "native": "<iframe src='embed.html' loading='lazy'></iframe>",
+        "when": "Third-party embeds, videos",
+        "benefit": "Saves bandwidth, improves performance"
+      },
+      "javascript": {
+        "dynamic_import": "const module = await import('./heavy-module.js');",
+        "when": "Features not needed on initial load",
+        "benefit": "Reduces initial bundle size"
+      }
+    },
+    "code_splitting": {
+      "description": "Split JavaScript into smaller chunks loaded on demand",
+      "strategies": [
+        "Route-based: Load code for each route separately",
+        "Component-based: Lazy load heavy components",
+        "Vendor splitting: Separate third-party libraries"
+      ],
+      "implementation": {
+        "webpack": "Use dynamic import() syntax",
+        "vite": "Automatic code splitting",
+        "next_js": "Automatic route-based splitting"
+      }
+    }
+  },
+  "image_optimization": {
+    "formats": {
+      "AVIF": {
+        "description": "Next-gen format, best compression",
+        "compression": "50% smaller than JPEG",
+        "support": "Modern browsers (95%+)",
+        "use": "Photos, complex images"
+      },
+      "WebP": {
+        "description": "Modern format, excellent compression",
+        "compression": "25-35% smaller than JPEG",
+        "support": "All modern browsers",
+        "use": "General purpose replacement for JPEG/PNG"
+      },
+      "JPEG": {
+        "description": "Traditional photo format",
+        "use": "Fallback for older browsers",
+        "optimization": "Use quality 80-85, progressive encoding"
+      },
+      "PNG": {
+        "description": "Lossless format for graphics",
+        "use": "Logos, icons with transparency",
+        "optimization": "Compress with tools like pngquant"
+      },
+      "SVG": {
+        "description": "Vector graphics",
+        "use": "Icons, logos, simple illustrations",
+        "optimization": "Minify with SVGO, inline when small"
+      }
+    },
+    "responsive_images": {
+      "srcset": "Provide multiple sizes for different screens",
+      "picture": "Art direction or format switching",
+      "sizes": "Tell browser which size to use when",
+      "example": "<img\n  srcset='small.jpg 400w, medium.jpg 800w, large.jpg 1200w'\n  sizes='(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px'\n  src='medium.jpg'\n  alt='Description'\n  width='800'\n  height='600'\n  loading='lazy'\n/>"
+    },
+    "optimization_tools": [
+      "ImageOptim (Mac)",
+      "Squoosh (Web)",
+      "Sharp (Node.js)",
+      "ImageMagick (CLI)",
+      "Next.js Image Component (automatic)"
+    ]
+  },
+  "caching_strategies": {
+    "http_caching": {
+      "cache_control": {
+        "immutable": "Cache-Control: public, max-age=31536000, immutable",
+        "use": "Hashed assets (main.a1b2c3.js)",
+        "benefit": "Never revalidate, perfect for build artifacts"
+      },
+      "stale_while_revalidate": {
+        "header": "Cache-Control: max-age=3600, stale-while-revalidate=86400",
+        "use": "API responses, frequently updated content",
+        "benefit": "Instant response from cache while updating in background"
+      },
+      "no_cache": {
+        "header": "Cache-Control: no-cache",
+        "use": "HTML pages, critical resources",
+        "note": "Revalidates every time (not 'don't cache')"
+      }
+    },
+    "service_worker": {
+      "strategies": [
+        "Cache First: Serve from cache, fallback to network",
+        "Network First: Try network, fallback to cache",
+        "Stale While Revalidate: Cache + background update",
+        "Network Only: Always fetch fresh",
+        "Cache Only: Offline-first"
+      ],
+      "use_cases": {
+        "cache_first": "Static assets, images, fonts",
+        "network_first": "API calls, dynamic content",
+        "stale_while_revalidate": "News feeds, timelines"
+      }
+    }
+  },
+  "performance_budget": {
+    "description": "Set limits to prevent performance regression",
+    "recommended_budgets": {
+      "JavaScript": "< 200 KB (gzipped) for initial bundle",
+      "CSS": "< 50 KB (gzipped)",
+      "Images": "< 500 KB total above-fold",
+      "Fonts": "< 100 KB (subset fonts)",
+      "Total page weight": "< 1 MB on first load",
+      "LCP": "< 2.5 seconds",
+      "FID/INP": "< 100/200 milliseconds",
+      "CLS": "< 0.1"
+    },
+    "enforcement": [
+      "Lighthouse CI in build pipeline",
+      "bundlesize package for bundle limits",
+      "WebPageTest for real-world testing",
+      "Performance monitoring (Sentry, New Relic)"
+    ]
+  },
+  "monitoring": {
+    "real_user_monitoring": {
+      "tools": [
+        "Google Analytics 4 (Web Vitals)",
+        "Sentry Performance",
+        "New Relic Browser",
+        "Cloudflare Web Analytics"
+      ],
+      "metrics_to_track": [
+        "Core Web Vitals (LCP, INP, CLS)",
+        "TTFB (Time to First Byte)",
+        "Page load time",
+        "Bounce rate by performance tier",
+        "Performance by device type/network"
+      ]
+    },
+    "synthetic_monitoring": {
+      "tools": [
+        "Lighthouse CI",
+        "WebPageTest",
+        "Chrome DevTools Performance",
+        "SpeedCurve"
+      ],
+      "frequency": "Every deployment"
+    }
+  },
+  "quick_wins": [
+    {
+      "optimization": "Enable compression (gzip/brotli)",
+      "impact": "60-80% size reduction",
+      "effort": "Low (server config)"
+    },
+    {
+      "optimization": "Optimize images (WebP, lazy loading)",
+      "impact": "30-50% faster LCP",
+      "effort": "Medium"
+    },
+    {
+      "optimization": "Minify CSS/JS",
+      "impact": "10-30% size reduction",
+      "effort": "Low (build tool)"
+    },
+    {
+      "optimization": "Use CDN",
+      "impact": "30-50% faster TTFB",
+      "effort": "Low"
+    },
+    {
+      "optimization": "Remove unused CSS/JS",
+      "impact": "20-40% size reduction",
+      "effort": "Medium"
+    },
+    {
+      "optimization": "Defer non-critical CSS",
+      "impact": "Faster first paint",
+      "effort": "Low"
+    },
+    {
+      "optimization": "Preload critical resources",
+      "impact": "Faster LCP",
+      "effort": "Low"
+    },
+    {
+      "optimization": "Add width/height to images",
+      "impact": "Zero CLS",
+      "effort": "Low"
+    }
+  ],
+  "checklist": [
+    "Run Lighthouse audit (aim for 90+ performance score)",
+    "Measure Core Web Vitals (use Chrome UX Report or RUM)",
+    "Optimize images (format, size, lazy loading)",
+    "Minimize CSS/JS (remove unused code)",
+    "Enable compression (gzip or brotli)",
+    "Use CDN for static assets",
+    "Implement caching strategy",
+    "Add resource hints (preconnect, preload)",
+    "Defer non-critical JavaScript",
+    "Avoid layout shifts (set dimensions)",
+    "Monitor performance in production",
+    "Set and enforce performance budgets"
+  ]
+}

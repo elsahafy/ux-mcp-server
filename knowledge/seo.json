@@ -1,0 +1,518 @@
+{
+  "name": "SEO Best Practices",
+  "description": "Search engine optimization guidelines, meta tags, and structured data",
+  "meta_tags": {
+    "essential": {
+      "title": {
+        "tag": "<title>Page Title | Site Name</title>",
+        "best_practices": [
+          "50-60 characters optimal",
+          "Include primary keyword",
+          "Unique for each page",
+          "Front-load important keywords",
+          "Include brand name at end"
+        ],
+        "bad_examples": [
+          "Home - Too generic",
+          "Best products ever made in 2026 - Too long",
+          "Products Products Products - Keyword stuffing"
+        ],
+        "good_examples": [
+          "Wireless Headphones - Noise Cancelling | Brand",
+          "Contact Us - Get in Touch | Company Name"
+        ]
+      },
+      "description": {
+        "tag": "<meta name='description' content='Page description'>",
+        "best_practices": [
+          "150-160 characters optimal",
+          "Include primary keyword naturally",
+          "Compelling call-to-action",
+          "Unique for each page",
+          "Accurately describe page content"
+        ],
+        "bad": "This is the homepage",
+        "good": "Shop premium wireless headphones with active noise cancellation. Free shipping on orders over $50. 30-day money-back guarantee."
+      },
+      "viewport": {
+        "tag": "<meta name='viewport' content='width=device-width, initial-scale=1'>",
+        "required": "Yes - affects mobile SEO",
+        "note": "Mobile-first indexing requires responsive design"
+      },
+      "charset": {
+        "tag": "<meta charset='UTF-8'>",
+        "required": "Yes - must be in first 1024 bytes",
+        "placement": "First meta tag in <head>"
+      }
+    },
+    "open_graph": {
+      "description": "Social media previews (Facebook, LinkedIn, etc.)",
+      "required_tags": {
+        "og:title": "<meta property='og:title' content='Page Title'>",
+        "og:description": "<meta property='og:description' content='Description'>",
+        "og:image": "<meta property='og:image' content='https://example.com/image.jpg'>",
+        "og:url": "<meta property='og:url' content='https://example.com/page'>",
+        "og:type": "<meta property='og:type' content='website'>"
+      },
+      "optional_tags": {
+        "og:site_name": "Your site name",
+        "og:locale": "en_US",
+        "og:image:width": "1200",
+        "og:image:height": "630"
+      },
+      "image_specs": {
+        "recommended_size": "1200x630 pixels",
+        "min_size": "600x315 pixels",
+        "aspect_ratio": "1.91:1",
+        "format": "JPG or PNG",
+        "max_file_size": "8 MB"
+      }
+    },
+    "twitter_cards": {
+      "description": "Twitter-specific previews",
+      "types": {
+        "summary": "Default card with small image",
+        "summary_large_image": "Large image card (recommended)",
+        "app": "Mobile app promotion",
+        "player": "Video/audio player"
+      },
+      "required_tags": {
+        "twitter:card": "<meta name='twitter:card' content='summary_large_image'>",
+        "twitter:title": "<meta name='twitter:title' content='Page Title'>",
+        "twitter:description": "<meta name='twitter:description' content='Description'>",
+        "twitter:image": "<meta name='twitter:image' content='https://example.com/image.jpg'>"
+      },
+      "optional": {
+        "twitter:site": "@username (site's Twitter)",
+        "twitter:creator": "@username (content creator)"
+      }
+    },
+    "robots": {
+      "tag": "<meta name='robots' content='index, follow'>",
+      "directives": {
+        "index": "Allow indexing (default)",
+        "noindex": "Don't index this page",
+        "follow": "Follow links (default)",
+        "nofollow": "Don't follow links",
+        "noarchive": "Don't show cached version",
+        "nosnippet": "Don't show snippet in results"
+      },
+      "use_cases": {
+        "noindex_follow": "Admin pages, thank you pages",
+        "noindex_nofollow": "Login, private pages",
+        "index_follow": "All public content (default)"
+      }
+    },
+    "canonical": {
+      "tag": "<link rel='canonical' href='https://example.com/page'>",
+      "purpose": "Prevent duplicate content issues",
+      "when_to_use": [
+        "Multiple URLs for same content",
+        "URL parameters (sorting, filtering)",
+        "HTTP and HTTPS versions",
+        "www and non-www versions",
+        "Paginated content"
+      ],
+      "best_practices": [
+        "Always use absolute URLs",
+        "Point to the preferred version",
+        "Self-reference on original page",
+        "Only one canonical per page"
+      ]
+    }
+  },
+  "structured_data": {
+    "description": "Schema.org markup for rich snippets",
+    "formats": {
+      "json_ld": {
+        "recommended": true,
+        "format": "JSON-LD in <script type='application/ld+json'>",
+        "placement": "<head> or <body>",
+        "advantage": "Cleanest, easiest to maintain"
+      },
+      "microdata": {
+        "format": "Inline HTML attributes (itemscope, itemprop)",
+        "use": "When JSON-LD not possible"
+      }
+    },
+    "common_schemas": {
+      "article": {
+        "type": "Article, NewsArticle, BlogPosting",
+        "properties": [
+          "headline",
+          "image",
+          "datePublished",
+          "dateModified",
+          "author",
+          "publisher"
+        ],
+        "example": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Article\",\n  \"headline\": \"Article Title\",\n  \"image\": \"https://example.com/image.jpg\",\n  \"datePublished\": \"2026-01-24\",\n  \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Author Name\"\n  }\n}"
+      },
+      "product": {
+        "type": "Product",
+        "properties": [
+          "name",
+          "image",
+          "description",
+          "sku",
+          "brand",
+          "offers (price, availability)",
+          "aggregateRating"
+        ],
+        "enables": "Product rich snippets with price, availability, reviews"
+      },
+      "breadcrumbs": {
+        "type": "BreadcrumbList",
+        "enables": "Breadcrumb navigation in search results",
+        "example": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"BreadcrumbList\",\n  \"itemListElement\": [\n    {\"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"https://example.com\"},\n    {\"@type\": \"ListItem\", \"position\": 2, \"name\": \"Products\", \"item\": \"https://example.com/products\"}\n  ]\n}"
+      },
+      "organization": {
+        "type": "Organization",
+        "properties": [
+          "name",
+          "url",
+          "logo",
+          "contactPoint",
+          "sameAs (social profiles)"
+        ],
+        "placement": "Homepage",
+        "enables": "Knowledge graph panel"
+      },
+      "local_business": {
+        "type": "LocalBusiness",
+        "properties": [
+          "name",
+          "address",
+          "telephone",
+          "openingHours",
+          "geo (coordinates)",
+          "image"
+        ],
+        "enables": "Google Maps listing, local pack"
+      },
+      "faq": {
+        "type": "FAQPage",
+        "enables": "FAQ rich snippets in search",
+        "properties": [
+          "mainEntity (array of Question)"
+        ]
+      },
+      "how_to": {
+        "type": "HowTo",
+        "enables": "Step-by-step guide rich snippets",
+        "properties": [
+          "name",
+          "step (array)",
+          "totalTime",
+          "supply",
+          "tool"
+        ]
+      },
+      "event": {
+        "type": "Event",
+        "properties": [
+          "name",
+          "startDate",
+          "endDate",
+          "location",
+          "image",
+          "description",
+          "offers (price, url)"
+        ],
+        "enables": "Event rich snippets with date/location"
+      },
+      "review": {
+        "type": "Review",
+        "properties": [
+          "itemReviewed",
+          "reviewRating",
+          "author",
+          "reviewBody",
+          "datePublished"
+        ],
+        "enables": "Star ratings in search results"
+      }
+    },
+    "testing": [
+      "Google Rich Results Test: https://search.google.com/test/rich-results",
+      "Schema Markup Validator: https://validator.schema.org/",
+      "Google Search Console: Monitor performance"
+    ]
+  },
+  "technical_seo": {
+    "url_structure": {
+      "best_practices": [
+        "Use hyphens (not underscores) for word separation",
+        "Keep URLs short and descriptive",
+        "Include primary keyword",
+        "Use lowercase only",
+        "Avoid parameters when possible"
+      ],
+      "good": "https://example.com/wireless-headphones",
+      "bad": "https://example.com/product?id=12345&cat=audio"
+    },
+    "sitemap": {
+      "xml_sitemap": {
+        "file": "sitemap.xml",
+        "location": "https://example.com/sitemap.xml",
+        "purpose": "Help search engines discover pages",
+        "include": [
+          "All public pages",
+          "Priority (0.0 - 1.0)",
+          "Change frequency",
+          "Last modified date"
+        ],
+        "exclude": [
+          "Admin pages",
+          "Login/auth pages",
+          "Duplicate content",
+          "Noindex pages"
+        ],
+        "submit": "Google Search Console, Bing Webmaster Tools"
+      },
+      "html_sitemap": {
+        "purpose": "User navigation, internal linking",
+        "placement": "Link from footer"
+      }
+    },
+    "robots_txt": {
+      "file": "robots.txt",
+      "location": "https://example.com/robots.txt",
+      "purpose": "Control crawler access",
+      "example": "User-agent: *\nDisallow: /admin/\nDisallow: /api/\nAllow: /api/public/\n\nSitemap: https://example.com/sitemap.xml",
+      "important": [
+        "Test before deploying (Google Search Console)",
+        "Disallow doesn't prevent indexing (use noindex meta tag)",
+        "Allow important resources (CSS, JS for rendering)"
+      ]
+    },
+    "redirects": {
+      "301": {
+        "name": "Permanent Redirect",
+        "use": "Page moved permanently",
+        "seo_impact": "Passes 90-99% of link equity",
+        "when": "URL changes, site migration, canonical URLs"
+      },
+      "302": {
+        "name": "Temporary Redirect",
+        "use": "Page temporarily moved",
+        "seo_impact": "Doesn't pass link equity",
+        "when": "A/B testing, maintenance"
+      },
+      "best_practices": [
+        "Avoid redirect chains (A → B → C)",
+        "Use 301 for permanent changes",
+        "Update internal links instead of relying on redirects",
+        "Monitor redirect performance"
+      ]
+    },
+    "https": {
+      "required": "Yes - Google ranking signal since 2014",
+      "implementation": [
+        "Install SSL certificate",
+        "Redirect HTTP to HTTPS (301)",
+        "Update canonical tags",
+        "Update sitemaps",
+        "Update internal links"
+      ],
+      "hsts": "Strict-Transport-Security header (recommended)"
+    },
+    "page_speed": {
+      "ranking_factor": "Yes - Core Web Vitals are ranking signals",
+      "targets": [
+        "LCP < 2.5s",
+        "FID/INP < 100/200ms",
+        "CLS < 0.1"
+      ],
+      "see_also": "ux://performance for optimization strategies"
+    },
+    "mobile_friendly": {
+      "importance": "Critical - Google uses mobile-first indexing",
+      "requirements": [
+        "Responsive design",
+        "Readable text (16px minimum)",
+        "Tappable elements (48x48px minimum)",
+        "No horizontal scrolling",
+        "Fast loading"
+      ],
+      "testing": "Google Mobile-Friendly Test"
+    }
+  },
+  "content_optimization": {
+    "keyword_research": {
+      "tools": [
+        "Google Keyword Planner",
+        "Ahrefs",
+        "SEMrush",
+        "Google Trends",
+        "Answer the Public"
+      ],
+      "metrics": [
+        "Search volume",
+        "Keyword difficulty",
+        "Search intent",
+        "Related keywords"
+      ]
+    },
+    "on_page_seo": {
+      "heading_hierarchy": {
+        "h1": "One per page, main topic",
+        "h2": "Main sections",
+        "h3": "Subsections",
+        "h4_h6": "Further subdivisions",
+        "best_practices": [
+          "Don't skip heading levels",
+          "Include keywords naturally",
+          "Make headings descriptive",
+          "Use heading hierarchy for structure, not styling"
+        ]
+      },
+      "content_length": {
+        "guideline": "Write for humans, not word count",
+        "minimum": "300 words for indexing",
+        "comprehensive": "1500-2500 words for competitive topics",
+        "focus": "Answer search intent completely"
+      },
+      "keyword_usage": {
+        "density": "1-2% (natural usage)",
+        "placement": [
+          "Title tag",
+          "First paragraph",
+          "Headings (H1, H2)",
+          "URL",
+          "Alt text (when relevant)",
+          "Meta description"
+        ],
+        "avoid": "Keyword stuffing, exact match overuse"
+      },
+      "images": {
+        "alt_text": "Describe image for accessibility and SEO",
+        "file_name": "descriptive-name.jpg (not IMG_1234.jpg)",
+        "compression": "Optimize for fast loading",
+        "format": "Use WebP or AVIF with fallbacks"
+      },
+      "internal_linking": {
+        "benefits": "Distributes page authority, helps crawling",
+        "best_practices": [
+          "Use descriptive anchor text",
+          "Link to relevant content",
+          "Don't overdo it (3-5 links per 500 words)",
+          "Fix broken links"
+        ],
+        "avoid": "Generic anchors like 'click here'"
+      }
+    }
+  },
+  "local_seo": {
+    "google_business_profile": {
+      "importance": "Essential for local visibility",
+      "optimization": [
+        "Complete all business information",
+        "Choose correct category",
+        "Add photos regularly",
+        "Respond to reviews",
+        "Post updates",
+        "Add business hours (including holidays)"
+      ]
+    },
+    "nap_consistency": {
+      "nap": "Name, Address, Phone",
+      "requirement": "Exact same format everywhere",
+      "locations": [
+        "Website",
+        "Google Business Profile",
+        "Directories (Yelp, Yellow Pages)",
+        "Social media"
+      ]
+    },
+    "local_citations": {
+      "definition": "Mentions of business name/address online",
+      "sources": [
+        "Business directories",
+        "Industry-specific sites",
+        "Local chambers of commerce",
+        "News sites"
+      ]
+    },
+    "reviews": {
+      "importance": "Ranking factor + social proof",
+      "strategy": [
+        "Ask satisfied customers",
+        "Make it easy (send link)",
+        "Respond to all reviews",
+        "Don't buy fake reviews (penalized)"
+      ]
+    }
+  },
+  "common_mistakes": [
+    {
+      "mistake": "Duplicate content",
+      "fix": "Use canonical tags, noindex, or 301 redirects"
+    },
+    {
+      "mistake": "Missing or duplicate title tags",
+      "fix": "Unique, descriptive titles for every page"
+    },
+    {
+      "mistake": "Slow page speed",
+      "fix": "See ux://performance for optimization"
+    },
+    {
+      "mistake": "Not mobile-friendly",
+      "fix": "Implement responsive design"
+    },
+    {
+      "mistake": "Broken links",
+      "fix": "Regular audits, fix or redirect"
+    },
+    {
+      "mistake": "Thin content",
+      "fix": "Comprehensive, valuable content"
+    },
+    {
+      "mistake": "No alt text on images",
+      "fix": "Add descriptive alt attributes"
+    },
+    {
+      "mistake": "Ignoring Search Console errors",
+      "fix": "Monitor and fix crawl errors, coverage issues"
+    }
+  ],
+  "seo_checklist": [
+    "Install Google Search Console and Analytics",
+    "Create and submit XML sitemap",
+    "Implement HTTPS with proper redirects",
+    "Make site mobile-friendly (responsive design)",
+    "Optimize page speed (Core Web Vitals)",
+    "Write unique, descriptive title tags (50-60 chars)",
+    "Write compelling meta descriptions (150-160 chars)",
+    "Use heading hierarchy (H1, H2, H3) properly",
+    "Add structured data (JSON-LD) where applicable",
+    "Optimize images (alt text, compression, modern formats)",
+    "Create quality content that answers search intent",
+    "Build internal links with descriptive anchors",
+    "Fix broken links and 404 errors",
+    "Use canonical tags for duplicate content",
+    "Add Open Graph and Twitter Card meta tags",
+    "Create robots.txt file",
+    "Monitor and improve Core Web Vitals",
+    "Set up Google Business Profile (for local businesses)"
+  ],
+  "tools": {
+    "free": [
+      "Google Search Console",
+      "Google Analytics",
+      "Google PageSpeed Insights",
+      "Google Mobile-Friendly Test",
+      "Google Rich Results Test",
+      "Bing Webmaster Tools",
+      "Schema Markup Validator"
+    ],
+    "paid": [
+      "Ahrefs",
+      "SEMrush",
+      "Moz Pro",
+      "Screaming Frog SEO Spider"
+    ]
+  }
+}

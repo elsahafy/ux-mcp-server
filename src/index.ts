@@ -102,6 +102,36 @@ server.setRequestHandler(ListResourcesRequestSchema, async () => {
         description: "User-friendly error messages for common scenarios with tone guidelines",
         mimeType: "application/json",
       },
+      {
+        uri: "ux://performance/optimization",
+        name: "Performance Best Practices",
+        description: "Core Web Vitals, performance optimization, and loading strategies",
+        mimeType: "application/json",
+      },
+      {
+        uri: "ux://seo/guidelines",
+        name: "SEO Best Practices",
+        description: "Search engine optimization, meta tags, structured data, and technical SEO",
+        mimeType: "application/json",
+      },
+      {
+        uri: "ux://i18n/patterns",
+        name: "Internationalization (i18n) Patterns",
+        description: "Guidelines for building multilingual, globally accessible applications",
+        mimeType: "application/json",
+      },
+      {
+        uri: "ux://animation/motion",
+        name: "Animation & Motion Design",
+        description: "Motion design principles, performance, and accessibility for UI animations",
+        mimeType: "application/json",
+      },
+      {
+        uri: "ux://react/patterns",
+        name: "React Component Patterns",
+        description: "Advanced React patterns for composition, state management, and performance",
+        mimeType: "application/json",
+      },
     ],
   };
 });
@@ -140,6 +170,26 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
     case "ux://content/error-messages":
       content = await loadKnowledge("error-messages.json");
       description = "User-friendly error messages with tone guidelines and examples";
+      break;
+    case "ux://performance/optimization":
+      content = await loadKnowledge("performance.json");
+      description = "Core Web Vitals and performance optimization strategies";
+      break;
+    case "ux://seo/guidelines":
+      content = await loadKnowledge("seo.json");
+      description = "SEO best practices, meta tags, and structured data";
+      break;
+    case "ux://i18n/patterns":
+      content = await loadKnowledge("i18n.json");
+      description = "Internationalization patterns for multilingual applications";
+      break;
+    case "ux://animation/motion":
+      content = await loadKnowledge("animation.json");
+      description = "Motion design principles and accessible animations";
+      break;
+    case "ux://react/patterns":
+      content = await loadKnowledge("react-patterns.json");
+      description = "Advanced React component patterns and best practices";
       break;
     default:
       throw new Error(`Unknown resource: ${uri}`);
@@ -349,6 +399,66 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["scenario"],
         },
       },
+      {
+        name: "analyze_performance",
+        description:
+          "Analyze code for performance issues and Core Web Vitals optimization. Checks resource loading, image optimization, and rendering performance.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            code: {
+              type: "string",
+              description: "HTML/CSS/JS code to analyze",
+            },
+            check_type: {
+              type: "string",
+              enum: ["all", "images", "css", "javascript", "loading"],
+              description: "Specific performance aspect to check",
+              default: "all",
+            },
+          },
+          required: ["code"],
+        },
+      },
+      {
+        name: "check_seo",
+        description:
+          "Analyze HTML for SEO best practices. Checks meta tags, Open Graph, structured data, and technical SEO elements.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            html: {
+              type: "string",
+              description: "HTML code to analyze",
+            },
+            url: {
+              type: "string",
+              description: "Optional: Page URL for context",
+            },
+          },
+          required: ["html"],
+        },
+      },
+      {
+        name: "suggest_animation",
+        description:
+          "Suggest appropriate animation for a UI interaction. Returns animation type, duration, easing, and implementation guidance.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            interaction: {
+              type: "string",
+              description:
+                "UI interaction to animate (e.g., 'button click', 'modal open', 'list item add', 'page transition')",
+            },
+            context: {
+              type: "string",
+              description: "Optional: Additional context about the interaction",
+            },
+          },
+          required: ["interaction"],
+        },
+      },
     ],
   };
 });
@@ -374,6 +484,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         return await checkResponsive(args);
       case "suggest_error_message":
         return await suggestErrorMessage(args);
+      case "analyze_performance":
+        return await analyzePerformance(args);
+      case "check_seo":
+        return await checkSEO(args);
+      case "suggest_animation":
+        return await suggestAnimation(args);
       default:
         throw new Error(`Unknown tool: ${name}`);
     }
@@ -1269,6 +1385,332 @@ async function suggestErrorMessage(args: any) {
   }
 
   suggestion.general_principles = errorMessages.principles.good_error_messages;
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(suggestion, null, 2),
+      },
+    ],
+  };
+}
+
+async function analyzePerformance(args: any) {
+  const code = args.code as string;
+  const checkType = (args.check_type as string) || "all";
+
+  const issues: string[] = [];
+  const recommendations: string[] = [];
+
+  // Check images
+  if (checkType === "all" || checkType === "images") {
+    if (/<img/i.test(code)) {
+      const hasWidthHeight = /<img[^>]*(width|height)=/i.test(code);
+      if (!hasWidthHeight) {
+        issues.push("⚠️ Images without width/height attributes (causes CLS)");
+        recommendations.push("Add width and height to prevent Cumulative Layout Shift");
+      }
+
+      const hasLazyLoading = /loading=["']lazy["']/i.test(code);
+      if (!hasLazyLoading) {
+        recommendations.push("Consider adding loading='lazy' to below-fold images");
+      }
+
+      const hasModernFormat = /(\.webp|\.avif)/i.test(code);
+      if (!hasModernFormat) {
+        recommendations.push("Use modern image formats (WebP, AVIF) for better compression");
+      }
+
+      const hasSrcset = /srcset=/i.test(code);
+      if (!hasSrcset) {
+        recommendations.push("Use srcset for responsive images");
+      }
+    }
+  }
+
+  // Check CSS
+  if (checkType === "all" || checkType === "css") {
+    const hasBlockingCSS = /<link[^>]*rel=["']stylesheet["'][^>]*>/i.test(code);
+    if (hasBlockingCSS) {
+      recommendations.push("Consider inlining critical CSS and deferring non-critical styles");
+    }
+  }
+
+  // Check JavaScript
+  if (checkType === "all" || checkType === "javascript") {
+    const hasBlockingJS = /<script(?![^>]*defer)(?![^>]*async)[^>]*src=/i.test(code);
+    if (hasBlockingJS) {
+      issues.push("⚠️ Render-blocking JavaScript detected");
+      recommendations.push("Add defer or async attribute to <script> tags");
+    }
+  }
+
+  // Check resource loading
+  if (checkType === "all" || checkType === "loading") {
+    const hasPreconnect = /<link[^>]*rel=["']preconnect["']/i.test(code);
+    const hasThirdParty = /(fonts\.googleapis|cdnjs|cdn\.)/i.test(code);
+    if (hasThirdParty && !hasPreconnect) {
+      recommendations.push("Add <link rel='preconnect'> for third-party resources to improve LCP");
+    }
+  }
+
+  const result = {
+    check_type: checkType,
+    issues,
+    recommendations,
+    core_web_vitals: {
+      LCP: "Target: ≤ 2.5s - Optimize images, preload critical resources",
+      INP: "Target: ≤ 200ms - Minimize JavaScript, use code splitting",
+      CLS: "Target: ≤ 0.1 - Add dimensions to images/embeds, avoid content shifts"
+    },
+    quick_wins: [
+      "Add width/height to images",
+      "Use defer/async on scripts",
+      "Enable gzip/brotli compression",
+      "Lazy load below-fold images",
+      "Use modern image formats (WebP, AVIF)"
+    ],
+    reference: "See ux://performance/optimization for complete guidelines"
+  };
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(result, null, 2),
+      },
+    ],
+  };
+}
+
+async function checkSEO(args: any) {
+  const html = args.html as string;
+  const url = args.url as string | undefined;
+
+  const issues: string[] = [];
+  const recommendations: string[] = [];
+  const found: string[] = [];
+
+  // Check title
+  const titleMatch = /<title[^>]*>([^<]+)<\/title>/i.exec(html);
+  if (!titleMatch) {
+    issues.push("❌ Missing <title> tag");
+  } else {
+    const titleLength = titleMatch[1].length;
+    found.push(`Title: "${titleMatch[1]}" (${titleLength} chars)`);
+    if (titleLength < 30) {
+      issues.push("⚠️ Title too short (< 30 characters)");
+    } else if (titleLength > 60) {
+      issues.push("⚠️ Title too long (> 60 characters, may be truncated)");
+    }
+  }
+
+  // Check meta description
+  const descMatch = /<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i.exec(html);
+  if (!descMatch) {
+    issues.push("❌ Missing meta description");
+  } else {
+    const descLength = descMatch[1].length;
+    found.push(`Meta description: ${descLength} chars`);
+    if (descLength < 120) {
+      issues.push("⚠️ Meta description too short (< 120 characters)");
+    } else if (descLength > 160) {
+      issues.push("⚠️ Meta description too long (> 160 characters)");
+    }
+  }
+
+  // Check canonical
+  if (/<link[^>]*rel=["']canonical["']/i.test(html)) {
+    found.push("Canonical tag present");
+  } else {
+    recommendations.push("Add canonical tag to prevent duplicate content issues");
+  }
+
+  // Check Open Graph
+  const hasOG = /<meta[^>]*property=["']og:/i.test(html);
+  if (hasOG) {
+    found.push("Open Graph tags present");
+  } else {
+    recommendations.push("Add Open Graph tags for better social media sharing");
+  }
+
+  // Check Twitter Cards
+  if (/<meta[^>]*name=["']twitter:card["']/i.test(html)) {
+    found.push("Twitter Card tags present");
+  } else {
+    recommendations.push("Add Twitter Card tags for better Twitter sharing");
+  }
+
+  // Check viewport
+  if (!/<meta[^>]*name=["']viewport["']/i.test(html)) {
+    issues.push("❌ Missing viewport meta tag (affects mobile SEO)");
+  }
+
+  // Check structured data
+  if (/<script[^>]*type=["']application\/ld\+json["']/i.test(html)) {
+    found.push("JSON-LD structured data present");
+  } else {
+    recommendations.push("Add structured data (JSON-LD) for rich snippets");
+  }
+
+  // Check headings
+  const h1Count = (html.match(/<h1[^>]*>/gi) || []).length;
+  if (h1Count === 0) {
+    issues.push("❌ No H1 heading found");
+  } else if (h1Count > 1) {
+    issues.push(`⚠️ Multiple H1 headings (${h1Count}) - use only one per page`);
+  } else {
+    found.push("Single H1 heading (good)");
+  }
+
+  // Check alt text
+  const imgCount = (html.match(/<img/gi) || []).length;
+  const altCount = (html.match(/<img[^>]*alt=/gi) || []).length;
+  if (imgCount > 0 && altCount < imgCount) {
+    issues.push(`⚠️ ${imgCount - altCount} image(s) missing alt text`);
+  }
+
+  const result = {
+    url: url || "Not specified",
+    found,
+    issues,
+    recommendations,
+    seo_checklist: [
+      "Title: 50-60 characters with primary keyword",
+      "Meta description: 120-160 characters",
+      "Canonical tag for duplicate content",
+      "Open Graph tags for social sharing",
+      "Structured data (JSON-LD) for rich snippets",
+      "Single H1 per page",
+      "Alt text on all images",
+      "Mobile-friendly (viewport meta tag)"
+    ],
+    reference: "See ux://seo/guidelines for complete guide"
+  };
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(result, null, 2),
+      },
+    ],
+  };
+}
+
+async function suggestAnimation(args: any) {
+  const interaction = (args.interaction as string).toLowerCase();
+  const context = args.context as string | undefined;
+
+  let suggestion: any = {
+    interaction,
+    context: context || "Not specified"
+  };
+
+  // Match interaction to animation patterns
+  if (interaction.includes("button") && (interaction.includes("click") || interaction.includes("press"))) {
+    suggestion = {
+      ...suggestion,
+      animation_type: "Micro-interaction",
+      sequence: [
+        "Scale down to 0.95 on press",
+        "Scale back to 1.0 on release",
+        "Optional: Ripple effect from click point"
+      ],
+      duration: "100-150ms total",
+      easing: "ease-out",
+      css_example: ".button {\n  transition: transform 100ms ease-out;\n}\n.button:active {\n  transform: scale(0.95);\n}",
+      accessibility: "Respect prefers-reduced-motion"
+    };
+  } else if (interaction.includes("modal") || interaction.includes("dialog")) {
+    const isOpen = interaction.includes("open") || interaction.includes("show");
+    suggestion = {
+      ...suggestion,
+      animation_type: "Modal transition",
+      backdrop: "Fade in from transparent to semi-opaque (200ms)",
+      content: isOpen ? "Scale from 0.9 to 1.0 + fade in (250-300ms)" : "Scale to 0.9 + fade out (200ms)",
+      timing: isOpen ? "Backdrop first, then content with 100ms delay" : "Content first, then backdrop",
+      duration: isOpen ? "300ms enter" : "200ms exit",
+      easing: "ease-out",
+      css_example: "@keyframes modalEnter {\n  from { opacity: 0; transform: scale(0.9); }\n  to { opacity: 1; transform: scale(1); }\n}\n\n.modal {\n  animation: modalEnter 300ms ease-out;\n}"
+    };
+  } else if (interaction.includes("list") || interaction.includes("item")) {
+    suggestion = {
+      ...suggestion,
+      animation_type: "List animation",
+      pattern: "Staggered entrance",
+      timing: "50-100ms delay between items",
+      duration: "200-250ms per item",
+      easing: "ease-out",
+      limit: "Animate first 10-15 items only (rest appear instantly)",
+      css_example: ".list-item {\n  opacity: 0;\n  transform: translateY(20px);\n  animation: itemEnter 250ms ease-out forwards;\n}\n\n.list-item:nth-child(1) { animation-delay: 0ms; }\n.list-item:nth-child(2) { animation-delay: 50ms; }\n.list-item:nth-child(3) { animation-delay: 100ms; }\n\n@keyframes itemEnter {\n  to { opacity: 1; transform: translateY(0); }\n}"
+    };
+  } else if (interaction.includes("page") || interaction.includes("route") || interaction.includes("transition")) {
+    suggestion = {
+      ...suggestion,
+      animation_type: "Page transition",
+      options: [
+        {
+          type: "Fade",
+          use: "Unrelated pages",
+          duration: "200-300ms",
+          implementation: "Cross-fade old and new content"
+        },
+        {
+          type: "Slide",
+          use: "Forward/back navigation",
+          duration: "300-400ms",
+          direction: "Left for forward, right for back"
+        }
+      ],
+      recommendation: "Use fade for simplicity, slide for directional navigation",
+      duration: "300-400ms",
+      easing: "ease-in-out"
+    };
+  } else if (interaction.includes("toast") || interaction.includes("notification")) {
+    suggestion = {
+      ...suggestion,
+      animation_type: "Toast notification",
+      enter: "Slide in from top/bottom + fade (300ms)",
+      exit: "Fade out + slight slide (200ms)",
+      auto_dismiss: "After 4-6 seconds",
+      easing: "ease-out for enter, ease-in for exit",
+      placement: "Top-right or bottom-left typical",
+      css_example: "@keyframes toastEnter {\n  from {\n    opacity: 0;\n    transform: translateY(-100%);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0);\n  }\n}\n\n.toast {\n  animation: toastEnter 300ms ease-out;\n}"
+    };
+  } else if (interaction.includes("hover")) {
+    suggestion = {
+      ...suggestion,
+      animation_type: "Hover state",
+      effects: [
+        "Subtle scale (1.0 → 1.05)",
+        "Lift effect (add shadow, translate up slightly)",
+        "Color transition",
+        "Underline grow"
+      ],
+      duration: "150-200ms",
+      easing: "ease-out",
+      note: "Keep subtle, instant feedback is key",
+      css_example: ".card {\n  transition: transform 150ms ease-out, box-shadow 150ms ease-out;\n}\n\n.card:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 10px 20px rgba(0,0,0,0.1);\n}"
+    };
+  } else {
+    suggestion = {
+      ...suggestion,
+      message: "No specific match found for this interaction",
+      general_guidelines: {
+        duration: "200-300ms for most UI animations",
+        easing: "ease-out for enter, ease-in for exit, ease-in-out for movement",
+        properties: "Animate transform and opacity only (GPU accelerated)",
+        accessibility: "Always respect prefers-reduced-motion"
+      },
+      reference: "See ux://animation/motion for complete animation library"
+    };
+  }
+
+  suggestion.performance_tip = "Use transform and opacity only for best performance (60fps)";
+  suggestion.accessibility_requirement = "Implement prefers-reduced-motion to disable/reduce animations";
+  suggestion.reference = "See ux://animation/motion for complete motion design guide";
 
   return {
     content: [

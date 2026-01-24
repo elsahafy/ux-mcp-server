@@ -1,0 +1,464 @@
+{
+  "name": "Internationalization (i18n) Patterns",
+  "description": "Guidelines for building multilingual, globally accessible applications",
+  "core_concepts": {
+    "i18n_vs_l10n": {
+      "internationalization": {
+        "abbreviation": "i18n (18 letters between i and n)",
+        "definition": "Designing software to support multiple languages/regions without code changes",
+        "examples": [
+          "Externalizing strings to resource files",
+          "Supporting Unicode",
+          "Designing flexible layouts for text expansion",
+          "Using locale-aware formatting"
+        ]
+      },
+      "localization": {
+        "abbreviation": "l10n (10 letters between l and n)",
+        "definition": "Adapting software for a specific language/region",
+        "examples": [
+          "Translating text",
+          "Adapting date/number formats",
+          "Localizing images and media",
+          "Cultural customization"
+        ]
+      }
+    },
+    "locale": {
+      "definition": "Language and regional variant identifier",
+      "format": "language-REGION (e.g., en-US, es-MX, zh-CN)",
+      "components": {
+        "language": "ISO 639-1 code (en, es, zh, ar)",
+        "region": "ISO 3166-1 alpha-2 code (US, MX, CN, SA)",
+        "script": "Optional - ISO 15924 (zh-Hans, zh-Hant)"
+      },
+      "examples": {
+        "en-US": "English (United States)",
+        "en-GB": "English (United Kingdom)",
+        "es-ES": "Spanish (Spain)",
+        "es-MX": "Spanish (Mexico)",
+        "zh-CN": "Chinese (Simplified, China)",
+        "zh-TW": "Chinese (Traditional, Taiwan)",
+        "ar-SA": "Arabic (Saudi Arabia)",
+        "pt-BR": "Portuguese (Brazil)",
+        "pt-PT": "Portuguese (Portugal)"
+      }
+    }
+  },
+  "text_handling": {
+    "string_externalization": {
+      "principle": "Never hardcode user-facing text in code",
+      "approach": "Store all text in translation files",
+      "formats": {
+        "json": {
+          "structure": "{\n  \"welcome\": \"Welcome\",\n  \"login\": {\n    \"button\": \"Sign In\",\n    \"error\": \"Invalid credentials\"\n  }\n}",
+          "pros": ["Simple", "Widely supported", "Human-readable"],
+          "cons": ["No comments", "Potential nesting complexity"]
+        },
+        "yaml": {
+          "pros": ["Comments supported", "Clean syntax"],
+          "use": "Rails, some JS frameworks"
+        },
+        "gettext_po": {
+          "pros": ["Industry standard", "Rich tooling"],
+          "use": "PHP, Python, C/C++"
+        },
+        "icu_messageformat": {
+          "pros": ["Handles plurals, genders, complex cases"],
+          "use": "React-intl, FormatJS"
+        }
+      },
+      "keys": {
+        "naming": "Use descriptive, hierarchical keys",
+        "good": "checkout.payment.creditCard.label",
+        "bad": "text1, label_a"
+      }
+    },
+    "text_expansion": {
+      "problem": "Translated text can be 30-40% longer",
+      "examples": {
+        "english": "Save (4 chars)",
+        "german": "Speichern (10 chars)",
+        "finnish": "Tallentaa (9 chars)"
+      },
+      "design_strategies": [
+        "Design with flexible layouts (no fixed widths)",
+        "Use overflow: ellipsis for long text",
+        "Test with longest language (usually German/Finnish)",
+        "Allow text wrapping where appropriate",
+        "Avoid tight character limits",
+        "Use abbreviations carefully (may not translate)"
+      ],
+      "average_expansion": {
+        "english_to_german": "+30%",
+        "english_to_french": "+20%",
+        "english_to_spanish": "+25%",
+        "english_to_finnish": "+30%"
+      }
+    },
+    "text_direction": {
+      "ltr": {
+        "languages": "Most languages (English, Spanish, French, etc.)",
+        "abbreviation": "Left-to-Right"
+      },
+      "rtl": {
+        "languages": "Arabic, Hebrew, Persian, Urdu",
+        "abbreviation": "Right-to-Left",
+        "css": "dir='rtl' attribute or :dir(rtl) selector",
+        "considerations": [
+          "Mirror entire layout",
+          "Icons may need flipping (arrows, etc.)",
+          "Numbers stay LTR",
+          "Keep logos/brand elements unchanged"
+        ],
+        "css_logical_properties": {
+          "instead_of": "margin-left, margin-right",
+          "use": "margin-inline-start, margin-inline-end",
+          "benefit": "Automatically adapts to text direction"
+        }
+      },
+      "bidi": {
+        "name": "Bidirectional text",
+        "problem": "Mixing LTR and RTL in same line",
+        "solution": "Use Unicode bidi algorithm, HTML dir attribute",
+        "example": "Arabic text with English brand name"
+      }
+    },
+    "unicode": {
+      "required": "Always use UTF-8 encoding",
+      "html": "<meta charset='UTF-8'>",
+      "considerations": [
+        "Store data in Unicode (UTF-8)",
+        "Avoid ASCII-only assumptions",
+        "Support emoji and special characters",
+        "Be aware of combining characters",
+        "String length !== visual characters"
+      ]
+    }
+  },
+  "formatting": {
+    "dates": {
+      "variations": {
+        "US": "MM/DD/YYYY (01/24/2026)",
+        "EU": "DD/MM/YYYY (24/01/2026)",
+        "ISO_8601": "YYYY-MM-DD (2026-01-24) - recommended for storage",
+        "japan": "YYYY年MM月DD日"
+      },
+      "implementation": {
+        "javascript": "new Intl.DateTimeFormat('en-US').format(date)",
+        "libraries": ["date-fns with locale", "Luxon", "Day.js with i18n"]
+      },
+      "best_practices": [
+        "Always display dates in user's locale",
+        "Store dates in UTC or ISO format",
+        "Include timezone information",
+        "Be explicit about date formats when needed"
+      ]
+    },
+    "numbers": {
+      "variations": {
+        "US": "1,234.56 (comma thousands, period decimal)",
+        "EU": "1.234,56 (period thousands, comma decimal)",
+        "india": "1,23,456.78 (different grouping)",
+        "switzerland": "1'234.56 (apostrophe thousands)"
+      },
+      "implementation": {
+        "javascript": "new Intl.NumberFormat('en-US').format(number)",
+        "currencies": "new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(amount)"
+      },
+      "best_practices": [
+        "Never hardcode number formats",
+        "Use locale-aware formatting",
+        "Be clear about currency",
+        "Round appropriately for currency"
+      ]
+    },
+    "currencies": {
+      "display": {
+        "us": "$1,234.56",
+        "eu": "1.234,56 €",
+        "uk": "£1,234.56",
+        "japan": "¥1,234",
+        "india": "₹1,23,456.78"
+      },
+      "symbol_placement": "Varies by locale (before/after number)",
+      "implementation": "Use Intl.NumberFormat with currency style",
+      "considerations": [
+        "Some currencies don't use decimals (JPY, KRW)",
+        "Exchange rates needed for multi-currency",
+        "Tax and pricing varies by region"
+      ]
+    },
+    "time": {
+      "formats": {
+        "12_hour": "3:45 PM (US, UK, some others)",
+        "24_hour": "15:45 (Most of world)",
+        "japan": "午後3:45"
+      },
+      "implementation": {
+        "javascript": "new Intl.DateTimeFormat('en-US', {timeStyle: 'short'}).format(date)"
+      },
+      "timezones": [
+        "Always store in UTC",
+        "Display in user's timezone",
+        "Show timezone when ambiguous",
+        "Handle DST transitions"
+      ]
+    },
+    "names": {
+      "variations": [
+        "Western: Given Middle Family (John Adam Smith)",
+        "Eastern: Family Given (Zhang Wei 张伟)",
+        "Icelandic: Given Patronymic (Jón Einarsson)",
+        "Spanish: Given Paternal Maternal (Juan García López)",
+        "Single name cultures: Madonna, Cher"
+      ],
+      "best_practices": [
+        "Don't assume name structure",
+        "Use single 'Full Name' field when possible",
+        "If splitting: 'Given Name' and 'Family Name' (not First/Last)",
+        "Allow long names (some are 50+ characters)",
+        "Support special characters (accents, etc.)",
+        "Don't require middle name"
+      ],
+      "form_design": "One field preferred, or Given + Family (not First/Middle/Last)"
+    },
+    "addresses": {
+      "variations": "Each country has different format",
+      "components": {
+        "us": "Street, City, State, ZIP",
+        "uk": "Street, Town, County, Postcode",
+        "japan": "Prefecture, City, Town, Block, Building",
+        "china": "Province, City, District, Street, Building"
+      },
+      "best_practices": [
+        "Use international address format",
+        "Don't enforce state/province for all countries",
+        "Postal code formats vary widely",
+        "Some addresses don't have street numbers",
+        "Use address validation service (Google Places API)"
+      ],
+      "order": "Display/input in local convention"
+    },
+    "phone_numbers": {
+      "format": "Varies by country",
+      "examples": {
+        "us": "+1 (555) 123-4567",
+        "uk": "+44 20 1234 5678",
+        "germany": "+49 30 12345678",
+        "india": "+91 98765 43210"
+      },
+      "best_practices": [
+        "Accept various formats (with/without spaces, parentheses)",
+        "Store in E.164 format (+15551234567)",
+        "Display in local format",
+        "Use libraries (libphonenumber)",
+        "Include country code selector"
+      ]
+    }
+  },
+  "content_considerations": {
+    "images_and_media": {
+      "text_in_images": "Avoid - hard to translate",
+      "alternatives": [
+        "Use HTML text over images",
+        "Create separate images per locale",
+        "Use SVG with text elements"
+      ],
+      "cultural_sensitivity": [
+        "Colors have different meanings (white = mourning in some cultures)",
+        "Hand gestures vary",
+        "Religious symbols",
+        "Avoid culturally specific imagery"
+      ]
+    },
+    "colors": {
+      "cultural_meanings": {
+        "red": "Luck/celebration (China), danger (Western), mourning (South Africa)",
+        "white": "Purity (Western), mourning (East Asia)",
+        "green": "Nature (most), sacred (Islam)",
+        "yellow": "Happiness (China), cowardice (Western in some contexts)"
+      },
+      "best_practice": "Don't rely on color alone to convey meaning (accessibility + i18n)"
+    },
+    "icons_and_symbols": {
+      "considerations": [
+        "Mailbox icon differs by country",
+        "Phone icons (landline vs mobile)",
+        "Shopping carts vs baskets",
+        "Check marks (not universal approval symbol)"
+      ],
+      "best_practice": "Combine icons with text labels"
+    }
+  },
+  "technical_implementation": {
+    "language_detection": {
+      "methods": [
+        "Browser language (navigator.language)",
+        "IP geolocation",
+        "User preference (saved)",
+        "URL structure (/en/, /es/)",
+        "Domain (example.com vs example.fr)"
+      ],
+      "best_practice": "Detect but always allow manual override",
+      "fallback": "Have a default language when detection fails"
+    },
+    "url_structure": {
+      "subdirectory": {
+        "format": "example.com/en/, example.com/es/",
+        "pros": ["Easy setup", "Consolidated domain authority"],
+        "cons": ["Can't target by country in Search Console"]
+      },
+      "subdomain": {
+        "format": "en.example.com, es.example.com",
+        "pros": ["Easy to set up on different servers"],
+        "cons": ["Split domain authority", "Separate SSL certs needed"]
+      },
+      "ccTLD": {
+        "format": "example.com, example.es, example.fr",
+        "pros": ["Best for SEO in specific countries", "Clear to users"],
+        "cons": ["Expensive", "Complex management"]
+      },
+      "parameter": {
+        "format": "example.com?lang=en",
+        "pros": ["Easy to implement"],
+        "cons": ["Not SEO-friendly", "Poor UX", "Not recommended"]
+      },
+      "recommended": "Subdirectory or ccTLD",
+      "seo": "Use hreflang tags to indicate language variants"
+    },
+    "hreflang": {
+      "purpose": "Tell search engines about language/regional variants",
+      "tag": "<link rel='alternate' hreflang='en-US' href='https://example.com/en-us/'>",
+      "example": "<!-- English US -->\n<link rel='alternate' hreflang='en-US' href='https://example.com/en-us/'>\n<!-- Spanish -->\n<link rel='alternate' hreflang='es' href='https://example.com/es/'>\n<!-- Default fallback -->\n<link rel='alternate' hreflang='x-default' href='https://example.com/'>",
+      "best_practices": [
+        "Include self-reference",
+        "Add x-default for fallback",
+        "Include all language variants",
+        "Use in <head> or sitemap"
+      ]
+    },
+    "language_switcher": {
+      "placement": "Header or footer (consistent location)",
+      "display": {
+        "native_language": "English, Español, Français (Recommended)",
+        "flags": "Avoid - flags represent countries, not languages",
+        "current_language": "Show in current language or native"
+      },
+      "ux": [
+        "Make it obvious and accessible",
+        "Maintain current page when switching",
+        "Remember user's choice",
+        "Use globe icon + text"
+      ]
+    },
+    "pluralization": {
+      "problem": "Different languages have different plural rules",
+      "examples": {
+        "english": "2 rules (1 item, 2 items)",
+        "polish": "3 rules (different forms for 1, 2-4, 5+)",
+        "arabic": "6 rules",
+        "chinese": "1 rule (no plurals)"
+      },
+      "solution": "Use ICU MessageFormat or library",
+      "icu_example": "{count, plural, =0 {No items} =1 {One item} other {# items}}",
+      "libraries": ["FormatJS", "react-intl", "i18next"]
+    },
+    "gender": {
+      "problem": "Some languages have gendered nouns/adjectives",
+      "examples": {
+        "spanish": "Bienvenido (male) vs Bienvenida (female)",
+        "french": "Nouveau (masculine) vs Nouvelle (feminine)"
+      },
+      "solution": [
+        "Use gender-neutral language when possible",
+        "Use ICU MessageFormat for gendered variants",
+        "Allow users to specify gender preference"
+      ]
+    }
+  },
+  "testing": {
+    "pseudo_localization": {
+      "description": "Test with fake translation to find i18n issues",
+      "method": "Replace text with accented characters and extend length",
+      "example": "Save → Śávë",
+      "finds": [
+        "Text that can't be translated (hardcoded)",
+        "UI that breaks with longer text",
+        "Character encoding issues",
+        "Truncation problems"
+      ]
+    },
+    "checklist": [
+      "Test with longest language (German/Finnish)",
+      "Test with RTL language (Arabic/Hebrew)",
+      "Test with non-Latin script (Japanese, Thai)",
+      "Verify all text is translatable",
+      "Check UI doesn't break with text expansion",
+      "Test date/number formatting in different locales",
+      "Verify currency displays correctly",
+      "Test language switcher",
+      "Check hreflang tags",
+      "Validate translations (hire native speakers)"
+    ]
+  },
+  "libraries": {
+    "javascript": [
+      {
+        "name": "i18next",
+        "features": ["Comprehensive", "Framework agnostic", "Plugins"],
+        "use": "Most versatile option"
+      },
+      {
+        "name": "react-intl (FormatJS)",
+        "features": ["React-specific", "ICU MessageFormat", "Date/number formatting"],
+        "use": "React applications"
+      },
+      {
+        "name": "vue-i18n",
+        "features": ["Vue-specific", "Component localization"],
+        "use": "Vue applications"
+      },
+      {
+        "name": "Intl (native)",
+        "features": ["Built-in browser API", "Date/number formatting"],
+        "use": "Formatting only, no translation"
+      }
+    ],
+    "services": [
+      "Lokalise - Translation management",
+      "Crowdin - Collaborative translation",
+      "Phrase - Localization platform",
+      "POEditor - Translation management"
+    ]
+  },
+  "best_practices": [
+    "Internationalize from the start (retrofitting is expensive)",
+    "Externalize all user-facing strings",
+    "Use Unicode (UTF-8) everywhere",
+    "Design flexible layouts for text expansion",
+    "Use locale-aware formatting (dates, numbers, currency)",
+    "Support RTL languages from the beginning",
+    "Don't make assumptions about names, addresses, phone numbers",
+    "Use ICU MessageFormat for complex translations",
+    "Include language switcher in prominent location",
+    "Use hreflang tags for SEO",
+    "Test with pseudo-localization",
+    "Hire native speakers for translation and testing",
+    "Consider cultural differences (colors, images, gestures)",
+    "Provide context to translators",
+    "Use translation memory to maintain consistency"
+  ],
+  "common_mistakes": [
+    "Hardcoding text in UI",
+    "Assuming Western name structure",
+    "Using flags for language selection",
+    "Concatenating strings for translation",
+    "Fixed-width layouts that break with longer text",
+    "Not supporting RTL languages",
+    "Assuming all currencies have 2 decimal places",
+    "Using English-specific pluralization",
+    "Not providing context to translators",
+    "Translating too late in development cycle"
+  ]
+}
