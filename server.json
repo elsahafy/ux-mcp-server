@@ -6,12 +6,12 @@
     "url": "https://github.com/elsahafy/ux-mcp-server",
     "source": "github"
   },
-  "version": "4.1.1",
+  "version": "5.0.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@elsahafy/ux-mcp-server",
-      "version": "4.1.1",
+      "version": "5.0.0",
       "transport": {
         "type": "stdio"
       }

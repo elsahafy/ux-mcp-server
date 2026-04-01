@@ -4123,7 +4123,6 @@ Provide a comprehensive, actionable audit report.`,
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("UX MCP Server running on stdio");
 }
 
 main().catch((error) => {
