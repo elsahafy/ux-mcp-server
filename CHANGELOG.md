@@ -5,16 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [5.0.0] - 2026-04-02
 
 ### Added
-- Nothing yet
+- **CI/CD pipeline** with GitHub Actions: build matrix (Node 18/20/22), TypeScript strict checking, security audit (#2)
+- **AgentSeal safety badge** (85/100 score) on README (#3)
+- **maxLength constraints** (100KB) on 6 tools accepting markup input (#8)
+- **Explicit capability declarations** with `listChanged: true` for resources, tools, and prompts (#7)
+- `package-lock.json` tracked for reproducible builds
 
 ### Changed
-- Nothing yet
+- **BREAKING:** Renamed `code` parameter to `content` in: `analyze_accessibility`, `review_usability`, `check_responsive`, `analyze_performance` (#4)
+- **BREAKING:** Renamed `url` to `page_url` in `check_seo` (#5)
+- **BREAKING:** Renamed `url` to `page_identifier` in `generate_accessibility_report` (#5)
+- **BREAKING:** Renamed `screenshot_url` to `screenshot_reference` in `detect_dark_patterns` (#5)
+- **BREAKING:** Renamed resource URI `ux://design-systems/tokens` to `ux://design-systems/principles` (#6)
 
 ### Fixed
-- Nothing yet
+- Removed `console.error` startup message that broke MCP client connections on Windows (#9)
+
+### Security
+- Resolved 4 high-severity command injection parameter findings (AgentSeal)
+- Resolved 4 medium-severity SSRF-capable parameter findings (AgentSeal)
+- Resolved 1 high-severity credential keyword in resource URI finding (AgentSeal)
+
+## [Unreleased]
 
 ---
 
