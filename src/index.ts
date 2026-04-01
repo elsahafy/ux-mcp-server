@@ -671,9 +671,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               type: "string",
               description: "HTML code to analyze",
             },
-            url: {
+            page_url: {
               type: "string",
-              description: "Optional: Page URL for context",
+              description: "Optional: Page URL label for report context (not fetched)",
             },
           },
           required: ["html"],
@@ -831,9 +831,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         inputSchema: {
           type: "object",
           properties: {
-            url: {
+            page_identifier: {
               type: "string",
-              description: "URL or page identifier to audit",
+              description: "Page name, route, or identifier for the audit report (not fetched)",
             },
             wcag_level: {
               type: "string",
@@ -842,7 +842,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               default: "AA",
             },
           },
-          required: ["url"],
+          required: ["page_identifier"],
         },
       },
       {
@@ -902,9 +902,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               type: "string",
               description: "Description of user flow or interface (e.g., 'subscription cancellation', 'cookie consent', 'checkout')",
             },
-            screenshot_url: {
+            screenshot_reference: {
               type: "string",
-              description: "URL to screenshot (optional)",
+              description: "Screenshot filename or reference label (optional, not fetched)",
             },
           },
           required: ["flow_description"],
@@ -2031,7 +2031,7 @@ async function analyzePerformance(args: any) {
 
 async function checkSEO(args: any) {
   const html = args.html as string;
-  const url = args.url as string | undefined;
+  const pageUrl = args.page_url as string | undefined;
 
   const issues: string[] = [];
   const recommendations: string[] = [];
@@ -2117,7 +2117,7 @@ async function checkSEO(args: any) {
   }
 
   const result = {
-    url: url || "Not specified",
+    page: pageUrl || "Not specified",
     found,
     issues,
     recommendations,
@@ -2878,11 +2878,11 @@ async function analyzeDataViz(args: any) {
 }
 
 async function generateAccessibilityReport(args: any) {
-  const url = args.url as string;
+  const pageIdentifier = args.page_identifier as string;
   const wcagLevel = (args.wcag_level as string) || "AA";
 
   const report: any = {
-    url,
+    page: pageIdentifier,
     wcag_level: wcagLevel,
     timestamp: new Date().toISOString(),
     summary: {},
@@ -3203,11 +3203,11 @@ async function analyzeInformationArchitecture(args: any) {
 
 async function detectDarkPatterns(args: any) {
   const flowDescription = (args.flow_description as string).toLowerCase();
-  const screenshotUrl = args.screenshot_url as string;
+  const screenshotRef = args.screenshot_reference as string;
 
   const detection: any = {
     flow: args.flow_description,
-    screenshot: screenshotUrl || "Not provided",
+    screenshot: screenshotRef || "Not provided",
     detected_patterns: [],
     severity_score: 0,
     ethical_alternatives: [],
