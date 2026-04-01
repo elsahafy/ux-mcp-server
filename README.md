@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![GitHub issues](https://img.shields.io/github/issues/elsahafy/ux-mcp-server)](https://github.com/elsahafy/ux-mcp-server/issues)
+[![AgentSeal MCP](https://agentseal.org/api/v1/mcp/https-githubcom-elsahafy-ux-mcp-server/badge)](https://agentseal.org/mcp/https-githubcom-elsahafy-ux-mcp-server)
 
 Model Context Protocol (MCP) server that provides comprehensive UX best practices covering the complete UX ecosystem: accessibility guidelines (WCAG), usability heuristics (Nielsen), UI patterns, design systems, performance optimization, SEO, internationalization, animation, framework patterns (React/Vue/Angular), e-commerce, testing, PWA, ethical design, SaaS, analytics, voice UI, AR/VR, AI/ML patterns, healthcare, finance, neurodiversity, and web components.
 
