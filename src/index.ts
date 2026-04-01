@@ -79,9 +79,9 @@ server.setRequestHandler(ListResourcesRequestSchema, async () => {
         mimeType: "application/json",
       },
       {
-        uri: "ux://design-systems/tokens",
+        uri: "ux://design-systems/principles",
         name: "Design System Principles",
-        description: "Design tokens, atomic design, and component API guidelines",
+        description: "Design primitives, atomic design, and component API guidelines",
         mimeType: "application/json",
       },
       {
@@ -299,7 +299,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
       content = await loadKnowledge("ui-patterns.json");
       description = "Library of proven UI patterns for common use cases";
       break;
-    case "ux://design-systems/tokens":
+    case "ux://design-systems/principles":
       content = await loadKnowledge("design-tokens.json");
       description = "Design system principles, tokens, and atomic design methodology";
       break;
@@ -1638,7 +1638,7 @@ async function auditDesignSystem(args: any) {
         "Use scales for sizing (spacing, typography)",
         "Support light/dark mode variants",
       ],
-      reference: "See ux://design-systems/tokens for complete guidelines",
+      reference: "See ux://design-systems/principles for complete guidelines",
     };
 
     return {
@@ -3992,7 +3992,7 @@ Guide me through:
    - Documentation approach
    - Testing strategy
 
-Reference the design system resource: ux://design-systems/tokens
+Reference the design system resource: ux://design-systems/principles
 
 Provide code examples for token definition and a starter component.`,
             },
