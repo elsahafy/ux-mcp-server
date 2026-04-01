@@ -460,9 +460,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         inputSchema: {
           type: "object",
           properties: {
-            code: {
+            content: {
               type: "string",
-              description: "HTML or JSX code to analyze",
+              description: "HTML or JSX markup to analyze for accessibility issues",
             },
             level: {
               type: "string",
@@ -471,7 +471,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               default: "AA",
             },
           },
-          required: ["code"],
+          required: ["content"],
         },
       },
       {
@@ -485,9 +485,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               type: "string",
               description: "Description of the UI or component to review",
             },
-            code: {
+            content: {
               type: "string",
-              description: "Optional: Code implementation to review",
+              description: "Optional: UI markup or implementation to review",
             },
             focus_heuristics: {
               type: "array",
@@ -601,9 +601,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         inputSchema: {
           type: "object",
           properties: {
-            code: {
+            content: {
               type: "string",
-              description: "HTML/CSS code to analyze",
+              description: "HTML/CSS markup to analyze for responsive design issues",
             },
             check_type: {
               type: "string",
@@ -612,7 +612,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               default: "all",
             },
           },
-          required: ["code"],
+          required: ["content"],
         },
       },
       {
@@ -646,9 +646,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         inputSchema: {
           type: "object",
           properties: {
-            code: {
+            content: {
               type: "string",
-              description: "HTML/CSS/JS code to analyze",
+              description: "HTML/CSS/JS markup to analyze for performance issues",
             },
             check_type: {
               type: "string",
@@ -657,7 +657,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               default: "all",
             },
           },
-          required: ["code"],
+          required: ["content"],
         },
       },
       {
@@ -1053,7 +1053,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 async function analyzeAccessibility(args: any) {
   const wcag = await loadKnowledge("wcag-guidelines.json");
-  const code = args.code as string;
+  const code = args.content as string;
   const level = (args.level as string) || "AA";
 
   const issues: string[] = [];
@@ -1119,7 +1119,7 @@ async function analyzeAccessibility(args: any) {
 async function reviewUsability(args: any) {
   const heuristics = await loadKnowledge("nielsen-heuristics.json");
   const description = args.description as string;
-  const code = args.code as string | undefined;
+  const code = args.content as string | undefined;
   const focusHeuristics = (args.focus_heuristics as number[]) || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const review: any[] = [];
@@ -1746,7 +1746,7 @@ async function checkContrast(args: any) {
 }
 
 async function checkResponsive(args: any) {
-  const code = args.code as string;
+  const code = args.content as string;
   const checkType = (args.check_type as string) || "all";
 
   const issues: string[] = [];
@@ -1942,7 +1942,7 @@ async function suggestErrorMessage(args: any) {
 }
 
 async function analyzePerformance(args: any) {
-  const code = args.code as string;
+  const code = args.content as string;
   const checkType = (args.check_type as string) || "all";
 
   const issues: string[] = [];
@@ -3844,8 +3844,8 @@ server.setRequestHandler(ListPromptsRequestSchema, async () => {
             required: true,
           },
           {
-            name: "code",
-            description: "Code to analyze (optional)",
+            name: "content",
+            description: "HTML/CSS/JS markup to analyze (optional)",
             required: false,
           },
         ],
@@ -3883,8 +3883,8 @@ server.setRequestHandler(ListPromptsRequestSchema, async () => {
             required: true,
           },
           {
-            name: "code",
-            description: "Code to analyze (optional)",
+            name: "content",
+            description: "HTML/CSS/JS markup to analyze (optional)",
             required: false,
           },
         ],
@@ -3906,7 +3906,7 @@ server.setRequestHandler(GetPromptRequestSchema, async (request) => {
               type: "text",
               text: `Please perform a comprehensive accessibility review for: ${args?.component}
 
-${args?.code ? `Code to analyze:\n\`\`\`\n${args.code}\n\`\`\`\n` : ""}
+${args?.content ? `Markup to analyze:\n\`\`\`\n${args.content}\n\`\`\`\n` : ""}
 
 Review checklist:
 1. Use the analyze_accessibility tool to check for WCAG violations
@@ -4009,7 +4009,7 @@ Provide code examples for token definition and a starter component.`,
               type: "text",
               text: `Please conduct a comprehensive UX audit for: ${args?.interface}
 
-${args?.code ? `Code to analyze:\n\`\`\`\n${args.code}\n\`\`\`\n` : ""}
+${args?.content ? `Markup to analyze:\n\`\`\`\n${args.content}\n\`\`\`\n` : ""}
 
 This is a complete audit covering all critical UX dimensions. Perform the following:
 
