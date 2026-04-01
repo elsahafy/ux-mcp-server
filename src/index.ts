@@ -463,6 +463,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             content: {
               type: "string",
               description: "HTML or JSX markup to analyze for accessibility issues",
+              maxLength: 100000,
             },
             level: {
               type: "string",
@@ -488,6 +489,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             content: {
               type: "string",
               description: "Optional: UI markup or implementation to review",
+              maxLength: 100000,
             },
             focus_heuristics: {
               type: "array",
@@ -553,6 +555,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             tokens: {
               type: "string",
               description: "JSON or CSS of design tokens to audit",
+              maxLength: 100000,
             },
             type: {
               type: "string",
@@ -604,6 +607,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             content: {
               type: "string",
               description: "HTML/CSS markup to analyze for responsive design issues",
+              maxLength: 100000,
             },
             check_type: {
               type: "string",
@@ -649,6 +653,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             content: {
               type: "string",
               description: "HTML/CSS/JS markup to analyze for performance issues",
+              maxLength: 100000,
             },
             check_type: {
               type: "string",
@@ -670,6 +675,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             html: {
               type: "string",
               description: "HTML code to analyze",
+              maxLength: 100000,
             },
             page_url: {
               type: "string",
