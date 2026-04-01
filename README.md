@@ -1,6 +1,7 @@
 # UX MCP Server
 
 [![npm version](https://badge.fury.io/js/@elsahafy%2Fux-mcp-server.svg)](https://www.npmjs.com/package/@elsahafy/ux-mcp-server)
+[![CI](https://github.com/elsahafy/ux-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/elsahafy/ux-mcp-server/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![GitHub issues](https://img.shields.io/github/issues/elsahafy/ux-mcp-server)](https://github.com/elsahafy/ux-mcp-server/issues)
@@ -43,7 +44,7 @@ Access comprehensive UX knowledge bases organized by category:
 - **ux://accessibility/wcag** - WCAG 2.1 AA Guidelines with code checks
 - **ux://usability/nielsen-heuristics** - Nielsen's 10 Usability Heuristics
 - **ux://patterns/ui-patterns** - Common UI patterns library
-- **ux://design-systems/tokens** - Design system principles & tokens
+- **ux://design-systems/principles** - Design system principles & primitives
 - **ux://responsive/design** - Responsive design & mobile-first principles
 - **ux://themes/dark-mode** - Dark mode implementation guide
 - **ux://content/error-messages** - User-friendly error message library
@@ -175,25 +176,18 @@ Restart Claude Desktop after configuration.
 
 ### Claude Code (CLI)
 
-Add to your Claude Code MCP settings (`~/.claude/settings.json`):
-
-```json
-{
-  "mcpServers": {
-    "ux-best-practices": {
-      "command": "ux-mcp-server"
-    }
-  }
-}
+Add via the CLI (recommended):
+```bash
+claude mcp add ux -- npx -y @elsahafy/ux-mcp-server
 ```
 
-Or use with npx:
+Or manually in `~/.claude/settings.json`:
 ```json
 {
   "mcpServers": {
-    "ux-best-practices": {
+    "ux": {
       "command": "npx",
-      "args": ["@elsahafy/ux-mcp-server"]
+      "args": ["-y", "@elsahafy/ux-mcp-server"]
     }
   }
 }
@@ -570,32 +564,34 @@ All examples and guidelines are framework-agnostic, focusing on:
 
 Works with React, Vue, Svelte, Angular, or vanilla JavaScript.
 
-## What's New in v4.0.0 🚀
+## What's New in v5.0.0
 
-**Complete UX Ecosystem Coverage (100%)**
+### Security Hardening
+- Resolved all AgentSeal security findings (command injection, SSRF, credential exposure)
+- Added `maxLength` constraints on markup-accepting parameters
+- Explicit MCP capability declarations
 
-Major expansion with 24 new knowledge resources and 12 new tools across three implementation tiers:
+### Bug Fix
+- Fixed `console.error` startup message that broke MCP client connections on Windows
 
-### Tier 1 - Critical Features (v3.0.0)
-- ✨ 8 new resources: Forms, Microcopy, Typography, Color Theory, Mobile Patterns, Vue, Angular, Data Visualization
-- 🛠️ 5 new tools: Color palettes, Typography scales, Microcopy suggestions, Form patterns, Data viz recommendations
-- 💬 1 new prompt: Complete UX Audit
+### CI/CD
+- GitHub Actions pipeline: build matrix (Node 18/20/22), TypeScript strict checking, security audit
+- Branch protection with required status checks
 
-### Tier 2 - Advanced Features (v3.2.0)
-- ✨ 8 new resources: E-commerce, Information Architecture, Testing/Validation, PWA, Ethical Design, Advanced Design Systems, SaaS, Analytics/Metrics
-- 🛠️ 5 new tools: Accessibility reports, A/B variants, IA analysis, Dark pattern detection, UX metrics calculation
+### Breaking Changes
+Parameter renames for security compliance — see [CHANGELOG.md](CHANGELOG.md) for the full migration guide.
 
-### Tier 3 - Emerging Technologies (v4.0.0)
-- ✨ 8 new resources: Voice UI, AR/VR Interfaces, AI/ML Patterns, Haptic Feedback, Healthcare UX, Finance UX, Neurodiversity, Web Components
-- 🛠️ 2 new tools: Wireframe generation, Microinteraction suggestions
+| Tool | Old Parameter | New Parameter |
+|------|--------------|---------------|
+| `analyze_accessibility` | `code` | `content` |
+| `review_usability` | `code` | `content` |
+| `check_responsive` | `code` | `content` |
+| `analyze_performance` | `code` | `content` |
+| `check_seo` | `url` | `page_url` |
+| `generate_accessibility_report` | `url` | `page_identifier` |
+| `detect_dark_patterns` | `screenshot_url` | `screenshot_reference` |
 
-### Final Metrics
-- 📚 **28 resources** (was 12) - 133% increase
-- 🛠️ **23 tools** (was 11) - 109% increase
-- 💬 **4 prompts** (was 3) - Comprehensive audit workflow added
-- ✅ **100% UX ecosystem coverage** - From foundational patterns to cutting-edge emerging technologies
-
-All implementations include best practices, anti-patterns, accessibility guidelines, code examples, and industry references.
+See the full [changelog](CHANGELOG.md) for previous versions.
 
 ## Contributing
 

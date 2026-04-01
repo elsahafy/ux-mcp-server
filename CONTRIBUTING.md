@@ -259,6 +259,16 @@ We welcome code contributions! Areas where you can help:
 
 ## Testing
 
+### CI Pipeline
+
+All PRs must pass the CI pipeline before merging. The pipeline runs automatically and includes:
+
+- **Build matrix**: Node.js 18, 20, and 22
+- **TypeScript strict checking**: `tsc --noEmit --strict`
+- **Security audit**: `npm audit --audit-level=high`
+- **Build verification**: Confirms `dist/index.js` is produced
+- **Publish dry-run**: Validates package contents
+
 ### Manual Testing
 
 1. Build the project:
@@ -271,20 +281,21 @@ We welcome code contributions! Areas where you can help:
    npm run dev
    ```
 
-3. Test with Claude Desktop:
-   - Configure in `claude_desktop_config.json`
-   - Restart Claude Desktop
+3. Test with Claude Desktop or Claude Code:
+   - Configure in your MCP client settings
+   - Restart the client
    - Test your new features/tools/resources
 
 ### Testing Checklist
 
-- [ ] Code compiles without errors
+- [ ] CI pipeline passes (all 5 checks green)
+- [ ] Code compiles without errors (`npm run build`)
 - [ ] All resources load correctly
 - [ ] Tools execute and return valid JSON
 - [ ] Prompts work as expected
 - [ ] No breaking changes to existing functionality
 - [ ] Documentation updated
-- [ ] Examples provided
+- [ ] CHANGELOG.md updated under "Unreleased"
 
 ## Pull Request Process
 
@@ -310,10 +321,11 @@ We welcome code contributions! Areas where you can help:
 
 ### PR Review Process
 
-1. Maintainers will review your PR
-2. Address any requested changes
-3. Once approved, maintainer will merge
-4. Your contribution will be included in next release
+1. All 5 CI checks must pass (build x3, lint, security audit)
+2. At least 1 approving review is required
+3. Address any requested changes
+4. Once approved, maintainer will merge
+5. Your contribution will be included in next release
 
 ### PR Guidelines
 
