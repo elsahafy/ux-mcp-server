@@ -6,10 +6,9 @@ We actively support the following versions with security updates:
 
 | Version | Supported          |
 | ------- | ------------------ |
+| 5.x.x   | :white_check_mark: |
 | 4.x.x   | :white_check_mark: |
-| 3.x.x   | :white_check_mark: |
-| 2.x.x   | :x:                |
-| < 2.0   | :x:                |
+| < 4.0   | :x:                |
 
 ## Reporting a Vulnerability
 
@@ -49,10 +48,12 @@ This security policy covers:
 
 When using this MCP server:
 
-1. **Keep Updated**: Always use the latest version
+1. **Keep Updated**: Always use the latest version (`npx -y @elsahafy/ux-mcp-server`)
 2. **Review Permissions**: The server only needs read access to provide UX guidance
 3. **Validate Output**: Treat all tool outputs as suggestions, not guaranteed secure code
 4. **Local Execution**: The server runs locally and doesn't transmit data externally
+5. **No Code Execution**: All `content` parameters are analyzed via regex, never evaluated or executed
+6. **No Network Requests**: No parameters trigger server-side HTTP requests — URL-like fields are labels only
 
 ## Dependencies
 
