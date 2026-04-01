@@ -46,9 +46,9 @@ const server = new Server(
   },
   {
     capabilities: {
-      resources: {},
-      tools: {},
-      prompts: {},
+      resources: { listChanged: true },
+      tools: { listChanged: true },
+      prompts: { listChanged: true },
     },
   }
 );
