@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/elsahafy-ux-mcp-server-badge.png)](https://mseep.ai/app/elsahafy-ux-mcp-server)
+
 # UX MCP Server
 
 [![npm version](https://badge.fury.io/js/@elsahafy%2Fux-mcp-server.svg)](https://www.npmjs.com/package/@elsahafy/ux-mcp-server)
